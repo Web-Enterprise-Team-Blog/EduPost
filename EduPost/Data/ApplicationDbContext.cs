@@ -14,5 +14,6 @@ namespace EduPost.Data
         public DbSet<EduPost.Models.Article>? Article { get; set; }
         public DbSet<EduPost.Models.Faculty>? Faculty { get; set; }
         public DbSet<EduPost.Models.Status>? Status { get; set; }
+        public DbSet<EduPost.Models.Comment>? Comment { get; set; }
     }
 }
