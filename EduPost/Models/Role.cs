@@ -8,7 +8,7 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("role_id")]
-        public int? Role_id { get; set; }
+        public int? RoleId { get; set; }
 
         [Column("roleName")]
         [Required]
