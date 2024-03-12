@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
+using EduPost.Models;
 
-namespace EduPost.Models
+namespace EduPost.Controllers
 {
     public class RolesController : Controller
     {
@@ -21,9 +22,9 @@ namespace EduPost.Models
         // GET: Roles
         public async Task<IActionResult> Index()
         {
-              return _context.Role != null ? 
-                          View(await _context.Role.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Role'  is null.");
+            return _context.Role != null ?
+                        View(await _context.Role.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Role'  is null.");
         }
 
         // GET: Roles/Details/5
@@ -149,14 +150,14 @@ namespace EduPost.Models
             {
                 _context.Role.Remove(role);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RoleExists(int? id)
         {
-          return (_context.Role?.Any(e => e.RoleId == id)).GetValueOrDefault();
+            return (_context.Role?.Any(e => e.RoleId == id)).GetValueOrDefault();
         }
     }
 }

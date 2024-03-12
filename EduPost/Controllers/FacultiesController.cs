@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
+using EduPost.Models;
 
-namespace EduPost.Models
+namespace EduPost.Controllers
 {
     public class FacultiesController : Controller
     {
@@ -21,9 +22,9 @@ namespace EduPost.Models
         // GET: Faculties
         public async Task<IActionResult> Index()
         {
-              return _context.Faculty != null ? 
-                          View(await _context.Faculty.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Faculty'  is null.");
+            return _context.Faculty != null ?
+                        View(await _context.Faculty.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Faculty'  is null.");
         }
 
         // GET: Faculties/Details/5
@@ -149,14 +150,14 @@ namespace EduPost.Models
             {
                 _context.Faculty.Remove(faculty);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FacultyExists(int? id)
         {
-          return (_context.Faculty?.Any(e => e.FacultyId == id)).GetValueOrDefault();
+            return (_context.Faculty?.Any(e => e.FacultyId == id)).GetValueOrDefault();
         }
     }
 }
