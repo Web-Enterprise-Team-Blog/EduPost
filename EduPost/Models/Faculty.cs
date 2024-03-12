@@ -8,7 +8,7 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("faculty_id")]
-        public int? Faculty_id { get; set; }
+        public int? FacultyId { get; set; }
 
         [Column("facultyName")]
         public string? FacultyName { get; set; }

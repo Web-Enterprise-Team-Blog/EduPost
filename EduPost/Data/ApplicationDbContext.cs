@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using EduPost.Models;
 
 namespace EduPost.Data
 {
@@ -9,5 +10,7 @@ namespace EduPost.Data
             : base(options)
         {
         }
+        public DbSet<EduPost.Models.Faculty> Faculty { get; set; } = default!;
+        public DbSet<EduPost.Models.Role> Role { get; set; } = default!;
     }
 }
