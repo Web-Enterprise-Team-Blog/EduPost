@@ -8,7 +8,7 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("status_id")]
-        public int? Status_id { get; set; }
+        public int? StatusId { get; set; }
 
         [Required]
         [Column("statusName")]

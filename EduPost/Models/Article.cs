@@ -8,22 +8,22 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("article_id")]
-        public int? Article_id { get; set; }
+        public int? ArticleId { get; set; }
 
         [Column("article_name")]
         [Required]
-        public string? Article_name { get; set; }
+        public string? ArticleName { get; set; }
 
         [Column("user_id")]
-        [Required]
+        //[Required]
         public int? UserID { get; set; }
 
         [Column("deadline")]
-        [Required]
+        //[Required]
         public DateTimeOffset? CreatedDate { get; set; }
 
         [Column("status_id")]
-        [Required]
-        public int? Status_id { get; set; }
+        //[Required]
+        public int? StatusId { get; set; }
     }
 }
