@@ -36,7 +36,7 @@ namespace EduPost.Controllers
             }
 
             var role = await _context.Role
-                .FirstOrDefaultAsync(m => m.RoleId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (role == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace EduPost.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, [Bind("RoleId,RoleName")] Role role)
         {
-            if (id != role.RoleId)
+            if (id != role.Id)
             {
                 return NotFound();
             }
@@ -104,7 +104,7 @@ namespace EduPost.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoleExists(role.RoleId))
+                    if (!RoleExists(role.Id))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace EduPost.Controllers
             }
 
             var role = await _context.Role
-                .FirstOrDefaultAsync(m => m.RoleId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (role == null)
             {
                 return NotFound();
@@ -157,7 +157,7 @@ namespace EduPost.Controllers
 
         private bool RoleExists(int? id)
         {
-            return (_context.Role?.Any(e => e.RoleId == id)).GetValueOrDefault();
+            return (_context.Role?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

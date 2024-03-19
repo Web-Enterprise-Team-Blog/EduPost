@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduPost.Models
 {
-    public class Role
+    public class Role :IdentityRole<int>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("role_id")]
-        public int? RoleId { get; set; }
+        [Required]
+        public override int Id { get; set; }
 
         [Column("roleName")]
         [Required]

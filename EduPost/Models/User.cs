@@ -4,22 +4,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduPost.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("Id")]
-        public int? Id { get; set; }
-
         [Required]
         [Column("user_name")]
-        public string? UserName { get; set; }
+        public override string? UserName { get; set; }
 
+        [Column("user_email")]
         [Required]
+        public override string? Email { get; set; }
+
+        //[Required]
         [Column("faculty_id")]
         public int? FacultyId { get; set; }
 
-        [Required]
+        //[Required]
         [Column("role_id")]
         public int? RoleId { get; set; }
     }
