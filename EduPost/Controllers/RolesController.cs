@@ -88,7 +88,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,Name")] Role role)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Role role)
         {
             if (id != role.Id)
             {
@@ -139,7 +139,7 @@ namespace EduPost.Controllers
         // POST: Roles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Role == null)
             {
@@ -155,7 +155,7 @@ namespace EduPost.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoleExists(int? id)
+        private bool RoleExists(int id)
         {
             return (_context.Role?.Any(e => e.Id == id)).GetValueOrDefault();
         }
