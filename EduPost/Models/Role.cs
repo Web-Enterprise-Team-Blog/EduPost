@@ -12,6 +12,6 @@ namespace EduPost.Models
 
         [Column("roleName")]
         [Required]
-        public string? RoleName { get; set; }
+        public override string? Name { get; set; }
     }
 }
