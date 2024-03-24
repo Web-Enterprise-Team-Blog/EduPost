@@ -27,6 +27,7 @@ namespace EduPost
 
             builder.Services.AddControllersWithViews();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -50,7 +51,29 @@ namespace EduPost
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Admin}/{action=Index}/{id?}");
+
+            app.Use(async (context, next) =>
+            {
+                var path = context.Request.Path;
+                // Check if the current request path is accessing login or register pages
+                var isAccessingAllowedPaths = path.StartsWithSegments("/Identity/Account/Login")
+                                              || path.StartsWithSegments("/Identity/Account/Register")
+                                              || path.StartsWithSegments("/Identity/Account/Logout")
+                                              || path.StartsWithSegments("/Identity/Account/ForgotPassword");
+
+                var isStaticFile = path.StartsWithSegments("/css") || path.StartsWithSegments("/js") || path.StartsWithSegments("/images");
+
+                if (!context.User.Identity.IsAuthenticated && !isAccessingAllowedPaths && !isStaticFile)
+                {
+                    context.Response.Redirect("/Identity/Account/Login");
+                }
+                else
+                {
+                    await next();
+                }
+            });
+
             app.MapRazorPages();
 
             app.Run();
