@@ -193,34 +193,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach (var item in Model)
+                                        @foreach (var item in Model)
                                         {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Id)
-                                            </td>
+                                            @if (item.UserName != User.Identity.Name) // Check if the current user is not the same as the user being displayed
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UserName)
-                                            </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.UserName)
+                                                    </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Email)
-                                            </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Email)
+                                                    </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FacultyId)
-                                            </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FacultyId)
+                                                    </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.RoleId)
-                                            </td>
-                                            <td>
-                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                            </td>
-                                        </tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.RoleId)
+                                                    </td>
+                                                    <td>
+                                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
                                         }
                                     </tbody>
                                 </table>
