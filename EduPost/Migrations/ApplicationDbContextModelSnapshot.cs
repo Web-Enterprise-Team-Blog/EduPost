@@ -136,6 +136,14 @@ namespace EduPost.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("EduPost.Models.Status", b =>
@@ -181,9 +189,9 @@ namespace EduPost.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("FacultyId")
-                        .HasColumnType("int")
-                        .HasColumnName("faculty_id");
+                    b.Property<string>("Faculty")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("faculty");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -208,9 +216,10 @@ namespace EduPost.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int")
-                        .HasColumnName("role_id");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("role");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -244,13 +253,13 @@ namespace EduPost.Migrations
                             ConcurrencyStamp = "61521b0c-13fb-44a0-b67c-f753cf71bba5",
                             Email = "TestEmail@email.com",
                             EmailConfirmed = true,
-                            FacultyId = 1,
+                            Faculty = "Admin",
                             LockoutEnabled = true,
                             NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                             NormalizedUserName = "TESTEMAIL@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==",
                             PhoneNumberConfirmed = false,
-                            RoleId = 1,
+                            Role = "Administator",
                             SecurityStamp = "P326W733E2RXH66PPK4ZYOQRQREJTMUD",
                             TwoFactorEnabled = false,
                             UserName = "TestEmail@email.com"
@@ -339,6 +348,13 @@ namespace EduPost.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>

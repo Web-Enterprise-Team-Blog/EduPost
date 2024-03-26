@@ -188,8 +188,8 @@
                                             <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
                                             <th scope="col">@Html.DisplayNameFor(model => model.UserName)</th>
                                             <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.RoleId)</th>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.FacultyId)</th>
+                                            <th scope="col">@Html.DisplayNameFor(model => model.Role)</th>
+                                            <th scope="col">@Html.DisplayNameFor(model => model.Faculty)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -211,11 +211,11 @@
                                                     </td>
 
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.FacultyId)
+                                                        @Html.DisplayFor(modelItem => item.Faculty)
                                                     </td>
 
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.RoleId)
+                                                        @Html.DisplayFor(modelItem => item.Role)
                                                     </td>
                                                     <td>
                                                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

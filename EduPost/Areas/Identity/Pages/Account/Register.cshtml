@@ -183,7 +183,7 @@
                         <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Register New User</h6>
                         <p>
-                            <a href="/Identity/Account/Register">Create New</a>
+                            <a href="/Users/Index">Back to list</a>
                         </p>
                         <div class="container">
                             <h6 class="mb-4">Horizontal Form</h6>
@@ -214,6 +214,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <div class="row mb-3">
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Register Role</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <label asp-for="Input.Role" class="control-label"></label>
+                                                <select asp-for="Input.Role" class="form-control" asp-items="ViewBag.Roles"></select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-10 offset-sm-2">
                                         <button id="register-submit" type="submit" class="btn btn-primary">Register</button>

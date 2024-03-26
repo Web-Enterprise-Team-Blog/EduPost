@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EduPost.Models;
 using System.Data;
+using System.Reflection.Emit;
+
 
 namespace EduPost.Data
 {
@@ -22,10 +24,20 @@ namespace EduPost.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            SeedAdminUser(builder);
+            int userId = 1; //ID of the user
+            int roleId = 1; //ID of the role
+
+            builder.Entity<IdentityUserRole<int>>().HasData(
+                new IdentityUserRole<int>
+                {
+                    UserId = userId,
+                    RoleId = roleId
+                }
+            );
+            SeedData(builder);
         }
 
-        private void SeedAdminUser(ModelBuilder builder)
+        private void SeedData(ModelBuilder builder)
         {
             var adminusers = new[]
             {
@@ -34,8 +46,8 @@ namespace EduPost.Data
                     Id = 1, 
                     UserName = "TestEmail@email.com",
                     Email = "TestEmail@email.com",
-                    FacultyId = 1,
-                    RoleId = 1,
+                    Faculty = "Admin",
+                    Role = "Administator",
                     NormalizedUserName = "TESTEMAIL@EMAIL.COM",
                     NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                     EmailConfirmed = true,
@@ -47,6 +59,10 @@ namespace EduPost.Data
                 }
             };
             builder.Entity<User>().HasData(adminusers);
+
+            var adminrole = new[]
+            { new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"}};
+            builder.Entity<Role>().HasData(adminrole);
         }
     }
 }

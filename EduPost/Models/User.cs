@@ -15,11 +15,11 @@ namespace EduPost.Models
         public override string? Email { get; set; }
 
         //[Required]
-        [Column("faculty_id")]
-        public int? FacultyId { get; set; }
+        [Column("faculty")]
+        public string? Faculty { get; set; }
 
-        //[Required]
-        [Column("role_id")]
-        public int? RoleId { get; set; }
+        [Required]
+        [Column("role")]
+        public string? Role { get; set; }
     }
 }
