@@ -101,9 +101,15 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserName,Email,FacultyId,RoleId,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserName,Email,FacultyId,RoleId,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User userInput)
         {
-            if (id != user.Id)
+            if (id != userInput.Id)
+            {
+                return NotFound();
+            }
+
+            var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (userInDb == null)
             {
                 return NotFound();
             }
@@ -112,12 +118,17 @@ namespace EduPost.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Entry(userInDb).CurrentValues.SetValues(userInput);
+                    _context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.SecurityStamp).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.ConcurrencyStamp).IsModified = false;
+
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!UserExists(userInput.Id))
                     {
                         return NotFound();
                     }
@@ -126,10 +137,10 @@ namespace EduPost.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(userInput);
         }
+
 
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
