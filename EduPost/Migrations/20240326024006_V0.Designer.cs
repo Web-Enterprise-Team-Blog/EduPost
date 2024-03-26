@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240320115331_v1")]
-    partial class v1
+    [Migration("20240326024006_V0")]
+    partial class V0
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,6 +238,26 @@ namespace EduPost.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9c8dc33b-557d-45e3-89f6-da80099cfb11",
+                            Email = "TestEmail@email.com",
+                            EmailConfirmed = true,
+                            FacultyId = 1,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TESTEMAIL@EMAIL.COM",
+                            NormalizedUserName = "ADMINTEST",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOeiGoBGZzflrpnCe+RN6VHV0k7kEbpLSInaNkS8Nz5kZ5/0eiuzYhJ6f1OCgDnlMA==",
+                            PhoneNumberConfirmed = false,
+                            RoleId = 1,
+                            SecurityStamp = "N4WB5UFKHKL7A77NYK766NIJDZJVQWIP",
+                            TwoFactorEnabled = false,
+                            UserName = "AdminTest"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

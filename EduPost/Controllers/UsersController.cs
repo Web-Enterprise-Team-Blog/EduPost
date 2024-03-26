@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
 using EduPost.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EduPost.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,13 +23,6 @@ namespace EduPost.Controllers
             _context = context;
             _userManager = userManager;
         }
-
-        
-            public IActionResult Register()
-            {
-                return View("~/Views/Users/Register.cshtml");
-            }
-       
 
         // GET: Users
         public async Task<IActionResult> Index()

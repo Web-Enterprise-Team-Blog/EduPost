@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduPost.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class V0 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -217,6 +217,11 @@ namespace EduPost.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "user_email", "EmailConfirmed", "faculty_id", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "role_id", "SecurityStamp", "TwoFactorEnabled", "user_name" },
+                values: new object[] { 1, 0, "9c8dc33b-557d-45e3-89f6-da80099cfb11", "TestEmail@email.com", true, 1, false, null, "TESTEMAIL@EMAIL.COM", "ADMINTEST", "AQAAAAIAAYagAAAAEOeiGoBGZzflrpnCe+RN6VHV0k7kEbpLSInaNkS8Nz5kZ5/0eiuzYhJ6f1OCgDnlMA==", null, false, 1, "N4WB5UFKHKL7A77NYK766NIJDZJVQWIP", false, "AdminTest" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
