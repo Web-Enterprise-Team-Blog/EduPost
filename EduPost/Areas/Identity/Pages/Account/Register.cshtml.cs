@@ -61,6 +61,9 @@ namespace EduPost.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [BindProperty]
+        public List<string> ValidationErrors { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -178,10 +181,13 @@ namespace EduPost.Areas.Identity.Pages.Account
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
+                    ValidationErrors.Add(error.Description.ToString());
+
                 }
             }
 
             // If we got this far, something failed, redisplay form
+            ViewData["validationErrors"] = ValidationErrors;
             return Page();
         }
 

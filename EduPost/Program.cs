@@ -25,6 +25,11 @@ namespace EduPost
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            });
+
             builder.Services.AddControllersWithViews();
 
 
