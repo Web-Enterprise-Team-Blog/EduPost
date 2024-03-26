@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EduPost.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         public IActionResult Index()

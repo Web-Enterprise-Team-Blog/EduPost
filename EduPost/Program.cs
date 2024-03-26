@@ -60,7 +60,8 @@ namespace EduPost
                 var isAccessingAllowedPaths = path.StartsWithSegments("/Identity/Account/Login")
                                               || path.StartsWithSegments("/Identity/Account/Register")
                                               || path.StartsWithSegments("/Identity/Account/Logout")
-                                              || path.StartsWithSegments("/Identity/Account/ForgotPassword");
+                                              || path.StartsWithSegments("/Identity/Account/ForgotPassword")
+                                              || path.StartsWithSegments("/Identity/Account/RegisterConfirmation");
 
                 var isStaticFile = path.StartsWithSegments("/css") || path.StartsWithSegments("/js") || path.StartsWithSegments("/images");
 

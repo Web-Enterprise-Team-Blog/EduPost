@@ -4,6 +4,7 @@ using EduPost.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326060308_02")]
+    partial class _02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,17 +244,17 @@ namespace EduPost.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "61521b0c-13fb-44a0-b67c-f753cf71bba5",
+                            ConcurrencyStamp = "9c8dc33b-557d-45e3-89f6-da80099cfb11",
                             Email = "TestEmail@email.com",
                             EmailConfirmed = true,
                             FacultyId = 1,
                             LockoutEnabled = true,
                             NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                             NormalizedUserName = "TESTEMAIL@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOeiGoBGZzflrpnCe+RN6VHV0k7kEbpLSInaNkS8Nz5kZ5/0eiuzYhJ6f1OCgDnlMA==",
                             PhoneNumberConfirmed = false,
                             RoleId = 1,
-                            SecurityStamp = "P326W733E2RXH66PPK4ZYOQRQREJTMUD",
+                            SecurityStamp = "N4WB5UFKHKL7A77NYK766NIJDZJVQWIP",
                             TwoFactorEnabled = false,
                             UserName = "TestEmail@email.com"
                         });

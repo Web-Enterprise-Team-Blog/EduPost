@@ -32,17 +32,17 @@ namespace EduPost.Data
                 new User 
                 { 
                     Id = 1, 
-                    UserName = "AdminTest",
+                    UserName = "TestEmail@email.com",
                     Email = "TestEmail@email.com",
                     FacultyId = 1,
                     RoleId = 1,
-                    NormalizedUserName = "ADMINTEST",
+                    NormalizedUserName = "TESTEMAIL@EMAIL.COM",
                     NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                     EmailConfirmed = true,
                     //Pasword:Admin@01
-                    PasswordHash = "AQAAAAIAAYagAAAAEOeiGoBGZzflrpnCe+RN6VHV0k7kEbpLSInaNkS8Nz5kZ5/0eiuzYhJ6f1OCgDnlMA==",
-                    SecurityStamp = "N4WB5UFKHKL7A77NYK766NIJDZJVQWIP",
-                    ConcurrencyStamp = "9c8dc33b-557d-45e3-89f6-da80099cfb11",
+                    PasswordHash = "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==",
+                    SecurityStamp = "P326W733E2RXH66PPK4ZYOQRQREJTMUD",
+                    ConcurrencyStamp = "61521b0c-13fb-44a0-b67c-f753cf71bba5",
                     LockoutEnabled = true,
                 }
             };

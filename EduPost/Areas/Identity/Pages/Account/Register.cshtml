@@ -4,10 +4,6 @@
     ViewData["Title"] = "Register";
 }
 
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -179,6 +175,7 @@
                 </div>
             </nav>
             <!-- Navbar End -->
+
             <!-- Form Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -191,19 +188,6 @@
                         <div class="container">
                             <h6 class="mb-4">Horizontal Form</h6>
                             <form id="account" method="post">
-                                <div class="row mb-3">
-                                    <label for="inputUserName" class="col-sm-2 col-form-label">Username</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <i class="bi bi-person custom-icon"></i>
-                                            <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true"
-                                                    placeholder="username" />
-                                            <div class="invalid-feedback">
-                                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-10">
@@ -237,11 +221,10 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
-                <!-- Form End -->
+            <!-- Form End -->
 
         </div>
         <!-- Content End -->

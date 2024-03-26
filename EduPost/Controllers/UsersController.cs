@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EduPost.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
