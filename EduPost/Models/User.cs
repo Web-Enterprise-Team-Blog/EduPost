@@ -18,7 +18,7 @@ namespace EduPost.Models
         [Column("faculty")]
         public string? Faculty { get; set; }
 
-        [Required]
+        //[Required]
         [Column("role")]
         public string? Role { get; set; }
     }
