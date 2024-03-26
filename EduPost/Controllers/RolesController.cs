@@ -60,6 +60,7 @@ namespace EduPost.Controllers
         {
             if (ModelState.IsValid)
             {
+                role.NormalizedName = role.Name.ToUpperInvariant();
                 _context.Add(role);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
