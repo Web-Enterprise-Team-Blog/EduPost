@@ -21,7 +21,12 @@
     </head>
     <body>
         <nav class="navbar" style="background-color: black;">
-            <img src="~/dropdownmenu/assets/logo.png" class="navbar-logo" alt="logo" />
+            <img src="~/images/2022-Greenwich-Eng.jpg" style="height:50px;width:150px;margin-left:50px" class="navbar-logo" alt="logo" />
+            <ul class="navbar-nav mr-auto d-flex align-items-center"style="margin-left:100PX;color:white">
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html" style="color:white">Manage Articles <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
             <div class="profile-dropdown" style="margin-right: 100px;">
                 <div onclick="toggle()" class="profile-dropdown-btn">
                     <div class="profile-img">
@@ -39,12 +44,6 @@
                         <a href="/Home/Profile">
                             <i class="fa-regular fa-user"></i>
                             Edit Profile
-                        </a>
-                    </li>
-                    <li class="profile-dropdown-list-item">
-                        <a href="#">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            Manage Articles
                         </a>
                     </li>
                     <li class="profile-dropdown-list-item">
