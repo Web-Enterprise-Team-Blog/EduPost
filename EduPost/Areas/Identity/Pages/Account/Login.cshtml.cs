@@ -116,6 +116,21 @@ namespace EduPost.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    if (user != null)
+                    {
+                        var roles = await _signInManager.UserManager.GetRolesAsync(user);
+                        if (roles.Contains("Admin"))
+                        {
+                            returnUrl = Url.Content("~/Admin/Index");
+                        }
+                        else if (roles.Contains("User"))
+                        {
+                            returnUrl = Url.Content("~/Home/Index");
+                        }
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

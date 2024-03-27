@@ -63,7 +63,6 @@ namespace EduPost
                 var path = context.Request.Path;
                 // Check if the current request path is accessing login or register pages
                 var isAccessingAllowedPaths = path.StartsWithSegments("/Identity/Account/Login")
-                                              || path.StartsWithSegments("/Identity/Account/Register")
                                               || path.StartsWithSegments("/Identity/Account/Logout")
                                               || path.StartsWithSegments("/Identity/Account/ForgotPassword")
                                               || path.StartsWithSegments("/Identity/Account/RegisterConfirmation");

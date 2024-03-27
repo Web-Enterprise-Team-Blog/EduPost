@@ -1,9 +1,11 @@
 ﻿using EduPost.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace EduPost.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,7 +20,7 @@ namespace EduPost.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Profile()
         {
             return View();
         }

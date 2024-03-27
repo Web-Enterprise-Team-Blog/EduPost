@@ -24,16 +24,6 @@ namespace EduPost.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            int userId = 1; //ID of the user
-            int roleId = 1; //ID of the role
-
-            builder.Entity<IdentityUserRole<int>>().HasData(
-                new IdentityUserRole<int>
-                {
-                    UserId = userId,
-                    RoleId = roleId
-                }
-            );
             SeedData(builder);
         }
 
@@ -47,7 +37,7 @@ namespace EduPost.Data
                     UserName = "TestEmail@email.com",
                     Email = "TestEmail@email.com",
                     Faculty = "Admin",
-                    Role = "Administator",
+                    Role = "Admin",
                     NormalizedUserName = "TESTEMAIL@EMAIL.COM",
                     NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                     EmailConfirmed = true,
@@ -61,8 +51,15 @@ namespace EduPost.Data
             builder.Entity<User>().HasData(adminusers);
 
             var adminrole = new[]
-            { new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"}};
+            { new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"},
+              new Role { Id = 2,Name = "User", NormalizedName = "USER"} };
             builder.Entity<Role>().HasData(adminrole);
+
+            var userRolePairs = new[]
+            {
+                new IdentityUserRole<int> { UserId = 1, RoleId = 1 },
+            };
+            builder.Entity<IdentityUserRole<int>>().HasData(userRolePairs);
         }
     }
 }

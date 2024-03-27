@@ -4,7 +4,10 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
+@{
+    Layout = null;
+}
+
 
     <html lang="en">
 
@@ -28,9 +31,10 @@
     <div class="row border rounded-5 p-3 bg-white shadow box-area">
 
         <p>
-            Please check your email to confirm your account.
+            Email vailation sent. Please notice the user to check their mailbox
         </p>
 
+            <a href="/Users/Index" class="btn btn-default"style="background-color:darkcyan; color:white">Back to User Management Page</a>
     </div>
 
 </div>

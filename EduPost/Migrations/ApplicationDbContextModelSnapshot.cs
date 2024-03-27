@@ -143,6 +143,12 @@ namespace EduPost.Migrations
                             Id = 1,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -258,7 +264,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "TESTEMAIL@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==",
                             PhoneNumberConfirmed = false,
-                            Role = "Administator",
+                            Role = "Admin",
                             SecurityStamp = "P326W733E2RXH66PPK4ZYOQRQREJTMUD",
                             TwoFactorEnabled = false,
                             UserName = "TestEmail@email.com"

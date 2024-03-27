@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240326111838_V01")]
-    partial class V01
+    [Migration("20240327035854_V0")]
+    partial class V0
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,6 +146,12 @@ namespace EduPost.Migrations
                             Id = 1,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -220,7 +226,6 @@ namespace EduPost.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("role");
 
@@ -262,7 +267,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "TESTEMAIL@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==",
                             PhoneNumberConfirmed = false,
-                            Role = "Administator",
+                            Role = "Admin",
                             SecurityStamp = "P326W733E2RXH66PPK4ZYOQRQREJTMUD",
                             TwoFactorEnabled = false,
                             UserName = "TestEmail@email.com"

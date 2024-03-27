@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EduPost.Migrations
 {
     /// <inheritdoc />
-    public partial class V01 : Migration
+    public partial class V0 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,7 +53,7 @@ namespace EduPost.Migrations
                     user_name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     user_email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     faculty = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
@@ -221,12 +223,16 @@ namespace EduPost.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "role_id", "ConcurrencyStamp", "roleName", "NormalizedName" },
-                values: new object[] { 1, null, "Admin", "ADMIN" });
+                values: new object[,]
+                {
+                    { 1, null, "Admin", "ADMIN" },
+                    { 2, null, "User", "USER" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "user_email", "EmailConfirmed", "faculty", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "role", "SecurityStamp", "TwoFactorEnabled", "user_name" },
-                values: new object[] { 1, 0, "61521b0c-13fb-44a0-b67c-f753cf71bba5", "TestEmail@email.com", true, "Admin", true, null, "TESTEMAIL@EMAIL.COM", "TESTEMAIL@EMAIL.COM", "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==", null, false, "Administator", "P326W733E2RXH66PPK4ZYOQRQREJTMUD", false, "TestEmail@email.com" });
+                values: new object[] { 1, 0, "61521b0c-13fb-44a0-b67c-f753cf71bba5", "TestEmail@email.com", true, "Admin", true, null, "TESTEMAIL@EMAIL.COM", "TESTEMAIL@EMAIL.COM", "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==", null, false, "Admin", "P326W733E2RXH66PPK4ZYOQRQREJTMUD", false, "TestEmail@email.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
