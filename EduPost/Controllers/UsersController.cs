@@ -17,11 +17,13 @@ namespace EduPost.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UsersController(ApplicationDbContext context, UserManager<User> userManager)
+        public UsersController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         // GET: Users
@@ -93,57 +95,81 @@ namespace EduPost.Controllers
             {
                 return NotFound();
             }
+
+            var roles = await _roleManager.Roles.ToListAsync();
+            ViewData["Roles"] = new SelectList(roles, "Name", "Name");
+
+            var faculties = await _context.Faculty.ToListAsync();
+            ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
+
             return View(user);
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserName,Email,FacultyId,RoleId,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User userInput)
-        {
-            if (id != userInput.Id)
-            {
-                return NotFound();
-            }
+		// POST: Users/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User userInput)
+		{
+			if (id != userInput.Id)
+			{
+				return NotFound();
+			}
 
-            var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-            if (userInDb == null)
-            {
-                return NotFound();
-            }
+			var userInDb = _context.Users.Find(id); // Synchronously finding the user
+			if (userInDb == null)
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Entry(userInDb).CurrentValues.SetValues(userInput);
-                    _context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.SecurityStamp).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.ConcurrencyStamp).IsModified = false;
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Entry(userInDb).CurrentValues.SetValues(userInput);
+					_context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
+					_context.Entry(userInDb).Property(x => x.SecurityStamp).IsModified = false;
+					_context.Entry(userInDb).Property(x => x.ConcurrencyStamp).IsModified = false;
+					_context.Entry(userInDb).Property(x => x.Role).IsModified = true;
+					_context.Entry(userInDb).Property(x => x.Faculty).IsModified = true;
 
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(userInput.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-            return View(userInput);
-        }
+					_context.SaveChanges();
 
+					var currentRoles = _userManager.GetRolesAsync(userInDb).Result;
+					var newRoleName = userInput.Role;
 
-        // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+					if (!currentRoles.Contains(newRoleName))
+					{
+						if (currentRoles.Any())
+						{
+							_userManager.RemoveFromRolesAsync(userInDb, currentRoles).Wait();
+						}
+						if (!String.IsNullOrEmpty(newRoleName))
+						{
+							_userManager.AddToRoleAsync(userInDb, newRoleName).Wait(); 
+						}
+					}
+
+					return RedirectToAction(nameof(Index));
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!UserExists(userInput.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+			}
+			return View(userInput);
+		}
+
+		// GET: Users/Delete/5
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.User == null)
             {

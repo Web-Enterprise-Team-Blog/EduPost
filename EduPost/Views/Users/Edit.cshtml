@@ -4,7 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-
+@{
+    Layout = null;
+}
 
 <h1>Edit</h1>
 
@@ -26,12 +28,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Faculty" class="control-label"></label>
-                <input asp-for="Faculty" class="form-control" />
+                <select asp-for="Faculty" class="form-control" asp-items="ViewBag.Faculties"></select>
                 <span asp-validation-for="Faculty" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
+                <select asp-for="Role" class="form-control" asp-items="ViewBag.Roles"></select>
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />

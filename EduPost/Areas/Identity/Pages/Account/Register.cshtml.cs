@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using EduPost.Controllers;
+using EduPost.Data;
 using EduPost.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -36,14 +37,16 @@ namespace EduPost.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+		private readonly ApplicationDbContext _context;
 
-        public RegisterModel(
+		public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<Role> roleManager)
+            RoleManager<Role> roleManager,
+			ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -52,6 +55,7 @@ namespace EduPost.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _context = context;
         }
 
         /// <summary>
@@ -111,6 +115,10 @@ namespace EduPost.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Role")]
             public string Role { get; set; }
+
+            [Required]
+            [Display(Name = "Faculty")]
+            public string Faculty { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -118,7 +126,10 @@ namespace EduPost.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             var roles = await _roleManager.Roles.ToListAsync();
             ViewData["Roles"] = new SelectList(roles, "Name", "Name");
-        }
+
+            var faculties = await _context.Faculty.ToListAsync();
+            ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
+		}
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -126,34 +137,41 @@ namespace EduPost.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+				var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+				await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+				await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.Faculty = Input.Faculty;
 
-                if (result.Succeeded)
+                var role = await _roleManager.FindByNameAsync(Input.Role);
+				if (role == null)
+				{
+					ModelState.AddModelError(string.Empty, "The specified role does not exist.");
+					return Page();
+				}
+				else
+				{
+					user.Role = role.Name;
+				}
+
+				var result = await _userManager.CreateAsync(user, Input.Password);
+
+				if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    var roleExist = await _roleManager.RoleExistsAsync(Input.Role);
-                    if (!roleExist)
-                    {
-                        await _roleManager.CreateAsync(new Role { Name = Input.Role });
-                    }
-                    await _userManager.AddToRoleAsync(user, Input.Role);
 
-                    user.Role = Input.Role;
-                    var updateResult = await _userManager.UpdateAsync(user);
-                    if (!updateResult.Succeeded)
-                    {
-                        foreach (var error in updateResult.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                        return Page();
-                    }
+					var roleResult = await _userManager.AddToRoleAsync(user, Input.Role);
 
-                    var userId = await _userManager.GetUserIdAsync(user);
+					if (!roleResult.Succeeded)
+					{
+						foreach (var error in roleResult.Errors)
+						{
+							ModelState.AddModelError(string.Empty, error.Description);
+						}
+						return Page();
+					}
+
+					var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -161,9 +179,6 @@ namespace EduPost.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId, code, returnUrl },
                         protocol: Request.Scheme);
-
-                    /*await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");*/
 
                     MailSender.SendEmail(Input.Email, "Confirm your email",
                         $"Please confirm your account by click this -> {callbackUrl}");
@@ -178,7 +193,8 @@ namespace EduPost.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
+
+				foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                     ValidationErrors.Add(error.Description.ToString());
