@@ -35,6 +35,25 @@
             @Html.DisplayFor(model => model.StatusId)
         </dd>
     </dl>
+
+    <h4>Uploaded files</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>File name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var file in Model.Files)
+            {
+                <tr>
+                    <td>@file.FileName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ArticleId">Edit</a> |

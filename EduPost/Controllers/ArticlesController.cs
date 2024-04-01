@@ -63,12 +63,13 @@ namespace EduPost.Controllers
             }
 
             var article = await _context.Article
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
+                .Include(a => a.Files)
+                .FirstOrDefaultAsync(a => a.ArticleId == id);
+
             if (article == null)
             {
                 return NotFound();
             }
-
             return View(article);
         }
 
