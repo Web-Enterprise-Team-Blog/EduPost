@@ -19,24 +19,13 @@
                 <span asp-validation-for="ArticleTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserID" class="control-label"></label>
-                <input asp-for="UserID" class="form-control" />
-                <span asp-validation-for="UserID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StatusId" class="control-label"></label>
-                <input asp-for="StatusId" class="form-control" />
-                <span asp-validation-for="StatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Files" class="control-label">Upload files</label>
                 <input asp-for="Files" type="file" class="form-control" multiple />
                 <span asp-validation-for="Files" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top:20px;">
+                <input asp-for="Public" type="checkbox" class="form-check-input" />
+                <label for="Public" class="form-check-label">Public (Check this to set this article viewable by guest users)</label>
             </div>
             <div class="form-group" style="margin-top:20px;">
                 <input type="submit" value="Save" class="btn btn-primary" />

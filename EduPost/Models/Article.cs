@@ -18,17 +18,21 @@ namespace EduPost.Models
         [Required]
         public string? ArticleTitle { get; set; }
 
+        [Column("article_faculty")]
+        public string? Faculty { get; set; }
+
         [Column("user_id")]
-        //[Required]
         public int? UserID { get; set; }
 
         [Column("deadline")]
-        //[Required]
         public DateTimeOffset? CreatedDate { get; set; }
 
         [Column("status_id")]
-        //[Required]
         public int? StatusId { get; set; }
+
+        public bool AgreeToTerms { get; set; }
+
+        public bool Public { get; set; }
 
         public ICollection<File>? Files { get; set; }
     }

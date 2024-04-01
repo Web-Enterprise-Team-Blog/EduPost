@@ -23,6 +23,14 @@
                 <span asp-validation-for="Files" class="text-danger"></span>
             </div>
             <div class="form-group" style="margin-top:20px;">
+                <input asp-for="Public" type="checkbox" class="form-check-input" />
+                <label for="Public" class="form-check-label">Public (Check this to set this article viewable by guest users)</label>
+            </div>
+            <div class="form-group" style="margin-top:20px;">
+                <input asp-for="AgreeToTerms" type="checkbox" class="form-check-input" />
+                <label for="AgreeToTerms" class="form-check-label">I have read and agree to the Term and Conditions</label>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -32,9 +40,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

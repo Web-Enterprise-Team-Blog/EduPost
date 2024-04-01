@@ -4,6 +4,7 @@ using EduPost.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240401143113_09")]
+    partial class _09
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace EduPost.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ArticleId"));
 
-                    b.Property<bool>("AgreeToTerms")
+                    b.Property<bool?>("AgreeToTerms")
                         .HasColumnType("bit");
 
                     b.Property<string>("ArticleTitle")
@@ -46,9 +49,6 @@ namespace EduPost.Migrations
                     b.Property<string>("Faculty")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("article_faculty");
-
-                    b.Property<bool>("Public")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int")

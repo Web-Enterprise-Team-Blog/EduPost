@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
 using EduPost.Models;
-using EduPost.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using File = EduPost.Models.File;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EduPost.Controllers
 {
@@ -103,7 +98,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files")] Article article, IFormFile[] files, ModelStateDictionary modelState)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Public")] Article article, IFormFile[] files, ModelStateDictionary modelState)
         {
             try
             {
@@ -111,7 +106,11 @@ namespace EduPost.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-
+                if (!article.AgreeToTerms)
+                {
+                    ModelState.AddModelError("AgreeToTerms", "You must agree to the Term and Conditions to create an article.");
+                    return View(article);
+                }
                 if (files != null)
                 {
                     foreach (var file in files)
@@ -155,6 +154,7 @@ namespace EduPost.Controllers
                     }
                 }
 
+                article.Faculty = _userManager.GetUserAsync(User).Result.Faculty;
                 article.CreatedDate = DateTime.Now;
                 article.StatusId = 0;
                 var userId = int.Parse(_userManager.GetUserId(User));
@@ -189,7 +189,13 @@ namespace EduPost.Controllers
             {
                 return NotFound();
             }
+
+
+            var faculties = await _context.Faculty.ToListAsync();
+            ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
+
             return View(article);
+
         }
 
         // POST: Articles/Edit/5
@@ -197,7 +203,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,UserID,CreatedDate,StatusId,Files")] Article article, IFormFile[] files)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Public")] Article article, IFormFile[] files)
         {
             if (id != article.ArticleId)
             {
@@ -292,8 +298,17 @@ namespace EduPost.Controllers
                         }
                     }
 
-                    _context.Update(article);
-                    await _context.SaveChangesAsync();
+                    var existingArticle = await _context.Article.FindAsync(article.ArticleId);
+                    if (existingArticle != null)
+                    {
+                        existingArticle.ArticleTitle = article.ArticleTitle;
+                        existingArticle.Files = article.Files;
+                        existingArticle.Public = article.Public;
+
+                        _context.Entry(existingArticle).State = EntityState.Modified;
+                        await _context.SaveChangesAsync();
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

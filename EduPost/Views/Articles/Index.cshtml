@@ -19,7 +19,10 @@
                 @Html.DisplayNameFor(model => model.CreatedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatusId)
+                Status
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Public)
             </th>
             <th></th>
         </tr>
@@ -27,6 +30,22 @@
     <tbody>
         @foreach (var item in Model)
         {
+            string status;
+            switch (item.StatusId)
+            {
+                case 0:
+                    status = "Pending";
+                    break;
+                case 1:
+                    status = "Accepted";
+                    break;
+                case 2:
+                    status = "Declined";
+                    break;
+                default:
+                    status = "Unknown";
+                    break;
+            }
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ArticleTitle)
@@ -35,7 +54,10 @@
                     @Html.DisplayFor(modelItem => item.CreatedDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StatusId)
+                    @status
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Public)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |
