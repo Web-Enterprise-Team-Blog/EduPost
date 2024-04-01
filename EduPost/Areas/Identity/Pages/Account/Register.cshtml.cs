@@ -197,13 +197,21 @@ namespace EduPost.Areas.Identity.Pages.Account
 				foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
-                    ValidationErrors.Add(error.Description.ToString());
+
+                    //ValidationErrors.Add(error.Description.ToString());
 
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            ViewData["validationErrors"] = ValidationErrors;
+            //ViewData["validationErrors"] = ValidationErrors;
+
+            //re-add view data
+            var roles = await _roleManager.Roles.ToListAsync();
+            ViewData["Roles"] = new SelectList(roles, "Name", "Name");
+
+            var faculties = await _context.Faculty.ToListAsync();
+            ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
             return Page();
         }
 

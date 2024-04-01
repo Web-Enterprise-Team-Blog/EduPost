@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using EduPost.Models;
 using System.Data;
 using System.Reflection.Emit;
-
+using File = EduPost.Models.File;
 
 namespace EduPost.Data
 {
@@ -18,12 +18,17 @@ namespace EduPost.Data
         public DbSet<EduPost.Models.Article>? Article { get; set; }
         public DbSet<EduPost.Models.Status>? Status { get; set; }
         public DbSet<EduPost.Models.Comment>? Comment { get; set; }
-        public DbSet<EduPost.Models.Faculty> Faculty { get; set; } = default!;
-        public DbSet<EduPost.Models.Role> Role { get; set; } = default!;
+        public DbSet<EduPost.Models.File>? File { get; set; }
+        public DbSet<EduPost.Models.Faculty>? Faculty { get; set; } = default!;
+        public DbSet<EduPost.Models.Role>? Role { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Article>()
+            .HasMany(a => a.Files)
+            .WithOne(f => f.Article)
+            .OnDelete(DeleteBehavior.Cascade);
             SeedData(builder);
         }
 
