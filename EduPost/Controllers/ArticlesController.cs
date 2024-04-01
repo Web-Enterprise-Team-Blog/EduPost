@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
 using EduPost.Models;
-using EduPost.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using File = EduPost.Models.File;
@@ -63,12 +62,13 @@ namespace EduPost.Controllers
             }
 
             var article = await _context.Article
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
+                .Include(a => a.Files)
+                .FirstOrDefaultAsync(a => a.ArticleId == id);
+
             if (article == null)
             {
                 return NotFound();
             }
-
             return View(article);
         }
 
