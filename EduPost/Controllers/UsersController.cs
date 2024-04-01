@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EduPost.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,6 +26,7 @@ namespace EduPost.Controllers
         }
 
         // GET: Users
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
               return _context.User != null ? 
@@ -35,6 +35,7 @@ namespace EduPost.Controllers
         }
 
         // GET: Users/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.User == null)
@@ -52,7 +53,22 @@ namespace EduPost.Controllers
             return View(user);
         }
 
+        // GET: Users/Profile
+        public async Task<IActionResult> Profile()
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return NotFound();
+            }
+
+            // Return the user's details view
+            return View(currentUser);
+        }
+
         // GET: Users/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -63,6 +79,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("UserName,Email,FacultyId,RoleId,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user, string password)
         {
             if (ModelState.IsValid)
@@ -83,6 +100,7 @@ namespace EduPost.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.User == null)
@@ -105,10 +123,11 @@ namespace EduPost.Controllers
             return View(user);
         }
 
-		// POST: Users/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User userInput)
 		{
@@ -168,8 +187,9 @@ namespace EduPost.Controllers
 			return View(userInput);
 		}
 
-		// GET: Users/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+        // GET: Users/Delete/5
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.User == null)
             {
@@ -187,6 +207,7 @@ namespace EduPost.Controllers
         }
 
         // POST: Users/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -205,6 +226,7 @@ namespace EduPost.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         private bool UserExists(int id)
         {
           return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();

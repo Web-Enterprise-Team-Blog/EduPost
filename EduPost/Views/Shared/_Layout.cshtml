@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplication1</title>
+    <title>@ViewData["Title"] - EduPost</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EduPost.styles.css" asp-append-version="true" />
 </head>
 <body>
 
@@ -38,12 +38,11 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </span>
                 </div>
-
                 <ul class="profile-dropdown-list" style="z-index:10;">
                     <li class="profile-dropdown-list-item">
-                        <a href="/Home/Profile">
+                        <a href="@Url.Action("Profile", "Users")">
                             <i class="fa-regular fa-user"></i>
-                            Edit Profile
+                            My Profile
                         </a>
                     </li>
                     <li class="profile-dropdown-list-item">
@@ -53,11 +52,8 @@
                         </a>
                     </li>
                 </ul>
-
-                
             </div>
         </nav>
-
         <script src="~/dropdownmenu/script.js"></script>
     </body>
     
