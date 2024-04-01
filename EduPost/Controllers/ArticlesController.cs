@@ -7,24 +7,51 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
 using EduPost.Models;
+using EduPost.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using File = EduPost.Models.File;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EduPost.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ArticlesController(ApplicationDbContext context)
+        public ArticlesController(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _userManager = userManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Articles
         public async Task<IActionResult> Index()
         {
-              return _context.Article != null ? 
-                          View(await _context.Article.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Article'  is null.");
+            bool isAdmin = User.IsInRole("Admin");
+
+            if (isAdmin)
+            {
+                var articles = await _context.Article.ToListAsync(); 
+                return View(articles);
+            }
+            else
+            {
+                var userIdAsString = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+                if (int.TryParse(userIdAsString, out int userId)) 
+                {
+                    var articles = await _context.Article
+                        .Where(a => a.UserID == userId)
+                        .ToListAsync();
+
+                    return View(articles);
+                }
+
+                return View(new List<Article>());
+            }
         }
 
         // GET: Articles/Details/5
@@ -46,9 +73,28 @@ namespace EduPost.Controllers
         }
 
         // GET: Articles/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var article = new Article
+            {
+                Files = new List<File>()
+            };
+
+            try
+            {
+                var user = _userManager.GetUserAsync(User).Result;
+                if (user != null)
+                {
+                    article.UserID = user.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error retrieving user information: {ex.Message}");
+            }
+
+            return View(article);
         }
 
         // POST: Articles/Create
@@ -56,18 +102,77 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleName,UserID,CreatedDate,StatusId")] Article article)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files")] Article article, IFormFile[] files, ModelStateDictionary modelState)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (files != null)
+                {
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                await file.CopyToAsync(ms);
+
+                                var fileToAdd = new File
+                                {
+                                    FileName = file.FileName,
+                                    FileData = ms.ToArray(),
+                                    FileContentType = file.ContentType
+                                };
+
+                                if (article.ArticleId != 0)
+                                {
+                                    fileToAdd.ArticleId = article.ArticleId;
+                                }
+
+                                string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                                if (!Directory.Exists(uploadFolder))
+                                {
+                                    Directory.CreateDirectory(uploadFolder);
+                                }
+
+                                string fileSavePath = Path.Combine(uploadFolder, file.FileName);
+                                using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
+                                {
+                                    ms.CopyTo(stream);
+                                }
+
+                                _context.File.Add(fileToAdd);
+                                await _context.SaveChangesAsync();
+
+                                article.Files.Add(fileToAdd);
+                            }
+                        }
+                    }
+                }
+
+                article.CreatedDate = DateTime.Now;
+                article.StatusId = 0;
+                var userId = int.Parse(_userManager.GetUserId(User));
+                article.UserID = userId;
+
                 _context.Add(article);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(article);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error creating article: {ex.Message}");
+                return View(article);
+            }
         }
 
         // GET: Articles/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Article == null)
@@ -75,7 +180,10 @@ namespace EduPost.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Article.FindAsync(id);
+            var article = await _context.Article
+                .Include(a => a.Files)
+                .FirstOrDefaultAsync(a => a.ArticleId == id);
+
             if (article == null)
             {
                 return NotFound();
@@ -88,7 +196,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleName,UserID,CreatedDate,StatusId")] Article article)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,UserID,CreatedDate,StatusId,Files")] Article article)
         {
             if (id != article.ArticleId)
             {
@@ -99,6 +207,27 @@ namespace EduPost.Controllers
             {
                 try
                 {
+                    if (article.Files != null)
+                    {
+                        foreach (var file in article.Files)
+                        {
+                            if (file.FileData != null)
+                            {
+                                using (var ms = new MemoryStream(file.FileData))
+                                {
+                                    var fileToAdd = new File
+                                    {
+                                        FileName = file.FileName,
+                                        FileData = ms.ToArray(),
+                                        FileContentType = file.FileContentType
+                                    };
+
+                                    _context.File.Add(fileToAdd);
+                                }
+                            }
+                        }
+                    }
+
                     _context.Update(article);
                     await _context.SaveChangesAsync();
                 }
@@ -139,20 +268,61 @@ namespace EduPost.Controllers
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(Nullable<int> id)
         {
-            if (_context.Article == null)
+            if (id == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Article'  is null.");
+                return NotFound();
             }
-            var article = await _context.Article.FindAsync(id);
-            if (article != null)
+
+            // Get the Article object
+            var article = await _context.Article
+                .Include(a => a.Files)
+                .FirstOrDefaultAsync(m => m.ArticleId == id);
+
+            if (article == null)
             {
-                _context.Article.Remove(article);
+                return NotFound();
             }
-            
+
+            foreach (var file in article.Files)
+            {
+                string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", file.FileName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                _context.File.Remove(file);
+            }
+
+            // Delete the Article object
+            _context.Article.Remove(article);
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("DeleteFile")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFileConfirmed(int id)
+        {
+            if (_context.File == null)
+            {
+                return Problem("Entity set 'EduPostContext.File'  is null.");
+            }
+
+            var file = await _context.File.FindAsync(id);
+
+            if (file != null)
+            {
+                _context.File.Remove(file);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Edit), new { id = file.ArticleId });
         }
 
         private bool ArticleExists(int? id)
