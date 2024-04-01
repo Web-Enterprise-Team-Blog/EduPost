@@ -196,7 +196,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,UserID,CreatedDate,StatusId,Files")] Article article)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,UserID,CreatedDate,StatusId,Files")] Article article, IFormFile[] files)
         {
             if (id != article.ArticleId)
             {
@@ -222,7 +222,70 @@ namespace EduPost.Controllers
                                         FileContentType = file.FileContentType
                                     };
 
+                                    if (article.ArticleId != 0)
+                                    {
+                                        fileToAdd.ArticleId = article.ArticleId;
+                                    }
+
+                                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                                    if (!Directory.Exists(uploadFolder))
+                                    {
+                                        Directory.CreateDirectory(uploadFolder);
+                                    }
+
+                                    string fileSavePath = Path.Combine(uploadFolder, file.FileName);
+                                    using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
+                                    {
+                                        ms.CopyTo(stream);
+                                    }
+
                                     _context.File.Add(fileToAdd);
+                                    await _context.SaveChangesAsync();
+
+                                    article.Files.Add(fileToAdd);
+                                }
+                            }
+                        }
+                    }
+
+                    if (files != null)
+                    {
+                        foreach (var file in files)
+                        {
+                            if (file.Length > 0)
+                            {
+                                using (var ms = new MemoryStream())
+                                {
+                                    await file.CopyToAsync(ms);
+
+                                    var fileToAdd = new File
+                                    {
+                                        FileName = file.FileName,
+                                        FileData = ms.ToArray(),
+                                        FileContentType = file.ContentType
+                                    };
+
+                                    if (article.ArticleId != 0)
+                                    {
+                                        fileToAdd.ArticleId = article.ArticleId;
+                                    }
+
+                                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                                    if (!Directory.Exists(uploadFolder))
+                                    {
+                                        Directory.CreateDirectory(uploadFolder);
+                                    }
+
+                                    string fileSavePath = Path.Combine(uploadFolder, file.FileName);
+                                    using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
+                                    {
+                                        ms.CopyTo(stream);
+                                    }
+
+                                    _context.File.Add(fileToAdd);
+                                    await _context.SaveChangesAsync();
+
+                                    article.Files.Add(fileToAdd);
                                 }
                             }
                         }
@@ -242,8 +305,10 @@ namespace EduPost.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(article);
         }
 
@@ -317,10 +382,15 @@ namespace EduPost.Controllers
 
             if (file != null)
             {
-                _context.File.Remove(file);
-            }
+                string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", file.FileName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
 
-            await _context.SaveChangesAsync();
+                _context.File.Remove(file);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction(nameof(Edit), new { id = file.ArticleId });
         }
