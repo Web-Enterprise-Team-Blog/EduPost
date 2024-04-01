@@ -8,56 +8,34 @@
 
 <h4>Article</h4>
 <hr />
-<p>@ViewBag.Message</p>
 <div class="row">
     <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Create" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label asp-for="ArticleTitle" class="control-label"></label>
-                        <input asp-for="ArticleTitle" class="form-control" />
-                        <span asp-validation-for="ArticleTitle" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Files" class="control-label">Upload files</label>
-                        <input asp-for="Files" type="file" class="form-control" multiple />
-                        <span asp-validation-for="Files" class="text-danger"></span>
-                        <p>
-                            @if (Model.Files?.Count > 0)
-                            {
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>File name</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var file in Model.Files)
-                                        {
-                                            <tr>
-                                                <td>@file.FileName</td>
-                                                <td>
-                                                    <a asp-action="DeleteFile" asp-route-fileId="@file.FileId">Delete</a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            }
-                            else
-                            {
-                            <p>No files have been uploaded yet.</p>
-                            }
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                </form>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ArticleName" class="control-label"></label>
+                <input asp-for="ArticleName" class="form-control" />
+                <span asp-validation-for="ArticleName" class="text-danger"></span>
             </div>
-        </div>
+            <div class="form-group">
+                <label asp-for="UserID" class="control-label"></label>
+                <input asp-for="UserID" class="form-control" />
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StatusId" class="control-label"></label>
+                <input asp-for="StatusId" class="form-control" />
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
 </div>
 
@@ -66,7 +44,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

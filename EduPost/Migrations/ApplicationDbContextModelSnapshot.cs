@@ -31,7 +31,7 @@ namespace EduPost.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ArticleId"));
 
-                    b.Property<string>("ArticleTitle")
+                    b.Property<string>("ArticleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("article_name");
@@ -103,40 +103,6 @@ namespace EduPost.Migrations
                     b.HasKey("FacultyId");
 
                     b.ToTable("Faculty");
-                });
-
-            modelBuilder.Entity("EduPost.Models.File", b =>
-                {
-                    b.Property<int?>("FileId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("file_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("FileId"));
-
-                    b.Property<int?>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FileContentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("file_content_type");
-
-                    b.Property<byte[]>("FileData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)")
-                        .HasColumnName("file_data");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("file_name");
-
-                    b.HasKey("FileId");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("File");
                 });
 
             modelBuilder.Entity("EduPost.Models.Role", b =>
@@ -415,16 +381,6 @@ namespace EduPost.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("EduPost.Models.File", b =>
-                {
-                    b.HasOne("EduPost.Models.Article", "Article")
-                        .WithMany("Files")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Article");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("EduPost.Models.Role", null)
@@ -474,11 +430,6 @@ namespace EduPost.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("EduPost.Models.Article", b =>
-                {
-                    b.Navigation("Files");
                 });
 #pragma warning restore 612, 618
         }
