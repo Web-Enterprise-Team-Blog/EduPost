@@ -23,9 +23,12 @@
         <nav class="navbar" style="background-color: black;">
             <img src="~/images/logo_black.png" style="height:50px;width:200px;margin-left:50px" class="navbar-logo" alt="logo" />
             <ul class="navbar-nav mr-auto d-flex align-items-center"style="margin-left:100PX;color:white">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Articles/Index" style="color:white">Manage Articles <span class="sr-only">(current)</span></a>
-                </li>
+                @if (User.IsInRole("User"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Articles/Index" style="color:white">Manage Articles <span class="sr-only">(current)</span></a>
+                    </li>
+                }
             </ul>
             <div class="profile-dropdown" style="margin-right: 100px;">
                 <div onclick="toggle()" class="profile-dropdown-btn">
