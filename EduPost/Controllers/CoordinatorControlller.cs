@@ -151,7 +151,6 @@ namespace EduPost.Controllers
                 _context.File.Remove(file);
             }
 
-            // Delete the Article object
             _context.Article.Remove(article);
 
             await _context.SaveChangesAsync();
