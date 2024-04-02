@@ -24,15 +24,31 @@ namespace EduPost.Models
         [Column("user_id")]
         public int? UserID { get; set; }
 
-        [Column("deadline")]
+        [Column("create_date")]
         public DateTimeOffset? CreatedDate { get; set; }
 
-        [Column("status_id")]
+        [Column("expire_date")]
+        public DateTimeOffset? ExpireDate { get; set; }
+
+        [Column("status")]
         public int? StatusId { get; set; }
 
         public bool AgreeToTerms { get; set; }
 
         public bool Public { get; set; }
+
+        public bool IsExpired
+        {
+            get
+            {
+                if (ExpireDate.HasValue)
+                {
+                    return ExpireDate.Value < DateTimeOffset.Now;
+                }
+
+                return false;
+            }
+        }
 
         public ICollection<File>? Files { get; set; }
     }

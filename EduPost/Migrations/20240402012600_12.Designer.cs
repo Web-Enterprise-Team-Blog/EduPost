@@ -4,6 +4,7 @@ using EduPost.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402012600_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,11 +44,7 @@ namespace EduPost.Migrations
 
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset")
-                        .HasColumnName("create_date");
-
-                    b.Property<DateTimeOffset?>("ExpireDate")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("expire_date");
+                        .HasColumnName("deadline");
 
                     b.Property<string>("Faculty")
                         .HasColumnType("nvarchar(max)")
@@ -56,7 +55,7 @@ namespace EduPost.Migrations
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int")
-                        .HasColumnName("status");
+                        .HasColumnName("status_id");
 
                     b.Property<int?>("UserID")
                         .HasColumnType("int")

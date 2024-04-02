@@ -7,9 +7,11 @@ using System.Security.Claims;
 using File = EduPost.Models.File;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EduPost.Controllers
 {
+    [Authorize]
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -156,6 +158,7 @@ namespace EduPost.Controllers
 
                 article.Faculty = _userManager.GetUserAsync(User).Result.Faculty;
                 article.CreatedDate = DateTime.Now;
+                article.ExpireDate = DateTime.Now.AddDays(14);
                 article.StatusId = 0;
                 var userId = int.Parse(_userManager.GetUserId(User));
                 article.UserID = userId;

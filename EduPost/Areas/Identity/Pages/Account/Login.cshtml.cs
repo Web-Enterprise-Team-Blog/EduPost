@@ -129,6 +129,10 @@ namespace EduPost.Areas.Identity.Pages.Account
                         {
                             returnUrl = Url.Content("~/Home/Index");
                         }
+                        else if (roles.Contains("Coordinator"))
+                        {
+                            returnUrl = Url.Content("~/Coordinator/Index");
+                        }
                     }
 
                     return LocalRedirect(returnUrl);

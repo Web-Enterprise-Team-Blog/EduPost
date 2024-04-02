@@ -25,10 +25,12 @@ namespace EduPost.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<Article>()
             .HasMany(a => a.Files)
             .WithOne(f => f.Article)
             .OnDelete(DeleteBehavior.Cascade);
+
             SeedData(builder);
         }
 
@@ -56,8 +58,12 @@ namespace EduPost.Data
             builder.Entity<User>().HasData(adminusers);
 
             var adminrole = new[]
-            { new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"},
-              new Role { Id = 2,Name = "User", NormalizedName = "USER"} };
+            { 
+              new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"},
+              new Role { Id = 2,Name = "User", NormalizedName = "USER"},
+              new Role { Id = 3,Name = "Coordinator", NormalizedName = "COORDINATOR"},
+              new Role { Id = 4,Name = "Manager", NormalizedName = "MANAGER"}
+            };
             builder.Entity<Role>().HasData(adminrole);
 
             var userRolePairs = new[]
