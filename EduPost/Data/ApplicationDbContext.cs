@@ -62,7 +62,8 @@ namespace EduPost.Data
               new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"},
               new Role { Id = 2,Name = "User", NormalizedName = "USER"},
               new Role { Id = 3,Name = "Coordinator", NormalizedName = "COORDINATOR"},
-              new Role { Id = 4,Name = "Manager", NormalizedName = "MANAGER"}
+              new Role { Id = 4,Name = "Manager", NormalizedName = "MANAGER"},
+              new Role { Id = 5,Name = "Guest", NormalizedName = "GUEST"}
             };
             builder.Entity<Role>().HasData(adminrole);
 

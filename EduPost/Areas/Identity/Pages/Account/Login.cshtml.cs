@@ -137,8 +137,11 @@ namespace EduPost.Areas.Identity.Pages.Account
                         {
                             returnUrl = Url.Content("~/Manager/Index");
                         }
+                        else if (roles.Contains("Guest"))
+                        {
+                            returnUrl = Url.Content("~/Guest/Index");
+                        }
                     }
-
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
