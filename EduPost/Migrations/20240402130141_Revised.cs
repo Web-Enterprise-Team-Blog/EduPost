@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduPost.Migrations
 {
     /// <inheritdoc />
-    public partial class V0 : Migration
+    public partial class Revised : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,9 +20,13 @@ namespace EduPost.Migrations
                     article_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     article_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    article_faculty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     user_id = table.Column<int>(type: "int", nullable: true),
-                    deadline = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    status_id = table.Column<int>(type: "int", nullable: true)
+                    create_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    expire_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    status = table.Column<int>(type: "int", nullable: true),
+                    AgreeToTerms = table.Column<bool>(type: "bit", nullable: false),
+                    Public = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,6 +116,28 @@ namespace EduPost.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Status", x => x.status_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "File",
+                columns: table => new
+                {
+                    file_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    file_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    file_data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    file_content_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArticleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_File", x => x.file_id);
+                    table.ForeignKey(
+                        name: "FK_File_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "article_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,13 +252,28 @@ namespace EduPost.Migrations
                 values: new object[,]
                 {
                     { 1, null, "Admin", "ADMIN" },
-                    { 2, null, "User", "USER" }
+                    { 2, null, "User", "USER" },
+                    { 3, null, "Coordinator", "COORDINATOR" },
+                    { 4, null, "Manager", "MANAGER" },
+                    { 5, null, "Guest", "GUEST" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "user_email", "EmailConfirmed", "faculty", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "role", "SecurityStamp", "TwoFactorEnabled", "user_name" },
                 values: new object[] { 1, 0, "61521b0c-13fb-44a0-b67c-f753cf71bba5", "TestEmail@email.com", true, "Admin", true, null, "TESTEMAIL@EMAIL.COM", "TESTEMAIL@EMAIL.COM", "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==", null, false, "Admin", "P326W733E2RXH66PPK4ZYOQRQREJTMUD", false, "TestEmail@email.com" });
+
+            migrationBuilder.InsertData(
+                table: "Faculty",
+                columns: new[] { "faculty_id", "facultyName" },
+                values: new object[,]
+                {
+                    { 1, "Information Tecnology" },
+                    { 2, "Computer Science" },
+                    { 3, "Economics" },
+                    { 4, "Environmental Science" },
+                    { 5, "Psychology" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -277,14 +318,16 @@ namespace EduPost.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_File_ArticleId",
+                table: "File",
+                column: "ArticleId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Article");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -307,6 +350,9 @@ namespace EduPost.Migrations
                 name: "Faculty");
 
             migrationBuilder.DropTable(
+                name: "File");
+
+            migrationBuilder.DropTable(
                 name: "Status");
 
             migrationBuilder.DropTable(
@@ -314,6 +360,9 @@ namespace EduPost.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Article");
         }
     }
 }

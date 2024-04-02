@@ -117,6 +117,33 @@ namespace EduPost.Migrations
                     b.HasKey("FacultyId");
 
                     b.ToTable("Faculty");
+
+                    b.HasData(
+                        new
+                        {
+                            FacultyId = 1,
+                            FacultyName = "Information Tecnology"
+                        },
+                        new
+                        {
+                            FacultyId = 2,
+                            FacultyName = "Computer Science"
+                        },
+                        new
+                        {
+                            FacultyId = 3,
+                            FacultyName = "Economics"
+                        },
+                        new
+                        {
+                            FacultyId = 4,
+                            FacultyName = "Environmental Science"
+                        },
+                        new
+                        {
+                            FacultyId = 5,
+                            FacultyName = "Psychology"
+                        });
                 });
 
             modelBuilder.Entity("EduPost.Models.File", b =>

@@ -57,7 +57,7 @@ namespace EduPost.Data
             };
             builder.Entity<User>().HasData(adminusers);
 
-            var adminrole = new[]
+            var roles = new[]
             { 
               new Role { Id = 1,Name = "Admin", NormalizedName = "ADMIN"},
               new Role { Id = 2,Name = "User", NormalizedName = "USER"},
@@ -65,7 +65,17 @@ namespace EduPost.Data
               new Role { Id = 4,Name = "Manager", NormalizedName = "MANAGER"},
               new Role { Id = 5,Name = "Guest", NormalizedName = "GUEST"}
             };
-            builder.Entity<Role>().HasData(adminrole);
+            builder.Entity<Role>().HasData(roles);
+
+            var faculties = new[]
+            {
+                new Faculty { FacultyId = 1, FacultyName = "Information Tecnology"},
+                new Faculty { FacultyId = 2, FacultyName = "Computer Science"},
+                new Faculty { FacultyId = 3, FacultyName = "Economics"},
+                new Faculty { FacultyId = 4, FacultyName = "Environmental Science"},
+                new Faculty { FacultyId = 5, FacultyName = "Psychology"}
+            };
+            builder.Entity<Faculty>().HasData(faculties);
 
             var userRolePairs = new[]
             {

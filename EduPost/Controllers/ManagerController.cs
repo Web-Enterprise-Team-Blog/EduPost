@@ -1,5 +1,6 @@
 ﻿using EduPost.Data;
 using EduPost.Models;
+using EduPost.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -23,11 +24,36 @@ namespace EduPost.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            return View();
-        }
+            var articlesPerFaculty = _context.Article
+                .GroupBy(a => a.Faculty)
+                .Select(group => new ArticlesPerFacultyViewModel
+                {
+                    Faculty = group.Key,
+                    Count = group.Count()
+                })
+                .ToList();
 
+            var startDate = DateTimeOffset.Now.AddDays(-6);
+            var articlesPerDay = _context.Article
+                .Where(a => a.CreatedDate >= startDate)
+                .GroupBy(a => a.CreatedDate.Value.Date)
+                .Select(group => new ArticlesPerDayViewModel
+                {
+                    Day = group.Key,
+                    Count = group.Count()
+                })
+                .ToList();
+
+            var model = new IndexViewModel
+            {
+                ArticlesPerFaculty = articlesPerFaculty,
+                ArticlesPerDay = articlesPerDay
+            };
+
+            return View(model);
+        }
 
         public async Task<IActionResult> Articles()
         {

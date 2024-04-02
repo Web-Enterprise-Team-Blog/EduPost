@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240401035329_02")]
-    partial class _02
+    [Migration("20240402130141_Revised")]
+    partial class Revised
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace EduPost.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ArticleId"));
 
+                    b.Property<bool>("AgreeToTerms")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ArticleTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -41,11 +44,22 @@ namespace EduPost.Migrations
 
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset")
-                        .HasColumnName("deadline");
+                        .HasColumnName("create_date");
+
+                    b.Property<DateTimeOffset?>("ExpireDate")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnName("expire_date");
+
+                    b.Property<string>("Faculty")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("article_faculty");
+
+                    b.Property<bool>("Public")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int")
-                        .HasColumnName("status_id");
+                        .HasColumnName("status");
 
                     b.Property<int?>("UserID")
                         .HasColumnType("int")
@@ -106,6 +120,33 @@ namespace EduPost.Migrations
                     b.HasKey("FacultyId");
 
                     b.ToTable("Faculty");
+
+                    b.HasData(
+                        new
+                        {
+                            FacultyId = 1,
+                            FacultyName = "Information Tecnology"
+                        },
+                        new
+                        {
+                            FacultyId = 2,
+                            FacultyName = "Computer Science"
+                        },
+                        new
+                        {
+                            FacultyId = 3,
+                            FacultyName = "Economics"
+                        },
+                        new
+                        {
+                            FacultyId = 4,
+                            FacultyName = "Environmental Science"
+                        },
+                        new
+                        {
+                            FacultyId = 5,
+                            FacultyName = "Psychology"
+                        });
                 });
 
             modelBuilder.Entity("EduPost.Models.File", b =>
@@ -117,7 +158,7 @@ namespace EduPost.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("FileId"));
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
                     b.Property<string>("FileContentType")
@@ -186,6 +227,24 @@ namespace EduPost.Migrations
                             Id = 2,
                             Name = "User",
                             NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Coordinator",
+                            NormalizedName = "COORDINATOR"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Guest",
+                            NormalizedName = "GUEST"
                         });
                 });
 
@@ -423,8 +482,7 @@ namespace EduPost.Migrations
                     b.HasOne("EduPost.Models.Article", "Article")
                         .WithMany("Files")
                         .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Article");
                 });
