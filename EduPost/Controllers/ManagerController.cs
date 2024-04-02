@@ -97,58 +97,5 @@ namespace EduPost.Controllers
                 return File(memoryStream.ToArray(), "application/zip", $"Article_{id}_Files.zip");
             }
         }
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Article == null)
-            {
-                return NotFound();
-            }
-
-            var article = await _context.Article
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            return View(article);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Nullable<int> id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var article = await _context.Article
-                .Include(a => a.Files)
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
-
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            foreach (var file in article.Files)
-            {
-                string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", file.FileName);
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
-                _context.File.Remove(file);
-            }
-
-            _context.Article.Remove(article);
-
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-        }
-
     }
 }
