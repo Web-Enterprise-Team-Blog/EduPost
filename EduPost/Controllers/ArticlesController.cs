@@ -122,6 +122,7 @@ namespace EduPost.Controllers
                             using (var ms = new MemoryStream())
                             {
                                 await file.CopyToAsync(ms);
+                                ms.Position = 0;
 
                                 var fileToAdd = new File
                                 {
@@ -129,11 +130,6 @@ namespace EduPost.Controllers
                                     FileData = ms.ToArray(),
                                     FileContentType = file.ContentType
                                 };
-
-                                if (article.ArticleId != 0)
-                                {
-                                    fileToAdd.ArticleId = article.ArticleId;
-                                }
 
                                 string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
                                 if (!Directory.Exists(uploadFolder))
@@ -144,6 +140,7 @@ namespace EduPost.Controllers
                                 string fileSavePath = Path.Combine(uploadFolder, file.FileName);
                                 using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                                 {
+                                    ms.Position = 0;
                                     ms.CopyTo(stream);
                                 }
 
@@ -217,47 +214,6 @@ namespace EduPost.Controllers
             {
                 try
                 {
-                    if (article.Files != null)
-                    {
-                        foreach (var file in article.Files)
-                        {
-                            if (file.FileData != null)
-                            {
-                                using (var ms = new MemoryStream(file.FileData))
-                                {
-                                    var fileToAdd = new File
-                                    {
-                                        FileName = file.FileName,
-                                        FileData = ms.ToArray(),
-                                        FileContentType = file.FileContentType
-                                    };
-
-                                    if (article.ArticleId != 0)
-                                    {
-                                        fileToAdd.ArticleId = article.ArticleId;
-                                    }
-
-                                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                                    if (!Directory.Exists(uploadFolder))
-                                    {
-                                        Directory.CreateDirectory(uploadFolder);
-                                    }
-
-                                    string fileSavePath = Path.Combine(uploadFolder, file.FileName);
-                                    using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
-                                    {
-                                        ms.CopyTo(stream);
-                                    }
-
-                                    _context.File.Add(fileToAdd);
-                                    await _context.SaveChangesAsync();
-
-                                    article.Files.Add(fileToAdd);
-                                }
-                            }
-                        }
-                    }
-
                     if (files != null)
                     {
                         foreach (var file in files)
@@ -267,18 +223,15 @@ namespace EduPost.Controllers
                                 using (var ms = new MemoryStream())
                                 {
                                     await file.CopyToAsync(ms);
+                                    ms.Position = 0;
 
                                     var fileToAdd = new File
                                     {
                                         FileName = file.FileName,
                                         FileData = ms.ToArray(),
-                                        FileContentType = file.ContentType
+                                        FileContentType = file.ContentType,
+                                        ArticleId = article.ArticleId
                                     };
-
-                                    if (article.ArticleId != 0)
-                                    {
-                                        fileToAdd.ArticleId = article.ArticleId;
-                                    }
 
                                     string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
                                     if (!Directory.Exists(uploadFolder))
@@ -289,13 +242,12 @@ namespace EduPost.Controllers
                                     string fileSavePath = Path.Combine(uploadFolder, file.FileName);
                                     using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                                     {
+                                        ms.Position = 0;
                                         ms.CopyTo(stream);
                                     }
 
                                     _context.File.Add(fileToAdd);
                                     await _context.SaveChangesAsync();
-
-                                    article.Files.Add(fileToAdd);
                                 }
                             }
                         }
@@ -305,13 +257,11 @@ namespace EduPost.Controllers
                     if (existingArticle != null)
                     {
                         existingArticle.ArticleTitle = article.ArticleTitle;
-                        existingArticle.Files = article.Files;
                         existingArticle.Public = article.Public;
 
                         _context.Entry(existingArticle).State = EntityState.Modified;
                         await _context.SaveChangesAsync();
                     }
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {

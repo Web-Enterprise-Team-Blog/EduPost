@@ -63,13 +63,13 @@
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0">@User.Identity.Name</h6>
-                        <span>Coordinator</span>
+                        <span>Manager</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="/Coordinator/Index" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="/Coordinator/Articles" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Articles</a>
-                    
+                    <a href="/Manager/Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="/Manager/Articles" class="nav-item nav-link  active"><i class="fa fa-tachometer-alt me-2"></i>Articles</a>
+
                 </div>
             </nav>
         </div>
@@ -181,6 +181,9 @@
                                                 @Html.DisplayNameFor(model => model.ArticleTitle)
                                             </th>
                                             <th>
+                                                @Html.DisplayNameFor(model => model.Faculty)
+                                            </th>
+                                            <th>
                                                 @Html.DisplayNameFor(model => model.CreatedDate)
                                             </th>
                                             <th>
@@ -219,6 +222,9 @@
                                                     @Html.DisplayFor(modelItem => item.ArticleTitle)
                                                 </td>
                                                 <td>
+                                                    @Html.DisplayFor(modelItem => item.Faculty)
+                                                </td>
+                                                <td>
                                                     @Html.DisplayFor(modelItem => item.CreatedDate)
                                                 </td>
                                                 <td>
@@ -240,7 +246,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
         <!-- Content End -->
         <!-- Back to Top -->

@@ -10,7 +10,7 @@ using File = EduPost.Models.File;
 
 namespace EduPost.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Coordinator")]
     public class CoordinatorController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -44,39 +44,20 @@ namespace EduPost.Controllers
 
         public async Task<IActionResult> Articles()
         {
-            bool isCoordinator = User.IsInRole("Coordinator");
+            var coordinator = await _userManager.GetUserAsync(User);
+            var faculty = coordinator.Faculty;
 
-            if (isCoordinator)
-            {
-                var coordinator = await _userManager.GetUserAsync(User);
-                var faculty = coordinator.Faculty;
+            var articles = await _context.Article
+                .Join(_context.User,
+                    article => article.UserID,
+                    user => user.Id,
+                    (article, user) => new { Article = article, User = user })
+                .Where(x => x.User.Faculty == faculty)
+                .Select(x => x.Article)
+                .Where(a => a.StatusId != 1)
+                .ToListAsync();
 
-                var articles = await _context.Article
-                    .Join(_context.User,
-                        article => article.UserID,
-                        user => user.Id,
-                        (article, user) => new { Article = article, User = user })
-                    .Where(x => x.User.Faculty == faculty)
-                    .Select(x => x.Article)
-                    .Where(a => a.StatusId != 1)
-                    .ToListAsync();
-
-                return View(articles);
-            }
-            else
-            {
-                var userIdAsString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (int.TryParse(userIdAsString, out int userId))
-                {
-                    var articles = await _context.Article
-                        .Where(a => a.UserID == userId)
-                        .ToListAsync();
-
-                    return View(articles);
-                }
-
-                return View(new List<Article>());
-            }
+            return View(articles); 
         }
 
         // GET: Articles/Details/5
