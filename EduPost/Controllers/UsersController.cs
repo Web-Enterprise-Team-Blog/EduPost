@@ -117,7 +117,7 @@ namespace EduPost.Controllers
 				return NotFound();
 			}
 
-			var userInDb = _context.Users.Find(id); // Synchronously finding the user
+			var userInDb = _context.Users.Find(id);
 			if (userInDb == null)
 			{
 				return NotFound();
@@ -131,9 +131,14 @@ namespace EduPost.Controllers
 					_context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
 					_context.Entry(userInDb).Property(x => x.SecurityStamp).IsModified = false;
 					_context.Entry(userInDb).Property(x => x.ConcurrencyStamp).IsModified = false;
-					_context.Entry(userInDb).Property(x => x.Role).IsModified = true;
+                    _context.Entry(userInDb).Property(x => x.PhoneNumber).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.PhoneNumberConfirmed).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.TwoFactorEnabled).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.LockoutEnd).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.LockoutEnabled).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.AccessFailedCount).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.Role).IsModified = true;
 					_context.Entry(userInDb).Property(x => x.Faculty).IsModified = true;
-
 					_context.SaveChanges();
 
 					var currentRoles = _userManager.GetRolesAsync(userInDb).Result;
