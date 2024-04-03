@@ -137,41 +137,42 @@ namespace EduPost.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-				var user = CreateUser();
+                var user = CreateUser();
 
-				await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-				await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Faculty = Input.Faculty;
 
                 var role = await _roleManager.FindByNameAsync(Input.Role);
-				if (role == null)
-				{
-					ModelState.AddModelError(string.Empty, "The specified role does not exist.");
-					return Page();
-				}
-				else
-				{
-					user.Role = role.Name;
-				}
+                if (role == null)
+                {
+                    ModelState.AddModelError(string.Empty, "The specified role does not exist.");
+                    return Page();
+                }
+                else
+                {
+                    user.Role = role.Name;
+                }
 
-				var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, Input.Password);
 
-				if (result.Succeeded)
+                if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-					var roleResult = await _userManager.AddToRoleAsync(user, Input.Role);
+                    var roleResult = await _userManager.AddToRoleAsync(user, Input.Role);
 
-					if (!roleResult.Succeeded)
-					{
-						foreach (var error in roleResult.Errors)
-						{
-							ModelState.AddModelError(string.Empty, error.Description);
-						}
-						return Page();
-					}
+                    if (!roleResult.Succeeded)
+                    {
+                        foreach (var error in roleResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return Page();
+                    }
 
-					var userId = await _userManager.GetUserIdAsync(user);
+                    // Generate the email confirmation link
+                    var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -180,8 +181,17 @@ namespace EduPost.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId, code, returnUrl },
                         protocol: Request.Scheme);
 
-                    MailSender.SendEmail(Input.Email, "Confirm your email",
-                        $"Please confirm your account by click this -> {callbackUrl}");
+                    var emailMessage = $"<html><body>An Admin had registered an account in EduPost with this email!<br><br>" +
+                                       $"Your login Information is:<br>" +
+                                       $"Email: {Input.Email}<br>" +
+                                       $"Password: {Input.Password}<br>" +
+                                       $"Faculty: {Input.Faculty}<br>" +
+                                       $"Role: {Input.Role}<br><br>" +
+                                       "---------------------------------------------------------------------------------------------------------------<br><br>" +
+                                       $"Please click <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>this link</a> to confirm this is your account!" +
+                                       "</body></html>";
+
+                    MailSender.SendEmail(Input.Email, "Confirm your EduPost account", emailMessage);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -194,19 +204,12 @@ namespace EduPost.Areas.Identity.Pages.Account
                     }
                 }
 
-				foreach (var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
-
-                    //ValidationErrors.Add(error.Description.ToString());
-
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            //ViewData["validationErrors"] = ValidationErrors;
-
-            //re-add view data
             var roles = await _roleManager.Roles.ToListAsync();
             ViewData["Roles"] = new SelectList(roles, "Name", "Name");
 
@@ -214,6 +217,7 @@ namespace EduPost.Areas.Identity.Pages.Account
             ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
             return Page();
         }
+
 
         private User CreateUser()
         {

@@ -13,7 +13,10 @@ namespace EduPost.Controllers
         {
             try
             {
-                MailMessage message = new MailMessage(MailConstant.emailSender, email, subject, htmlMessage);
+                MailMessage message = new MailMessage(MailConstant.emailSender, email, subject, htmlMessage)
+                {
+                    IsBodyHtml = true
+                };
                 SmtpClient client = new SmtpClient(MailConstant.hostEmail, MailConstant.portEmail);
 
                 client.EnableSsl = true;
