@@ -275,3 +275,68 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+/*** Comment Box ***/
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.comment-textarea {
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.submit-comment-btn {
+    width: auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-comment-btn:hover {
+    background-color: #0056b3;
+}
+
+.comments-section ul {
+    list-style-type: none; /* Removes bullet points from the list */
+    padding: 0;
+}
+
+.comments-section li {
+    margin-bottom: 10px; /* Adds space between comments */
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Adds a subtle line between comments */
+}
+
+.delete-comment-form {
+    display: inline-block; /* Makes the form inline with the comment text */
+    margin-left: 10px; /* Adds some space before the delete button */
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+.btn-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}

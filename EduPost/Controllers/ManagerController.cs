@@ -71,7 +71,15 @@ namespace EduPost.Controllers
 
             var article = await _context.Article
                 .Include(a => a.Files)
+                .Include(a => a.Comments)
                 .FirstOrDefaultAsync(a => a.ArticleId == id);
+
+            var userIds = article.Comments.Select(c => c.UserId).Distinct();
+            var users = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id, u => u.UserName);
+
+            ViewBag.Usernames = users;
 
             if (article == null)
             {

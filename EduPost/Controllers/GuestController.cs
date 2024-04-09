@@ -52,6 +52,7 @@ namespace EduPost.Controllers
 
             var article = await _context.Article
                 .Include(a => a.Files)
+                .Include(a => a.Comments)
                 .FirstOrDefaultAsync(a => a.ArticleId == id);
 
             if (article == null)

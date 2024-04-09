@@ -60,22 +60,50 @@
                             </dl>
 
                             <h4>Uploaded files</h4>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>File name</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var file in Model.Files)
-                                    {
+                            @if (Model.Files != null && Model.Files.Any())
+                            {
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td>@file.FileName</td>
+                                            <th>File name</th>
+                                            <th></th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var file in Model.Files)
+                                        {
+                                            <tr>
+                                                <td>@file.FileName</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p>No file uploaded.</p>
+                            }
+                            <div class="comments-section">
+                                <h3>Comments:</h3>
+                                @if (Model.Comments != null && Model.Comments.Any())
+                                {
+                                    <ul>
+                                        @foreach (var comment in Model.Comments)
+                                        {
+                                            <li>
+                                                <strong>@comment.CreatedDate.ToString("dd MMM yyyy"): </strong>@comment.Content
+                                                <br>
+                                                <em>Posted by User ID: @comment.UserId</em>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <p>No comments to display.</p>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

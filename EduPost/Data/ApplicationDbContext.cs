@@ -31,6 +31,12 @@ namespace EduPost.Data
             .WithOne(f => f.Article)
             .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Article>()
+            .HasMany(a => a.Comments) 
+            .WithOne()
+            .HasForeignKey(c => c.ArticleId)
+            .OnDelete(DeleteBehavior.Cascade);
+
             SeedData(builder);
         }
 

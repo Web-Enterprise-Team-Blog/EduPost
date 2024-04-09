@@ -8,22 +8,22 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("comment_id")]
-        public int? Comment_id { get; set; }
+        public int CommentId { get; set; }
 
-        [Column("context")]
+        [Column("content")]
         [Required]
-        public string? Context { get; set; }
+        public string? Content { get; set; }
 
         [Column("article_id")]
         [Required]
-        public int? Artice_id { get; set; }
+        public int? ArticleId { get; set; }
 
         [Column("user_id")]
         [Required]
-        public int? User_id { get; set; }
+        public int? UserId { get; set; } 
 
-        [Column("commentDate")]
+        [Column("comment_date")]
         [Required]
-        public DateTimeOffset? CreatedDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
     }
 }

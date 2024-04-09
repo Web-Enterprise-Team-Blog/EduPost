@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.IO.Compression;
 using System.Security.Claims;
 using File = EduPost.Models.File;
 
@@ -70,13 +71,113 @@ namespace EduPost.Controllers
 
             var article = await _context.Article
                 .Include(a => a.Files)
+                .Include(a => a.Comments)
                 .FirstOrDefaultAsync(a => a.ArticleId == id);
+
+            var userIds = article.Comments.Select(c => c.UserId).Distinct();
+            var users = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id, u => u.UserName);
+
+            ViewBag.Usernames = users;
 
             if (article == null)
             {
                 return NotFound();
             }
             return View(article);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadArticleFiles(int? id)
+        {
+            if (id == null || _context.Article == null)
+            {
+                return NotFound();
+            }
+
+            var article = await _context.Article
+                .Include(a => a.Files)
+                .FirstOrDefaultAsync(m => m.ArticleId == id);
+
+            if (article == null || article.Files == null || !article.Files.Any())
+            {
+                return NotFound();
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var file in article.Files)
+                    {
+                        var zipEntry = archive.CreateEntry(file.FileName, CompressionLevel.Fastest);
+                        using (var zipStream = zipEntry.Open())
+                        {
+                            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", file.FileName);
+                            if (System.IO.File.Exists(filePath))
+                            {
+                                using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                                {
+                                    await fileStream.CopyToAsync(zipStream);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                memoryStream.Position = 0;
+
+                return File(memoryStream.ToArray(), "application/zip", $"Article_{id}_Files.zip");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(int ArticleId, string Content)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            var comment = new Comment
+            {
+                ArticleId = ArticleId,
+                Content = Content,
+                CreatedDate = DateTimeOffset.Now,
+                UserId = user.Id 
+            };
+
+            _context.Comment.Add(comment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = ArticleId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(int commentId)
+        {
+            var comment = await _context.Comment.FindAsync(commentId);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (comment.UserId != user.Id)
+            {
+                return Forbid("You can delete only your own comment!");
+            }
+
+            _context.Comment.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = comment.ArticleId });
         }
 
         public async Task<IActionResult> ApproveStatus(int articleId)

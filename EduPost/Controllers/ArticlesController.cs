@@ -8,6 +8,7 @@ using File = EduPost.Models.File;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using System.IO.Compression;
 
 namespace EduPost.Controllers
 {
@@ -61,7 +62,15 @@ namespace EduPost.Controllers
 
             var article = await _context.Article
                 .Include(a => a.Files)
+                .Include(a => a.Comments)
                 .FirstOrDefaultAsync(a => a.ArticleId == id);
+
+            var userIds = article.Comments.Select(c => c.UserId).Distinct();
+            var users = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id, u => u.UserName);
+
+            ViewBag.Usernames = users;
 
             if (article == null)
             {
@@ -205,80 +214,88 @@ namespace EduPost.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Public")] Article article, IFormFile[] files)
         {
-            if (id != article.ArticleId)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (id != article.ArticleId)
                 {
-                    if (files != null)
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
                     {
-                        foreach (var file in files)
+                        if (files != null)
                         {
-                            if (file.Length > 0)
+                            foreach (var file in files)
                             {
-                                using (var ms = new MemoryStream())
+                                if (file.Length > 0)
                                 {
-                                    await file.CopyToAsync(ms);
-                                    ms.Position = 0;
-
-                                    var fileToAdd = new File
+                                    using (var ms = new MemoryStream())
                                     {
-                                        FileName = file.FileName,
-                                        FileData = ms.ToArray(),
-                                        FileContentType = file.ContentType,
-                                        ArticleId = article.ArticleId
-                                    };
-
-                                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                                    if (!Directory.Exists(uploadFolder))
-                                    {
-                                        Directory.CreateDirectory(uploadFolder);
-                                    }
-
-                                    string fileSavePath = Path.Combine(uploadFolder, file.FileName);
-                                    using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
-                                    {
+                                        await file.CopyToAsync(ms);
                                         ms.Position = 0;
-                                        ms.CopyTo(stream);
-                                    }
 
-                                    _context.File.Add(fileToAdd);
-                                    await _context.SaveChangesAsync();
+                                        var fileToAdd = new File
+                                        {
+                                            FileName = file.FileName,
+                                            FileData = ms.ToArray(),
+                                            FileContentType = file.ContentType,
+                                            ArticleId = article.ArticleId
+                                        };
+
+                                        string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                                        if (!Directory.Exists(uploadFolder))
+                                        {
+                                            Directory.CreateDirectory(uploadFolder);
+                                        }
+
+                                        string fileSavePath = Path.Combine(uploadFolder, file.FileName);
+                                        using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
+                                        {
+                                            ms.Position = 0;
+                                            ms.CopyTo(stream);
+                                        }
+
+                                        _context.File.Add(fileToAdd);
+                                        await _context.SaveChangesAsync();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    var existingArticle = await _context.Article.FindAsync(article.ArticleId);
-                    if (existingArticle != null)
+                        var existingArticle = await _context.Article.FindAsync(article.ArticleId);
+                        if (existingArticle != null)
+                        {
+                            existingArticle.ArticleTitle = article.ArticleTitle;
+                            existingArticle.Public = article.Public;
+
+                            _context.Entry(existingArticle).State = EntityState.Modified;
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                    catch (DbUpdateConcurrencyException)
                     {
-                        existingArticle.ArticleTitle = article.ArticleTitle;
-                        existingArticle.Public = article.Public;
-
-                        _context.Entry(existingArticle).State = EntityState.Modified;
-                        await _context.SaveChangesAsync();
+                        if (!ArticleExists(article.ArticleId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ArticleExists(article.ArticleId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
 
-                return RedirectToAction(nameof(Index));
+                return View(article);
             }
-
-            return View(article);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error creating article: {ex.Message}");
+                return View(article);
+            }
         }
 
         // GET: Articles/Delete/5
@@ -367,6 +384,50 @@ namespace EduPost.Controllers
         private bool ArticleExists(int? id)
         {
           return (_context.Article?.Any(e => e.ArticleId == id)).GetValueOrDefault();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadArticleFiles(int? id)
+        {
+            if (id == null || _context.Article == null)
+            {
+                return NotFound();
+            }
+
+            var article = await _context.Article
+                .Include(a => a.Files)
+                .FirstOrDefaultAsync(m => m.ArticleId == id);
+
+            if (article == null || article.Files == null || !article.Files.Any())
+            {
+                return NotFound();
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var file in article.Files)
+                    {
+                        var zipEntry = archive.CreateEntry(file.FileName, CompressionLevel.Fastest);
+                        using (var zipStream = zipEntry.Open())
+                        {
+                            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", file.FileName);
+                            if (System.IO.File.Exists(filePath))
+                            {
+                                using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                                {
+                                    await fileStream.CopyToAsync(zipStream);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                memoryStream.Position = 0;
+
+                return File(memoryStream.ToArray(), "application/zip", $"Article_{id}_Files.zip");
+            }
         }
     }
 }
