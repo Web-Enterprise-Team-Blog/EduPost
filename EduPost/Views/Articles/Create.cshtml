@@ -27,6 +27,11 @@
                 <label for="Public" class="form-check-label">Public (Check this to set this article viewable by guest users)</label>
             </div>
             <div class="form-group" style="margin-top:20px;">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top:20px;">
                 <input asp-for="AgreeToTerms" type="checkbox" class="form-check-input" />
                 <label for="AgreeToTerms" class="form-check-label">I have read and agree to the Term and Conditions</label>
             </div>

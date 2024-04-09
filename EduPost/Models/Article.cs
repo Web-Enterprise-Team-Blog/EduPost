@@ -21,6 +21,9 @@ namespace EduPost.Models
         [Column("article_faculty")]
         public string? Faculty { get; set; }
 
+        [Column("description")]
+        public string? Description { get; set; }
+
         [Column("user_id")]
         public int? UserID { get; set; }
 

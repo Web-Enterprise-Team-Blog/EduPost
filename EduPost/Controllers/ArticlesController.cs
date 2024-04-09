@@ -109,7 +109,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Public")] Article article, IFormFile[] files, ModelStateDictionary modelState)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Public,Description")] Article article, IFormFile[] files, ModelStateDictionary modelState)
         {
             try
             {
@@ -212,7 +212,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Public")] Article article, IFormFile[] files)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Public,Description")] Article article, IFormFile[] files)
         {
             try
             {
@@ -269,6 +269,7 @@ namespace EduPost.Controllers
                         {
                             existingArticle.ArticleTitle = article.ArticleTitle;
                             existingArticle.Public = article.Public;
+                            existingArticle.Description = article.Description;
 
                             _context.Entry(existingArticle).State = EntityState.Modified;
                             await _context.SaveChangesAsync();
