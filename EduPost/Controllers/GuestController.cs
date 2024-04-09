@@ -24,22 +24,22 @@ namespace EduPost.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var guest = _userManager.GetUserAsync(User).Result;
-            var faculty = guest.Faculty;
+            string faculty = guest.Faculty;
 
-            var articles = _context.Article
-                .Include(a => a.Files)
-                .Where(a => _context.User.Any(u => u.Id == a.UserID && u.Faculty == faculty) && a.StatusId == 1 && a.Public)
-                .ToList();
+            GuestIndexViewModel model = new GuestIndexViewModel();
+            model.f1 = await _context.Article.Include(a => a.Files).Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
+            model.f2 = await _context.Article.Include(a => a.Files).Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.ArticleTitle).Take(4).ToListAsync();
+            model.f3 = await _context.Article.Include(a => a.Files).Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderByDescending(a => a.CreatedDate).Take(3).ToListAsync();
 
-            if (articles == null)
+            if (model == null)
             {
                 return RedirectToAction("NotFound", "Error");
             }
 
-            return View(articles);
+            return View(model);
         }
 
         // GET: Articles/Details/5
@@ -60,6 +60,12 @@ namespace EduPost.Controllers
                 return NotFound();
             }
             return View(article);
-        }
+        }        
+    }
+    public class GuestIndexViewModel
+    {
+        public List<Article> f1 = new List<Article>();
+        public List<Article> f2 = new List<Article>();
+        public List<Article> f3 = new List<Article>();
     }
 }

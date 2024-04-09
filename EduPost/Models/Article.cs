@@ -26,6 +26,7 @@ namespace EduPost.Models
 
         [Column("user_id")]
         public int? UserID { get; set; }
+        public User? User { get; set; }
 
         [Column("create_date")]
         public DateTimeOffset? CreatedDate { get; set; }

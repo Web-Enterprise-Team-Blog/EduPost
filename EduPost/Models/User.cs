@@ -21,5 +21,6 @@ namespace EduPost.Models
         //[Required]
         [Column("role")]
         public string? Role { get; set; }
+        public List<Article>? Article { get; set; }
     }
 }
