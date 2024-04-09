@@ -182,51 +182,50 @@
                                 <a href="/Identity/Account/Register">Create New</a>
                             </p>
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.UserName)</th>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.Faculty)</th>
-                                            <th scope="col">@Html.DisplayNameFor(model => model.Role)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            @if (item.UserName != User.Identity.Name) // Check if the current user is not the same as the user being displayed
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Id)
-                                                    </td>
-
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.UserName)
-                                                    </td>
-
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Email)
-                                                    </td>
-
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Faculty)
-                                                    </td>
-
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Role)
-                                                    </td>
-                                                    <td>
-                                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                    </tbody>
-                                </table>
+                                @foreach (var group in Model.GroupBy(u => u.Faculty))
+                                {
+                                    <div class="faculty-group-container" style="width:100%;">
+                                        <div class="toggle-box">
+                                            <a class="btn btn-link mt-3 faculty-group-button" href="javascript:void(0)" onclick="toggleFaculty('@group.Key')" style="color: white">@group.Key</a>
+                                        </div>
+                                        <div class="faculty-group" id="@group.Key.Replace(" ", "-")" style="display: none;">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+                                                        <th scope="col">@Html.DisplayNameFor(model => model.UserName)</th>
+                                                        <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
+                                                        <th scope="col">@Html.DisplayNameFor(model => model.Role)</th>
+                                                        <th scope="col">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in group)
+                                                    {
+                                                        @if (item.UserName != User.Identity.Name)
+                                                        {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.Role)</td>
+                                                                <td>
+                                                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                                
+                        </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -253,6 +252,17 @@
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
+
+    <script>
+        function toggleFaculty(facultyName) {
+            var facultyGroup = document.getElementById(facultyName.replace(" ", "-"));
+            if (facultyGroup.style.display === "none") {
+                facultyGroup.style.display = "block";
+            } else {
+                facultyGroup.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>
