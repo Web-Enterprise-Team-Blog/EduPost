@@ -169,82 +169,180 @@
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Approved Articles</h6>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.UserID)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.ArticleTitle)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Faculty)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.CreatedDate)
-                                            </th>
-                                            <th>
-                                                Status
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Public)
-                                            </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.Where(i => i.StatusId == 1))
-                                        {
-                                            string status;
-                                            switch (item.StatusId)
-                                            {
-                                                case 0:
-                                                    status = "Pending";
-                                                    break;
-                                                case 1:
-                                                    status = "Accepted";
-                                                    break;
-                                                case 2:
-                                                    status = "Declined";
-                                                    break;
-                                                default:
-                                                    status = "Unknown";
-                                                    break;
-                                            }
+
+                            <div class="container">
+                                <div class="form-group">
+                                    <div class="input-group" style="margin-bottom:10px;">
+                                        <input type="text" id="articleSearch" placeholder="Search by Article Title" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container">
+
+                                <button id="toggleViewBtn" class="btn btn-primary mt-3" onclick="toggleView()" style="margin-bottom:7px; background-color:#4C4C4C; color:white;">Group by faculty</button>
+
+                                <div id="groupedUsers" style="display:none;">
+                                    @foreach (var group in Model.GroupBy(u => u.Faculty))
+                                    {
+                                        <div class="faculty-group-container" style="width:100%;">
+                                            <div class="toggle-box">
+                                                <a class="btn btn-link mt-3 faculty-group-button" href="javascript:void(0)" onclick="toggleFaculty('@group.Key')" style="color: white">@group.Key</a>
+                                            </div>
+                                            <div class="faculty-group" id="@group?.Key?.Replace(" ", "-")" style="display: none;">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.UserID)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.ArticleTitle)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Faculty)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.CreatedDate)
+                                                            </th>
+                                                            <th>
+                                                                Status
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Public)
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in (group != null && group.Any()) ? group : Model)
+                                                        {
+                                                            @if (item.StatusId == 1)
+                                                            {
+                                                                string status;
+                                                                switch (item.StatusId)
+                                                                {
+                                                                    case 0:
+                                                                        status = "Pending";
+                                                                        break;
+                                                                    case 1:
+                                                                        status = "Accepted";
+                                                                        break;
+                                                                    case 2:
+                                                                        status = "Declined";
+                                                                        break;
+                                                                    default:
+                                                                        status = "Unknown";
+                                                                        break;
+                                                                }
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.UserID)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.ArticleTitle)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Faculty)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                                    </td>
+                                                                    <td>
+                                                                        @status
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Public)
+                                                                    </td>
+                                                                    <td>
+                                                                        <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div id="ungroupedUsers" style="display:block;">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.UserID)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ArticleTitle)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Faculty)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                                                </td>
-                                                <td>
-                                                    @status
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Public)
-                                                </td>
-                                                <td>
-                                                    <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a>
-                                                </td>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.UserID)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.ArticleTitle)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Faculty)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.CreatedDate)
+                                                </th>
+                                                <th>
+                                                    Status
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Public)
+                                                </th>
+                                                <th></th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Where(i => i.StatusId == 1))
+                                            {
+                                                string status;
+                                                switch (item.StatusId)
+                                                {
+                                                    case 0:
+                                                        status = "Pending";
+                                                        break;
+                                                    case 1:
+                                                        status = "Accepted";
+                                                        break;
+                                                    case 2:
+                                                        status = "Declined";
+                                                        break;
+                                                    default:
+                                                        status = "Unknown";
+                                                        break;
+                                                }
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.UserID)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ArticleTitle)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Faculty)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                    </td>
+                                                    <td>
+                                                        @status
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Public)
+                                                    </td>
+                                                    <td>
+                                                        <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- Content End -->
         <!-- Back to Top -->
@@ -264,6 +362,58 @@
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
+
+    <script>
+        //Group script
+        function toggleFaculty(facultyName) {
+            var facultyGroup = document.getElementById(facultyName.replace(" ", "-"));
+            if (facultyGroup.style.display === "none") {
+                facultyGroup.style.display = "block";
+            } else {
+                facultyGroup.style.display = "none";
+            }
+        }
+
+        //Search script
+        $(document).ready(function () {
+            const $search = $("#articleSearch");
+
+            $search.on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+
+                $("#ungroupedUsers tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+
+                $(".faculty-group-container").each(function () {
+                    var matched = false;
+                    $(this).find("tr").filter(function () {
+                        if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                            matched = true;
+                        }
+                    });
+                    $(this).toggle(matched);
+                });
+            });
+        });
+
+        //Switch Group view script
+        let isGroupedView = true;
+
+        function toggleView() {
+            isGroupedView = !isGroupedView;
+
+            const groupedView = document.getElementById('groupedUsers');
+            const ungroupedView = document.getElementById('ungroupedUsers');
+            const toggleBtn = document.getElementById('toggleViewBtn');
+
+            groupedView.style.display = isGroupedView ? 'block' : 'none';
+            ungroupedView.style.display = isGroupedView ? 'none' : 'block';
+
+            toggleBtn.textContent = isGroupedView ? 'View all Article' : 'Group by faculty';
+        }
+    </script>
+
 </body>
 
 </html>

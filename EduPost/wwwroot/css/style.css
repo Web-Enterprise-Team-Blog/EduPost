@@ -308,14 +308,14 @@
 }
 
 .comments-section ul {
-    list-style-type: none; /* Removes bullet points from the list */
+    list-style-type: none;
     padding: 0;
 }
 
 .comments-section li {
-    margin-bottom: 10px; /* Adds space between comments */
+    margin-bottom: 10px;
     padding: 10px;
-    border-bottom: 1px solid #ccc; /* Adds a subtle line between comments */
+    border-bottom: 1px solid #ccc;
 }
 
 .delete-comment-form {
