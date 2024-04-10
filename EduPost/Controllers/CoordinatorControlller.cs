@@ -1,5 +1,7 @@
 ﻿using EduPost.Data;
 using EduPost.Models;
+using EduPost.Models.ViewModels;
+using EduPost.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,32 +18,47 @@ namespace EduPost.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly NotificationHub _notificationHub;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CoordinatorController(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
+        public CoordinatorController(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment, NotificationHub notificationHub )
         {
             _context = context;
             _userManager = userManager;
+            _notificationHub = notificationHub;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-                var coordinator = _userManager.GetUserAsync(User).Result;
-                var faculty = coordinator.Faculty;
+            var coordinator = _userManager.GetUserAsync(User).Result;
+            var faculty = coordinator.Faculty;
 
-                var articles = _context.Article
-                    .Include(a => a.Files)
-                    .Where(a => _context.User.Any(u => u.Id == a.UserID && u.Faculty == faculty) && a.StatusId == 1)
-                    .ToList();
+            var articles = _context.Article
+                .Include(a => a.Files)
+                .Where(a => _context.User.Any(u => u.Id == a.UserID && u.Faculty == faculty) && a.StatusId == 1)
+                .ToList();
 
-                if (articles == null)
-                {
-                    return RedirectToAction("NotFound", "Error");
-                }
+            if (articles == null)
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
 
-                return View(articles);
+            var notifications = _context.Notification
+                .Where(n => n.UserId == coordinator.Id)
+                .OrderByDescending(n => n.Timestamp)
+                .Take(5).
+                ToList();
+
+            var viewModel = new CoordinatorIndexViewModel
+            {
+                Articles = articles,
+                Notifications = notifications
+            };
+
+            return View(viewModel);
         }
+
 
         public async Task<IActionResult> Articles()
         {
@@ -187,6 +204,8 @@ namespace EduPost.Controllers
             {
                 article.StatusId = 1;
                 await _context.SaveChangesAsync();
+                var message = $"Your article: {article.ArticleTitle} has been Approved.";
+                await _notificationHub.SendNotificationToUser(message, article.UserID);
             }
 
             return RedirectToAction(nameof(Articles));
@@ -199,6 +218,8 @@ namespace EduPost.Controllers
             {
                 article.StatusId = 2;
                 await _context.SaveChangesAsync();
+                var message = $"Your article: {article.ArticleTitle} has been Declined.";
+                await _notificationHub.SendNotificationToUser(message, article.UserID);
             }
 
             return RedirectToAction(nameof(Articles));
@@ -252,11 +273,13 @@ namespace EduPost.Controllers
                 _context.File.Remove(file);
             }
 
-            _context.Article.Remove(article);
+			var message = $"Your article: {article.ArticleTitle} has been Deleted.";
+			await _notificationHub.SendNotificationToUser(message, article.UserID);
+			_context.Article.Remove(article);
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+			return RedirectToAction(nameof(Index));
         }
 
         private bool ArticleExists(int? id)

@@ -12,7 +12,7 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("article_id")]
-        public int? ArticleId { get; set; }
+        public int ArticleId { get; set; }
 
         [Column("article_name")]
         [Required]

@@ -20,15 +20,26 @@
         <title>Profile Dropdown</title>
     </head>
     <body>
-        <nav class="navbar" style="background-color: black;">
+        <nav class="navbar" style="background-color: black; height:auto">
             <img src="~/images/logo_black.png" style="height:50px;width:200px;margin-left:50px" class="navbar-logo" alt="logo" />
             <ul class="navbar-nav mr-auto d-flex align-items-center" style="margin-left:100PX;color:white">
                 @if (User.IsInRole("User"))
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Articles/Index" style="color:white">Manage Articles <span class="sr-only">(current)</span></a>
-                    </li>
+                    <div style="overflow: auto; width:600px;">
+                        <div class="nav-item" style="float: left; width: 33.33%;">
+                            <a class="nav-link" href="/Home/Index" style="color:white">HomePage <span class="sr-only">(current)</span></a>
+                        </div>
+
+                        <div class="nav-item" style="float: left; width: 33.33%;">
+                            <a class="nav-link" href="/Home/Notifications" style="color:white">Notifications <span class="sr-only">(current)</span></a>
+                        </div>
+
+                        <div class="nav-item" style="float: left; width: 33.33%;">
+                            <a class="nav-link" href="/Articles/Index" style="color:white; display: inline-block;">Manage Articles <span class="sr-only">(current)</span></a>
+                        </div>
+                    </div>
                 }
+
             </ul>
             <div class="profile-dropdown" style="margin-right: 100px;">
                 <div onclick="toggle()" class="profile-dropdown-btn">
@@ -41,7 +52,6 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </span>
                 </div>
-
                 <ul class="profile-dropdown-list" style="z-index:10;">
                     <li class="profile-dropdown-list-item">
                         <a href="/Home/Profile">
@@ -56,9 +66,7 @@
                         </a>
                     </li>
                 </ul>
-
-
-            </div>
+            </div>           
         </nav>
 
         <script src="~/dropdownmenu/script.js"></script>
@@ -69,11 +77,10 @@
             @RenderBody()
         </main>
     </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/dropdownmenu/script.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using System.IO.Compression;
+using EduPost.Service;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EduPost.Controllers
 {
@@ -17,13 +19,20 @@ namespace EduPost.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly NotificationHub _notificationHub;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ArticlesController(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
+        public ArticlesController(ApplicationDbContext context, UserManager<User> userManager, NotificationHub notificationHub,  IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _userManager = userManager;
+            _notificationHub = notificationHub;
             _webHostEnvironment = webHostEnvironment;
+        }
+
+        private async Task SendNotification(string message)
+        {
+            await _notificationHub.Clients.All.SendAsync("SendNotification", message);
         }
 
         // GET: Articles
@@ -171,6 +180,9 @@ namespace EduPost.Controllers
 
                 _context.Add(article);
                 await _context.SaveChangesAsync();
+
+                var message = $"Article {article.ArticleTitle} has been created.";
+                await _notificationHub.SendNotificationToCoordinator(message, article.Faculty);
 
                 return RedirectToAction(nameof(Index));
             }

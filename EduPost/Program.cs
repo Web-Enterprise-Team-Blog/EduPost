@@ -1,5 +1,6 @@
 using EduPost.Data;
 using EduPost.Models;
+using EduPost.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,9 @@ namespace EduPost
             });
 
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddSignalR();
+            builder.Services.AddScoped<NotificationHub>();
+            builder.Services.AddScoped<NotificationViewComponent>();
 
             var app = builder.Build();
 
@@ -55,6 +58,13 @@ namespace EduPost
             app.UseRouting();
 
             app.UseAuthorization();
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+                // Other mappings
+            });
 
             app.MapControllerRoute(
                 name: "default",
