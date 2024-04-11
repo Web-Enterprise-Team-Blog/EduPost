@@ -32,10 +32,22 @@ namespace EduPost.Controllers
 
 			HomeIndexViewModel model = new HomeIndexViewModel();
 			model.f1 = await _context.Article.Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
-			model.f2 = await _context.Article.Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
-			model.f3 = await _context.Article.Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
-			model.f4 = await _context.Article.Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(5).ToListAsync();
-			model.f5 = await _context.Article.Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
+			model.f2 = await _context.Article
+	            .Include(a => a.User)
+	            .Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+	            .OrderByDescending(a => _context.UserReaction
+		            .Where(ur => ur.ArticleId == a.ArticleId && ur.ReactionType)
+		            .Count())
+	            .Take(3)
+	            .ToListAsync();
+			model.f3 = await _context.Article
+				.Include(a => a.User)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.OrderByDescending(a => _context.Comment
+					.Where(ur => ur.ArticleId == a.ArticleId)
+					.Count())
+				.Take(3)
+				.ToListAsync();
 			return View(model);
 		}
 
@@ -160,10 +172,8 @@ namespace EduPost.Controllers
     }
 	public class HomeIndexViewModel
 	{
-		public List<Article> f1 = new List<Article>();   //Information Tecnology
-		public List<Article> f2 = new List<Article>();   //Computer Science
-		public List<Article> f3 = new List<Article>();   //Economics
-		public List<Article> f4 = new List<Article>();   //Environmental Science
-		public List<Article> f5 = new List<Article>();   //Psychology
+		public List<Article> f1 = new List<Article>();
+		public List<Article> f2 = new List<Article>();  
+		public List<Article> f3 = new List<Article>();   
 	}
 }

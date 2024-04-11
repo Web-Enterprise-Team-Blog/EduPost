@@ -32,9 +32,9 @@
 			<div class="pl-4 pr-0 h-100 tofront">
 				<div class="row justify-content-between">
 					<div class="col-md-6 pt-6 pb-6 align-self-center">
-						<h1 class="secondfont mb-3 font-weight-bold">website sumary here</h1>
+						<h1 class="secondfont mb-3 font-weight-bold">Welcome,@User.Identity.Name</h1>
 						<p class="mb-3">
-							detail introduction to the website here
+							The lastest and and popular articles in EduPost is here!
 						</p>
 						@* <a href="~/mundana/article.html" class="btn btn-dark">Read More</a> *@
 					</div>
@@ -52,7 +52,7 @@
 		<div class="row">
 
 			<div class="col-lg-6">
-				<h5 class="font-weight-bold spanborder"><span>section title here</span></h5>
+				<h5 class="font-weight-bold spanborder"><span>Lastest Articles</span></h5>
 				<div class="flex-md-row mb-4 box-shadow h-xl-300">
 					@for (int i = 0; i <= Model.f1.Count() - 1; i++)
 					{
@@ -76,14 +76,13 @@
 				</div>
 			</div>
 
-
 			<div class="col-lg-6">
-				<h5 class="font-weight-bold spanborder"><span>section title here</span></h5>
+				<h5 class="font-weight-bold spanborder"><span>Most Liked Articles</span></h5>
 				<div class="flex-md-row mb-4 box-shadow h-xl-300">
 					@for (int i = 0; i <= Model.f2.Count() - 1; i++)
 					{
 						<div class="mb-3 d-flex align-items-center">
-							<img height="80" src="~/mundana/assets/img/demo/blog5.jpg">
+							<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
 
 							<div class="pl-3 text-truncate">
 								<h2 class="mb-2 h6 font-weight-bold">
@@ -91,10 +90,9 @@
 								</h2>
 								<p class="card-text small m-0 text-truncate">
 									@Model.f2[i].Description
-
 								</p>
 								<div class="card-text text-muted small">
-									@Model.f2[i].User.UserName
+									By @Model.f2[i].User.UserName
 								</div>
 								<small class="text-muted">@Model.f2[i].CreatedDate.Value.Day/@Model.f2[i].CreatedDate.Value.Month/@Model.f2[i].CreatedDate.Value.Year</small>
 							</div>
@@ -102,83 +100,32 @@
 					}
 				</div>
 			</div>
-
 		</div>
 	</div>
 
-	<div class="container">
-		<div class="row justify-content-between">
 
-			<div class="col-md-8">
-				<h5 class="font-weight-bold spanborder"><span>section title here</span></h5>
-				@for (int i = 0; i <= @Model.f3.Count() - 1; i++)
-				{
-					<div class="mb-3 d-flex justify-content-between">
-						<div class="pr-3  text-truncate">
-
-							<h2 class="mb-1 h4 font-weight-bold">
-								<a class="text-dark" href="~/mundana/article.html">@Model.f3[i].ArticleTitle</a>
-							</h2>
-							<p class="card-text small m-0 text-truncate">
-								@Model.f3[i].Description
-							</p>
-							<div class="card-text text-muted small">
-								@Model.f3[i].User.UserName
-							</div>
-							<small class="text-muted">@Model.f3[i].CreatedDate.Value.Day/@Model.f3[i].CreatedDate.Value.Month/@Model.f3[i].CreatedDate.Value.Year</small>
-						</div>
-						<img height="120" src="~/mundana/assets/img/demo/blog8.jpg">
-					</div>
-				}
-			</div>
-
-			<div class="col-md-4 pl-4">
-				<h5 class="font-weight-bold spanborder"><span>section title here</span></h5>
-				<ol class="list-featured">
-					@for (int i = 0; i <= @Model.f4.Count() - 1; i++)
-					{
-						<li class="my-3">
-							<span class="text-truncate">
-								<h6 class="font-weight-bold">
-									<a href="~/mundana/article.html" class="text-dark">@Model.f4[i].ArticleTitle</a>
-								</h6>
-								<p class="card-text small m-0 text-truncate">
-									@Model.f4[i].Description
-
-								</p>
-								<p class="text-muted">
-									<span>@Model.f4[i].User.UserName</span>
-									<span>@Model.f4[i].CreatedDate.Value.Day/@Model.f4[i].CreatedDate.Value.Month/@Model.f4[i].CreatedDate.Value.Year</span>
-								</p>
-							</span>
-						</li>
-					}
-				</ol>
-			</div>
-		</div>
-	</div>
-
+			
 	<div class="container">
 		<div>
 
-			<h5 class="font-weight-bold spanborder"><span>section title here</span></h5>
+			<h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
 
-			@for (int i = 0; i <= @Model.f5.Count() - 1; i++)
+			@for (int i = 0; i <= @Model.f3.Count() - 1; i++)
 			{
 				<div class="mb-3 d-flex flex-row">
 					<img height="120" src="~/mundana/assets/img/demo/5.jpg">
 
 					<div class="ml-5  text-truncate">
 						<h2 class="mb-1 h4 font-weight-bold">
-							<a class="text-dark" href="~/mundana/article.html">@Model.f5[i].ArticleTitle</a>
+							<a class="text-dark" asp-action="Details" asp-route-id="@Model.f3[i].ArticleId">@Model.f3[i].ArticleTitle</a>
 						</h2>
 						<p class="card-text small m-0 text-truncate">
-							@Model.f5[i].Description
+							@Model.f3[i].Description
 						</p>
 						<div class="card-text text-muted small">
-							@Model.f5[i].User.UserName
+							@Model.f3[i].User.UserName
 						</div>
-						<small class="text-muted">@Model.f5[i].CreatedDate.Value.Day/@Model.f5[i].CreatedDate.Value.Month/@Model.f5[i].CreatedDate.Value.Year</small>
+						<small class="text-muted">@Model.f3[i].CreatedDate.Value.Day/@Model.f3[i].CreatedDate.Value.Month/@Model.f3[i].CreatedDate.Value.Year</small>
 					</div>
 				</div>
 			}
@@ -189,20 +136,6 @@
 	<!--------------------------------------
 	FOOTER
 	--------------------------------------->
-	<div class="">
-		<footer class="bg-white border-top p-3 text-muted small">
-			<div class="row align-items-center justify-content-between">
-				<div>
-					<span class="navbar-brand mr-2"><strong>Mundana</strong></span> Copyright &copy;
-					<script>document.write(new Date().getFullYear())</script>
-					. All rights reserved.
-				</div>
-				<div>
-					Made with <a target="_blank" class="text-secondary font-weight-bold" href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/">Mundana Theme</a> by WowThemes.net.
-				</div>
-			</div>
-		</footer>
-	</div>
 	<!-- End Footer -->
 	<!--------------------------------------
 	JAVASCRIPTS
