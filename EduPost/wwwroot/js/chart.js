@@ -5,7 +5,7 @@ function getRandomColor() {
     return `rgba(${r}, ${g}, ${b}, 0.7)`;
 }
 
-function renderCharts(articlesPerFaculty, articlesPerDay) {
+function renderCharts(articlesPerFaculty, articlesPerDay, articlesByStatus, articlesByFaculty) {
     var backgroundColors = articlesPerFaculty.map(() => getRandomColor());
     var borderColors = backgroundColors.map(color => color.replace('0.7', '1'));
 
@@ -61,6 +61,96 @@ function renderCharts(articlesPerFaculty, articlesPerDay) {
                 title: {
                     display: true,
                     text: 'Articles Per Day (Last 7 Days)'
+                }
+            }
+        },
+    });
+
+    var statusLabels = articlesByStatus.map(a => a.status);
+    var statusData = articlesByStatus.map(a => a.count);
+
+    var statusColors = ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 206, 86, 0.7)'];
+
+    var ctxStatus = document.getElementById('articlesByStatusChart').getContext('2d');
+    var articlesByStatusChart = new Chart(ctxStatus, {
+        type: 'pie',
+        data: {
+            labels: statusLabels,
+            datasets: [{
+                data: statusData,
+                backgroundColor: statusColors,
+                borderColor: statusColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Articles By Status'
+                }
+            }
+        },
+    });
+
+    var facultyLabels = articlesByFaculty.map(a => a.faculty);
+
+    // Extract counts for each status
+    var dataByFaculty = articlesByFaculty.map(a => ({
+        faculty: a.faculty,
+        pending: a.pending,
+        approved: a.approved,
+        declined: a.declined
+    }));
+
+    // Create datasets for each status
+    var datasets = [
+        {
+            label: 'Pending',
+            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+            data: dataByFaculty.map(a => a.pending)
+        },
+        {
+            label: 'Approved',
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            data: dataByFaculty.map(a => a.approved)
+        },
+        {
+            label: 'Declined',
+            backgroundColor: 'rgba(255, 206, 86, 0.7)',
+            data: dataByFaculty.map(a => a.declined)
+        }
+    ];
+
+    // Render multi-bar chart
+    var ctxBar = document.getElementById('articlesByFacultyBarChart').getContext('2d');
+    var articlesByFacultyBarChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: facultyLabels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Articles By Faculty'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true
                 }
             }
         },

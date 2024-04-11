@@ -349,3 +349,22 @@
     color: white;
     width: 100%
 }
+
+.academic-year-box {
+    background-color: #0099cc;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+    .academic-year-box h3 {
+        margin-top: 0;
+        color:white;
+        font-size: 24px;
+    }
+
+    .academic-year-box p {
+        margin: 0;
+        font-size: 18px;
+    }

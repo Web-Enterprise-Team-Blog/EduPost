@@ -177,6 +177,15 @@
                                 <div style="flex: 1; margin: 10px; height: 50%;">
                                     <canvas id="articlesPerDayChart"></canvas>
                                 </div>
+                                
+                            </div>
+                            <div style="display: flex; justify-content: space-around;">     
+                                <div style="flex: 1; margin: 10px; height: 50%;">
+                                    <canvas id="articlesByStatusChart"></canvas>
+                                </div>
+                                <div style="flex: 1; margin: 10px; height: 50%;">
+                                    <canvas id="articlesByFacultyBarChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -209,7 +218,9 @@
             renderCharts
             (
                 @Html.Raw(Json.Serialize(Model.ArticlesPerFaculty)),
-                @Html.Raw(Json.Serialize(Model.ArticlesPerDay))
+                @Html.Raw(Json.Serialize(Model.ArticlesPerDay)),
+                @Html.Raw(Json.Serialize(Model.ArticlesByStatus)),
+                @Html.Raw(Json.Serialize(Model.ArticlesByFaculty))
             );
         });
     </script>

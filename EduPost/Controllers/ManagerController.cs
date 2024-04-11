@@ -46,14 +46,38 @@ namespace EduPost.Controllers
                 })
                 .ToList();
 
+            var articlesByStatus = _context.Article
+                 .GroupBy(a => a.StatusId)
+                 .Select(group => new ArticlesByStatusViewModel
+                 {
+                     Status = group.Key == 0 ? "Pending" : (group.Key == 1 ? "Approved" : "Declined"),
+                     Count = group.Count()
+                 })
+                 .ToList<ArticlesByStatusViewModel>();
+
+            var articlesByFaculty = _context.Article
+                .GroupBy(a => new { a.Faculty, a.StatusId })
+                .Select(group => new ArticlesByFacultyViewModel
+                {
+                    Faculty = group.Key.Faculty,
+                    Pending = group.Key.StatusId == 0 ? group.Count() : 0,
+                    Approved = group.Key.StatusId == 1 ? group.Count() : 0,
+                    Declined = group.Key.StatusId == 2 ? group.Count() : 0
+                })
+                .ToList();
+
             var model = new IndexViewModel
             {
                 ArticlesPerFaculty = articlesPerFaculty,
-                ArticlesPerDay = articlesPerDay
+                ArticlesPerDay = articlesPerDay,
+                ArticlesByStatus = articlesByStatus,
+                ArticlesByFaculty = articlesByFaculty
             };
+
 
             return View(model);
         }
+
 
         public async Task<IActionResult> Articles()
         {
