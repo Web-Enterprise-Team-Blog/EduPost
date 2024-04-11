@@ -8,7 +8,7 @@ namespace EduPost.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("feedback_id")]
-        public int CommentId { get; set; }
+        public int FeedbackId { get; set; }
 
         [Column("content")]
         [Required]

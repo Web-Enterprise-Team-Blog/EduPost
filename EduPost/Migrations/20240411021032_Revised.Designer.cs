@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240409155720_homeView1")]
-    partial class homeView1
+    [Migration("20240411021032_Revised")]
+    partial class Revised
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,12 @@ namespace EduPost.Migrations
 
             modelBuilder.Entity("EduPost.Models.Article", b =>
                 {
-                    b.Property<int?>("ArticleId")
+                    b.Property<int>("ArticleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("article_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ArticleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"));
 
                     b.Property<bool>("AgreeToTerms")
                         .HasColumnType("bit");
@@ -260,12 +260,12 @@ namespace EduPost.Migrations
 
             modelBuilder.Entity("EduPost.Models.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int>("FeedbackId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("comment_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
 
                     b.Property<int?>("ArticleId")
                         .IsRequired()
@@ -286,7 +286,7 @@ namespace EduPost.Migrations
                         .HasColumnType("int")
                         .HasColumnName("user_id");
 
-                    b.HasKey("CommentId");
+                    b.HasKey("FeedbackId");
 
                     b.HasIndex("ArticleId");
 
@@ -338,6 +338,41 @@ namespace EduPost.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EduPost.Models.FeedBack", b =>
+                {
+                    b.Property<int>("FeedbackId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("feedback_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
+
+                    b.Property<int?>("ArticleId")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("article_id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("content");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnName("feedback_date");
+
+                    b.Property<int?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("FeedbackId");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("FeedBack");
+                });
+
             modelBuilder.Entity("EduPost.Models.File", b =>
                 {
                     b.Property<int?>("FileId")
@@ -370,6 +405,36 @@ namespace EduPost.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("File");
+                });
+
+            modelBuilder.Entity("EduPost.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("notice_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit")
+                        .HasColumnName("isRead?");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("message");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("time");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("to_user_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("EduPost.Models.Role", b =>
@@ -937,6 +1002,15 @@ namespace EduPost.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EduPost.Models.FeedBack", b =>
+                {
+                    b.HasOne("EduPost.Models.Article", null)
+                        .WithMany("FeedBacks")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EduPost.Models.File", b =>
                 {
                     b.HasOne("EduPost.Models.Article", "Article")
@@ -1001,6 +1075,8 @@ namespace EduPost.Migrations
             modelBuilder.Entity("EduPost.Models.Article", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("FeedBacks");
 
                     b.Navigation("Files");
                 });

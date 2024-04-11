@@ -199,6 +199,16 @@ body {
 [tabindex="-1"]:focus {
   outline: 0 !important; }
 
+.liked {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.disliked {
+    background-color: #6c757d;
+    color: #fff;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;

@@ -56,7 +56,7 @@
 					@foreach (var notification in Model)
 					{
 						<li class="list-group-item">
-							<strong>@notification.Timestamp.ToString("MM/dd/yyyy HH:mm:ss"):</strong> @notification.Message
+							<strong>@notification.Timestamp.ToString("dd/MM/yyyy HH:mm:ss"):</strong> @notification.Message
 						</li>
 					}
 				</ul>

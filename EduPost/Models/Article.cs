@@ -57,5 +57,6 @@ namespace EduPost.Models
         public ICollection<File>? Files { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<FeedBack> FeedBacks { get; set; } = new List<FeedBack>();
-    }
+
+	}
 }

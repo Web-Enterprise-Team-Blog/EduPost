@@ -61,7 +61,7 @@
 
 							<div class="pl-3 text-truncate">
 								<h2 class="mb-2 h6 font-weight-bold">
-									<a class="text-dark" href="~/mundana/article.html">@Model.f1[i].ArticleTitle</a>
+									<a class="text-dark" asp-action="Details" asp-route-id="@Model.f1[i].ArticleId">@Model.f1[i].ArticleTitle</a>
 								</h2>
 								<p class="card-text small m-0 text-truncate">
 									@Model.f1[i].Description
@@ -87,7 +87,7 @@
 
 							<div class="pl-3 text-truncate">
 								<h2 class="mb-2 h6 font-weight-bold">
-									<a class="text-dark" href="~/mundana/article.html">@Model.f2[i].ArticleTitle</a>
+									<a class="text-dark" asp-action="Details" asp-route-id="@Model.f2[i].ArticleId">@Model.f2[i].ArticleTitle</a>
 								</h2>
 								<p class="card-text small m-0 text-truncate">
 									@Model.f2[i].Description

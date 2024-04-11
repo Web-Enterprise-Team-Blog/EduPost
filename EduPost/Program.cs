@@ -35,7 +35,8 @@ namespace EduPost
             builder.Services.AddControllersWithViews();
             builder.Services.AddSignalR();
             builder.Services.AddScoped<NotificationHub>();
-            builder.Services.AddScoped<NotificationViewComponent>();
+			builder.Services.AddScoped<ReactionService>();
+			builder.Services.AddScoped<NotificationViewComponent>();
 
             var app = builder.Build();
 

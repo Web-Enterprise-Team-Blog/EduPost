@@ -14,26 +14,6 @@ namespace EduPost.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Article",
-                columns: table => new
-                {
-                    article_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    article_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    article_faculty = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    user_id = table.Column<int>(type: "int", nullable: true),
-                    create_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    expire_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    status = table.Column<int>(type: "int", nullable: true),
-                    AgreeToTerms = table.Column<bool>(type: "bit", nullable: false),
-                    Public = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Article", x => x.article_id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -77,22 +57,6 @@ namespace EduPost.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    comment_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    context = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    article_id = table.Column<int>(type: "int", nullable: false),
-                    user_id = table.Column<int>(type: "int", nullable: false),
-                    commentDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.comment_id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Faculty",
                 columns: table => new
                 {
@@ -106,6 +70,22 @@ namespace EduPost.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notification",
+                columns: table => new
+                {
+                    notice_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    to_user_id = table.Column<int>(type: "int", nullable: false),
+                    message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isRead = table.Column<bool>(name: "isRead?", type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notification", x => x.notice_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Status",
                 columns: table => new
                 {
@@ -116,28 +96,6 @@ namespace EduPost.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Status", x => x.status_id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "File",
-                columns: table => new
-                {
-                    file_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    file_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    file_data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    file_content_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArticleId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_File", x => x.file_id);
-                    table.ForeignKey(
-                        name: "FK_File_Article_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Article",
-                        principalColumn: "article_id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +117,32 @@ namespace EduPost.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "role_id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Article",
+                columns: table => new
+                {
+                    article_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    article_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    article_faculty = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    user_id = table.Column<int>(type: "int", nullable: true),
+                    create_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    expire_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    status = table.Column<int>(type: "int", nullable: true),
+                    AgreeToTerms = table.Column<bool>(type: "bit", nullable: false),
+                    Public = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Article", x => x.article_id);
+                    table.ForeignKey(
+                        name: "FK_Article_AspNetUsers_user_id",
+                        column: x => x.user_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -246,26 +230,70 @@ namespace EduPost.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Article",
-                columns: new[] { "article_id", "AgreeToTerms", "article_name", "create_date", "expire_date", "article_faculty", "Public", "status", "user_id" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
                 {
-                    { 1, true, "ITArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", true, 0, 7 },
-                    { 2, true, "ITArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", true, 0, 7 },
-                    { 3, true, "ITArticle03", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", false, 0, 7 },
-                    { 4, true, "ITArticle04", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", false, 0, 7 },
-                    { 5, true, "ITArticle05", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", true, 0, 7 },
-                    { 6, true, "CSArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4099), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4158), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", true, 0, 8 },
-                    { 7, true, "CSArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4727), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4775), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", false, 0, 8 },
-                    { 8, true, "CSArticle03", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(277), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(327), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", true, 0, 8 },
-                    { 9, true, "CSArticle04", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(2979), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(3029), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", true, 0, 8 },
-                    { 10, true, "EArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7115), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7182), new TimeSpan(0, 7, 0, 0, 0)), "Economics", true, 0, 9 },
-                    { 11, true, "EArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7437), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7483), new TimeSpan(0, 7, 0, 0, 0)), "Economics", false, 0, 9 },
-                    { 12, true, "EArticle03", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1925), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1982), new TimeSpan(0, 7, 0, 0, 0)), "Economics", true, 0, 9 },
-                    { 13, true, "ESArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5518), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5631), new TimeSpan(0, 7, 0, 0, 0)), "Environmental Science", true, 0, 10 },
-                    { 14, true, "ESArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8359), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8402), new TimeSpan(0, 7, 0, 0, 0)), "Environmental Science", true, 0, 10 },
-                    { 15, true, "PsyArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(365), new TimeSpan(0, 7, 0, 0, 0)), new DateTimeOffset(new DateTime(2024, 4, 16, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(431), new TimeSpan(0, 7, 0, 0, 0)), "Psychology", true, 0, 11 }
+                    comment_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    article_id = table.Column<int>(type: "int", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false),
+                    comment_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.comment_id);
+                    table.ForeignKey(
+                        name: "FK_Comment_Article_article_id",
+                        column: x => x.article_id,
+                        principalTable: "Article",
+                        principalColumn: "article_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FeedBack",
+                columns: table => new
+                {
+                    feedback_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    article_id = table.Column<int>(type: "int", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false),
+                    feedback_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FeedBack", x => x.feedback_id);
+                    table.ForeignKey(
+                        name: "FK_FeedBack_Article_article_id",
+                        column: x => x.article_id,
+                        principalTable: "Article",
+                        principalColumn: "article_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "File",
+                columns: table => new
+                {
+                    file_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    file_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    file_data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    file_content_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArticleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_File", x => x.file_id);
+                    table.ForeignKey(
+                        name: "FK_File_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "article_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -312,6 +340,28 @@ namespace EduPost.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Article",
+                columns: new[] { "article_id", "AgreeToTerms", "article_name", "create_date", "description", "expire_date", "article_faculty", "Public", "status", "user_id" },
+                values: new object[,]
+                {
+                    { 1, true, "ITArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", true, 0, 7 },
+                    { 2, true, "ITArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", true, 0, 7 },
+                    { 3, true, "ITArticle03", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", false, 0, 7 },
+                    { 4, true, "ITArticle04", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", false, 0, 7 },
+                    { 5, true, "ITArticle05", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)), "Information Tecnology", true, 0, 7 },
+                    { 6, true, "CSArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4099), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4158), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", true, 0, 8 },
+                    { 7, true, "CSArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4727), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4775), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", false, 0, 8 },
+                    { 8, true, "CSArticle03", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(277), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(327), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", true, 0, 8 },
+                    { 9, true, "CSArticle04", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(2979), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(3029), new TimeSpan(0, 7, 0, 0, 0)), "Computer Science", true, 0, 8 },
+                    { 10, true, "EArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7115), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7182), new TimeSpan(0, 7, 0, 0, 0)), "Economics", true, 0, 9 },
+                    { 11, true, "EArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7437), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7483), new TimeSpan(0, 7, 0, 0, 0)), "Economics", false, 0, 9 },
+                    { 12, true, "EArticle03", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1925), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1982), new TimeSpan(0, 7, 0, 0, 0)), "Economics", true, 0, 9 },
+                    { 13, true, "ESArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5518), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5631), new TimeSpan(0, 7, 0, 0, 0)), "Environmental Science", true, 0, 10 },
+                    { 14, true, "ESArticle02", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8359), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8402), new TimeSpan(0, 7, 0, 0, 0)), "Environmental Science", true, 0, 10 },
+                    { 15, true, "PsyArticle01", new DateTimeOffset(new DateTime(2024, 4, 2, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(365), new TimeSpan(0, 7, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2024, 4, 16, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(431), new TimeSpan(0, 7, 0, 0, 0)), "Psychology", true, 0, 11 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
@@ -329,6 +379,11 @@ namespace EduPost.Migrations
                     { 2, 11 },
                     { 4, 12 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_user_id",
+                table: "Article",
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -370,6 +425,16 @@ namespace EduPost.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comment_article_id",
+                table: "Comment",
+                column: "article_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FeedBack_article_id",
+                table: "FeedBack",
+                column: "article_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_File_ArticleId",
                 table: "File",
                 column: "ArticleId");
@@ -400,7 +465,13 @@ namespace EduPost.Migrations
                 name: "Faculty");
 
             migrationBuilder.DropTable(
+                name: "FeedBack");
+
+            migrationBuilder.DropTable(
                 name: "File");
+
+            migrationBuilder.DropTable(
+                name: "Notification");
 
             migrationBuilder.DropTable(
                 name: "Status");
@@ -409,10 +480,10 @@ namespace EduPost.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Article");
 
             migrationBuilder.DropTable(
-                name: "Article");
+                name: "AspNetUsers");
         }
     }
 }

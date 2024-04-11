@@ -178,7 +178,7 @@ namespace EduPost.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFeedBack(int ArticleId, string Content)
+        public async Task<IActionResult> AddFeedback(int ArticleId, string Content)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -200,7 +200,7 @@ namespace EduPost.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteFeedBack(int feedbackId)
+        public async Task<IActionResult> DeleteFeedback(int feedbackId)
         {
             var feedback = await _context.FeedBack.FindAsync(feedbackId);
             if (feedback == null)

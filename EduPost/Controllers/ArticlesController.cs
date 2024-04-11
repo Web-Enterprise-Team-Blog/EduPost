@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.IO.Compression;
 using EduPost.Service;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace EduPost.Controllers
 {
@@ -20,13 +21,15 @@ namespace EduPost.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly NotificationHub _notificationHub;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+		private readonly ReactionService _reactionService;
+		private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ArticlesController(ApplicationDbContext context, UserManager<User> userManager, NotificationHub notificationHub,  IWebHostEnvironment webHostEnvironment)
+        public ArticlesController(ApplicationDbContext context, UserManager<User> userManager, NotificationHub notificationHub, ReactionService reactionService, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _userManager = userManager;
             _notificationHub = notificationHub;
+            _reactionService = reactionService;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -88,8 +91,90 @@ namespace EduPost.Controllers
             return View(article);
         }
 
-        // GET: Articles/Create
-        [HttpGet]
+		[HttpGet]
+		public async Task<IActionResult> GetUserReaction(int articleId)
+		{
+			try
+			{
+				var userIdAsString = _userManager.GetUserId(User);
+				if (int.TryParse(userIdAsString, out int userId))
+				{
+					var reaction = await _reactionService.GetUserReaction(userId, articleId);
+
+					if (reaction != null)
+					{
+						return Json(new { success = true, isLike = reaction.ReactionType });
+					}
+					else
+					{
+						return Json(new { success = true, message = "You have not reacted to this article before." });
+					}
+				}
+				else
+				{
+					return Json(new { success = false, message = "Invalid user ID." });
+				}
+			}
+			catch (Exception ex)
+			{
+				return Json(new { success = false, message = ex.Message });
+			}
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetArticleReactionCounts(int articleId)
+		{
+			try
+			{
+				var likeCount = await _context.UserReaction
+				   .Where(r => r.ArticleId == articleId && r.ReactionType)
+				   .CountAsync();
+
+				var dislikeCount = await _context.UserReaction
+				   .Where(r => r.ArticleId == articleId && !r.ReactionType)
+				   .CountAsync();
+
+				return Json(new { success = true, likeCount = likeCount, dislikeCount = dislikeCount });
+			}
+			catch (Exception ex)
+			{
+				return Json(new { success = false, message = ex.Message });
+			}
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> LikeOrDislikeArticle(int userId, int articleId, bool isLike)
+		{
+			try
+			{
+				await _reactionService.LikeOrDislikeArticle(userId, articleId, isLike);
+				return Json(new { success = true });
+			}
+			catch (Exception ex)
+			{
+				return Json(new { success = false, message = ex.Message });
+			}
+		}
+
+
+		[HttpPost]
+		public async Task<IActionResult> LikeArticle(int articleId)
+		{
+			var userId = int.Parse(_userManager.GetUserId(User));
+			await _reactionService.LikeArticle(userId, articleId);
+			return RedirectToAction("Details", new { id = articleId });
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> DislikeArticle(int articleId)
+		{
+			var userId = int.Parse(_userManager.GetUserId(User));
+			await _reactionService.DislikeArticle(userId, articleId);
+			return RedirectToAction("Details", new { id = articleId });
+		}
+
+		// GET: Articles/Create
+		[HttpGet]
         public IActionResult Create()
         {
             var article = new Article
@@ -359,8 +444,12 @@ namespace EduPost.Controllers
                 _context.File.Remove(file);
             }
 
-            // Delete the Article object
-            _context.Article.Remove(article);
+			var reactions = await _context.UserReaction
+		        .Where(ur => ur.ArticleId == id)
+		        .ToListAsync();
+			_context.UserReaction.RemoveRange(reactions);
+
+			_context.Article.Remove(article);
 
             await _context.SaveChangesAsync();
 
