@@ -86,11 +86,11 @@
         }
 
     <div class="comments-section">
-        <h3>Comments:</h3>
-        @if (Model.Comments != null && Model.Comments.Any())
+        <h3>FeedBacks:</h3>
+        @if (Model.FeedBacks != null && Model.FeedBacks.Any())
         {
             <ul>
-                @foreach (var comment in Model.Comments)
+                @foreach (var comment in Model.FeedBacks)
                 {
                     <li>
                         <strong>@comment.CreatedDate.ToString("dd MMM yyyy"): </strong>@comment.Content

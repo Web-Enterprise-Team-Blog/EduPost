@@ -23,10 +23,10 @@
                 <input asp-for="Files" type="file" class="form-control" multiple />
                 <span asp-validation-for="Files" class="text-danger"></span>
             </div>
-            <div class="form-group" style="margin-top:20px;">
+            @* <div class="form-group" style="margin-top:20px;">
                 <input asp-for="Public" type="checkbox" class="form-check-input" />
                 <label for="Public" class="form-check-label">Public (Check this to set this article viewable by guest users)</label>
-            </div>
+            </div> *@
             <div class="form-group" style="margin-top:20px;">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control"></textarea>

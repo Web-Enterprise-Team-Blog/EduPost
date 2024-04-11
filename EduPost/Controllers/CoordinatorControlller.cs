@@ -88,10 +88,10 @@ namespace EduPost.Controllers
 
             var article = await _context.Article
                 .Include(a => a.Files)
-                .Include(a => a.Comments)
+                .Include(a => a.FeedBacks)
                 .FirstOrDefaultAsync(a => a.ArticleId == id);
 
-            var userIds = article.Comments.Select(c => c.UserId).Distinct();
+            var userIds = article.FeedBacks.Select(c => c.UserId).Distinct();
             var users = await _context.Users
                 .Where(u => userIds.Contains(u.Id))
                 .ToDictionaryAsync(u => u.Id, u => u.UserName);
@@ -105,7 +105,35 @@ namespace EduPost.Controllers
             return View(article);
         }
 
-        [HttpGet]
+        public async Task<IActionResult> TogglePublic(int AID)
+        {
+            Article article = await _context.Article.FindAsync(AID);
+            if(article == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            if(article.Public == true)
+            {
+                article.Public = false;
+                _context.Update(article);
+                await _context.SaveChangesAsync();
+                var message = $"Your article: \"{article.ArticleTitle}\" has been set to Private \"{_userManager.GetUserAsync(User).Result.UserName}\".";
+                await _notificationHub.SendNotificationToUser(message, article.UserID);
+
+            }
+            else
+            {
+                article.Public = true;
+                _context.Update(article);
+                await _context.SaveChangesAsync();
+                var message = $"Your article: \"{article.ArticleTitle}\" has been set to Public \"{_userManager.GetUserAsync(User).Result.UserName}\".";
+                await _notificationHub.SendNotificationToUser(message, article.UserID);
+
+            }
+            return RedirectToAction(nameof(Details), new {id = AID});
+        }
+
+		[HttpGet]
         public async Task<IActionResult> DownloadArticleFiles(int? id)
         {
             if (id == null || _context.Article == null)
@@ -150,14 +178,14 @@ namespace EduPost.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(int ArticleId, string Content)
+        public async Task<IActionResult> AddFeedBack(int ArticleId, string Content)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return Unauthorized();
             }
-            var comment = new Comment
+            var feedback = new FeedBack
             {
                 ArticleId = ArticleId,
                 Content = Content,
@@ -165,17 +193,17 @@ namespace EduPost.Controllers
                 UserId = user.Id 
             };
 
-            _context.Comment.Add(comment);
+            _context.FeedBack.Add(feedback);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = ArticleId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteComment(int commentId)
+        public async Task<IActionResult> DeleteFeedBack(int feedbackId)
         {
-            var comment = await _context.Comment.FindAsync(commentId);
-            if (comment == null)
+            var feedback = await _context.FeedBack.FindAsync(feedbackId);
+            if (feedback == null)
             {
                 return NotFound();
             }
@@ -186,15 +214,15 @@ namespace EduPost.Controllers
                 return Unauthorized();
             }
 
-            if (comment.UserId != user.Id)
+            if (feedback.UserId != user.Id)
             {
-                return Forbid("You can delete only your own comment!");
+                return Forbid("You can delete only your own feedback!");
             }
 
-            _context.Comment.Remove(comment);
+            _context.FeedBack.Remove(feedback);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", new { id = comment.ArticleId });
+            return RedirectToAction("Details", new { id = feedback.ArticleId });
         }
 
         public async Task<IActionResult> ApproveStatus(int articleId)
@@ -204,7 +232,7 @@ namespace EduPost.Controllers
             {
                 article.StatusId = 1;
                 await _context.SaveChangesAsync();
-                var message = $"Your article: {article.ArticleTitle} has been Approved.";
+                var message = $"Your article: \"{article.ArticleTitle}\" has been Approved by coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
                 await _notificationHub.SendNotificationToUser(message, article.UserID);
             }
 
@@ -218,7 +246,7 @@ namespace EduPost.Controllers
             {
                 article.StatusId = 2;
                 await _context.SaveChangesAsync();
-                var message = $"Your article: {article.ArticleTitle} has been Declined.";
+                var message = $"Your article: \"{article.ArticleTitle}\" has been Declined by coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
                 await _notificationHub.SendNotificationToUser(message, article.UserID);
             }
 

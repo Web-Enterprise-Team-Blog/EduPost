@@ -155,7 +155,19 @@
                                             @Html.DisplayNameFor(model => model.Public)
                                         </dt>
                                         <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.Public)
+											@Html.DisplayFor(model => model.Public)
+                                            <div  style="display:inline">
+												<a class ="btn btn-primary" asp-action="TogglePublic" asp-route-AID="@Model.ArticleId">
+                                                    @if(Model.Public == false)
+                                                    {
+														<p>Change to public</p>
+													}
+                                                    else
+                                                    {
+                                                        <p>Change to private</p>
+                                                    }
+                                                </a>
+											</div>
                                         </dd>
                                         <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.Description)
@@ -198,11 +210,11 @@
                                 </div>
 
                                 <div class="comments-section">
-                                    <h3>Comments:</h3>
-                                    @if (Model.Comments != null && Model.Comments.Any())
+                                    <h3>FeedBacks:</h3>
+                                    @if (Model.FeedBacks != null && Model.FeedBacks.Any())
                                     {
                                         <ul>
-                                            @foreach (var comment in Model.Comments)
+                                            @foreach (var comment in Model.FeedBacks)
                                             {
                                                 <li>
                                                     <strong>@comment.CreatedDate.ToString("dd MMM yyyy"): </strong>@comment.Content

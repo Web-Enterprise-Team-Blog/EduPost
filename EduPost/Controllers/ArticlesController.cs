@@ -71,10 +71,10 @@ namespace EduPost.Controllers
 
             var article = await _context.Article
                 .Include(a => a.Files)
-                .Include(a => a.Comments)
+                .Include(a => a.FeedBacks)
                 .FirstOrDefaultAsync(a => a.ArticleId == id);
 
-            var userIds = article.Comments.Select(c => c.UserId).Distinct();
+            var userIds = article.FeedBacks.Select(c => c.UserId).Distinct();
             var users = await _context.Users
                 .Where(u => userIds.Contains(u.Id))
                 .ToDictionaryAsync(u => u.Id, u => u.UserName);
@@ -118,7 +118,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Public,Description")] Article article, IFormFile[] files, ModelStateDictionary modelState)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Description")] Article article, IFormFile[] files, ModelStateDictionary modelState)
         {
             try
             {
@@ -181,7 +181,7 @@ namespace EduPost.Controllers
                 _context.Add(article);
                 await _context.SaveChangesAsync();
 
-                var message = $"Article {article.ArticleTitle} has been created.";
+                var message = $"User {_userManager.GetUserAsync(User).Result.UserName} has created a new article.";
                 await _notificationHub.SendNotificationToCoordinator(message, article.Faculty);
 
                 return RedirectToAction(nameof(Index));
@@ -224,7 +224,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Public,Description")] Article article, IFormFile[] files)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Description")] Article article, IFormFile[] files)
         {
             try
             {
@@ -280,7 +280,6 @@ namespace EduPost.Controllers
                         if (existingArticle != null)
                         {
                             existingArticle.ArticleTitle = article.ArticleTitle;
-                            existingArticle.Public = article.Public;
                             existingArticle.Description = article.Description;
 
                             _context.Entry(existingArticle).State = EntityState.Modified;

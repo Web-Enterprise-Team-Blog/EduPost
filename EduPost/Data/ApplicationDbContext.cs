@@ -18,6 +18,7 @@ namespace EduPost.Data
         public DbSet<EduPost.Models.Article>? Article { get; set; }
         public DbSet<EduPost.Models.Status>? Status { get; set; }
         public DbSet<EduPost.Models.Comment>? Comment { get; set; }
+        public DbSet<EduPost.Models.FeedBack>? FeedBack { get; set; }
         public DbSet<EduPost.Models.Notification>? Notification { get; set; }
         public DbSet<EduPost.Models.File>? File { get; set; }
         public DbSet<EduPost.Models.Faculty>? Faculty { get; set; } = default!;
@@ -34,6 +35,12 @@ namespace EduPost.Data
 
             builder.Entity<Article>()
             .HasMany(a => a.Comments) 
+            .WithOne()
+            .HasForeignKey(c => c.ArticleId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Article>()
+            .HasMany(a => a.FeedBacks)
             .WithOne()
             .HasForeignKey(c => c.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
