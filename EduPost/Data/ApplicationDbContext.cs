@@ -21,6 +21,7 @@ namespace EduPost.Data
         public DbSet<EduPost.Models.FeedBack>? FeedBack { get; set; }
         public DbSet<EduPost.Models.Notification>? Notification { get; set; }
 		public DbSet<EduPost.Models.UserReaction>? UserReaction { get; set; }
+		public DbSet<EduPost.Models.AYear>? AYear { get; set; }
 		public DbSet<EduPost.Models.File>? File { get; set; }
         public DbSet<EduPost.Models.Faculty>? Faculty { get; set; } = default!;
         public DbSet<EduPost.Models.Role>? Role { get; set; } = default!;

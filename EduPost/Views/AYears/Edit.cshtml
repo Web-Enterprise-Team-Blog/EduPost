@@ -1,4 +1,4 @@
-﻿@model EduPost.Models.Role
+﻿@model EduPost.Models.AYear
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,6 @@
 @{
     Layout = null;
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -73,9 +72,9 @@
                         <a href="#" class="nav-link dropdown-toggle active show" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Management</a>
                         <div class="dropdown-menu bg-transparent border-0 show">
                             <a href="/Users/Index" class="dropdown-item">Users</a>
-                            <a href="/Roles/Index" class="dropdown-item active">Roles</a>
+                            <a href="/Roles/Index" class="dropdown-item">Roles</a>
                             <a href="/Faculties/Index" class="dropdown-item">Faculties</a>
-                            <a href="/AYears/Index" class="dropdown-item">Academic Years</a>
+                            <a href="/AYears/Index" class="dropdown-item active">Academic Years</a>
                         </div>
                     </div>
                 </div>
@@ -92,9 +91,6 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -104,7 +100,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="Identity/Account/Logout" class="dropdown-item">Log Out</a>
+                            <a href="/Identity/Account/Logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -115,30 +111,47 @@
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Roles Table</h6>
-                            <p>
-                                <a href="/Roles/Index">Back to list</a>
-                            </p>
-                            <div class="table-responsive">
-                                <dl class="row">
-                                    <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.Name)
-                                    </dt>
-                                    <dd class="col-sm-10">
-                                        @Html.DisplayFor(model => model.Name)
-                                    </dd>
-                                </dl>
+                        <h4>Academic Year</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="Edit">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="YearId" />
+                                    <div class="form-group">
+                                        <label asp-for="YearTitle" class="control-label"></label>
+                                        <input asp-for="YearTitle" class="form-control" />
+                                        <span asp-validation-for="YearTitle" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="BeginDate" class="control-label"></label>
+                                        <input asp-for="BeginDate" class="form-control" />
+                                        <span asp-validation-for="BeginDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="EndDate" class="control-label"></label>
+                                        <input asp-for="EndDate" class="form-control" />
+                                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </form>
                             </div>
+                        </div>
+                        <div>
+                            <a asp-action="Index">Back to List</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Table End -->
-
         </div>
-        <!-- Content End -->
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Table End -->
+
+    </div>
+    <!-- Content End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
