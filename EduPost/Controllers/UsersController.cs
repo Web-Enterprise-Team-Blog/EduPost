@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EduPost.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,11 +26,33 @@ namespace EduPost.Controllers
         }
 
         // GET: Users
+        [Authorize(Roles = "Admin, Manager, Coordinator")]
         public async Task<IActionResult> Index()
         {
-              return _context.User != null ? 
-                          View(await _context.User.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.User'  is null.");
+            if (User.IsInRole("Admin"))
+            {
+                return _context.User != null ?
+                        View(await _context.User.Where(u => u.Role != "Admin").ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.User'  is null.");
+            }
+            if (User.IsInRole("Manager"))
+            {
+
+                return _context.User != null ?
+                        View(await _context.User.Where(u => u.Role == "User").ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.User'  is null.");
+            }
+            if (User.IsInRole("Coordinator"))
+            {
+                User currentUser = await _userManager.GetUserAsync(User);
+                return _context.User != null ?
+                        View(await _context.User.Where(u => u.Role == "User" && u.Faculty == currentUser.Faculty).ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.User'  is null.");
+            }
+            else
+            {
+                throw new UnauthorizedAccessException();
+            }
         }
 
         // GET: Users/Details/5
@@ -52,16 +73,12 @@ namespace EduPost.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
+       
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserName,Email,FacultyId,RoleId,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user, string password)
         {
@@ -83,6 +100,7 @@ namespace EduPost.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.User == null)
@@ -109,7 +127,8 @@ namespace EduPost.Controllers
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
-		[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
 		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User userInput)
 		{
 			if (id != userInput.Id)
@@ -173,8 +192,9 @@ namespace EduPost.Controllers
 			return View(userInput);
 		}
 
-		// GET: Users/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+        // GET: Users/Delete/5
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.User == null)
             {
@@ -193,6 +213,7 @@ namespace EduPost.Controllers
 
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

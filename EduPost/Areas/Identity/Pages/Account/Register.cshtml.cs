@@ -27,7 +27,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EduPost.Areas.Identity.Pages.Account
 {
-    //[Authorize]
+    [Authorize(Roles = "Admin, Manager, Coordinator")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
@@ -124,12 +124,30 @@ namespace EduPost.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            var roles = await _roleManager.Roles.ToListAsync();
-            ViewData["Roles"] = new SelectList(roles, "Name", "Name");
+            if (User.IsInRole("Admin"))
+            {
+                var roles = await _roleManager.Roles.Where(r => r.Name != "Admin").ToListAsync();
+                ViewData["Roles"] = new SelectList(roles, "Name", "Name");
+            }
+            if (User.IsInRole("Coordinator") || User.IsInRole("Manager"))
+            {
+                var roles = await _roleManager.Roles.Where(r => r.Name == "User" || r.Name == "Guest").ToListAsync();
+                ViewData["Roles"] = new SelectList(roles, "Name", "Name");
+            }
 
-            var faculties = await _context.Faculty.ToListAsync();
-            ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
-		}
+            if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+            {
+                var faculties = await _context.Faculty.ToListAsync();
+                ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
+            }
+            if (User.IsInRole("Coordinator"))
+            {
+                User currentUser = await _userManager.GetUserAsync(User);
+                var faculties = await _context.Faculty.Where(f => f.FacultyName == currentUser.Faculty).ToListAsync();
+                ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
+            }
+
+        }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
