@@ -52,8 +52,8 @@ function renderCharts(articlesByStatus, articlesPerMonth, approvalRateOverTime, 
             datasets: [{
                 label: 'Submissions',
                 data: counts,
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(131, 131, 131, 0.7)',
+                borderColor: 'rgba(131, 131, 131, 1)',
                 borderWidth: 1
             }]
         },
