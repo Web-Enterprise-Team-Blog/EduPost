@@ -14,13 +14,14 @@ namespace EduPost.Models
         [Required]
         public override string? Email { get; set; }
 
-        //[Required]
         [Column("faculty")]
         public string? Faculty { get; set; }
 
-        //[Required]
         [Column("role")]
         public string? Role { get; set; }
         public List<Article>? Article { get; set; }
+
+        [Column("first_login")]
+        public bool? FirstLogin { get; set; }
     }
 }

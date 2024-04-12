@@ -129,7 +129,7 @@ namespace EduPost.Controllers
 		[HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User userInput)
+		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,FirstLogin")] User userInput)
 		{
 			if (id != userInput.Id)
 			{
@@ -156,6 +156,9 @@ namespace EduPost.Controllers
                     _context.Entry(userInDb).Property(x => x.LockoutEnd).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.LockoutEnabled).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.AccessFailedCount).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.FirstLogin).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.NormalizedEmail).IsModified = false;
+                    _context.Entry(userInDb).Property(x => x.NormalizedUserName).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.Role).IsModified = true;
 					_context.Entry(userInDb).Property(x => x.Faculty).IsModified = true;
 					_context.SaveChanges();

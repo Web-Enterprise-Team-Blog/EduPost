@@ -120,6 +120,11 @@ namespace EduPost.Areas.Identity.Pages.Account
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
                     if (user != null)
                     {
+                        if (user.FirstLogin == null)
+                        {
+                            returnUrl = Url.Content("~/Identity/Account/Manage/FirstLogin");
+                            return LocalRedirect(returnUrl);
+                        }
                         var roles = await _signInManager.UserManager.GetRolesAsync(user);
                         if (roles.Contains("Admin"))
                         {
