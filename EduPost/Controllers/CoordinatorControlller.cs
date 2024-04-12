@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using File = EduPost.Models.File;
 
 namespace EduPost.Controllers
@@ -398,10 +399,37 @@ namespace EduPost.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>UpdateExpireDate(int articleid, DateTime expireDate)
+        {
+            try
+            {
+                var article = await _context.Article.FindAsync(articleid);
+
+                if (article == null)
+                {
+                    return NotFound();
+                }
+
+                article.ExpireDate = expireDate;
+
+                _context.Entry(article).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Details), new { id = articleid });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error updating expiration date: {ex.Message}");
+                return View();
+            }
+        }
+
+
+        [HttpPost]
         public IActionResult CheckExpiredArticles()
         {
             var articles = _context.Article
-                .Where(a => a.StatusId == 0)
                 .ToList();
 
             var expiredArticles = articles
@@ -417,12 +445,12 @@ namespace EduPost.Controllers
             return RedirectToAction("Articles");
         }
 
-        public IActionResult ExtendDeadline(int articleId)
+        public IActionResult ExtendDeadline(int articleId, DateTime deadlineDate)
         {
             var article = _context.Article.Find(articleId);
             if (article != null)
             {
-                article.ExpireDate = DateTime.UtcNow.AddDays(7);
+                article.ExpireDate = deadlineDate;
                 article.StatusId = 0;
                 _context.SaveChanges();
             }
