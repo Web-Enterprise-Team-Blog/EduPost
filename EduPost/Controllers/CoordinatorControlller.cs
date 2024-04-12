@@ -105,6 +105,88 @@ namespace EduPost.Controllers
             return View(article);
         }
 
+        public async Task<string> GetUserFaculty()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return user?.Faculty;
+        }
+
+        public async Task<ActionResult> Statistic()
+        {
+            string faculty = await GetUserFaculty();
+
+            var articlesByStatus = _context.Article
+                .Where(a => a.Faculty == faculty)
+                .GroupBy(a => a.StatusId)
+                .Select(group => new ArticlesByStatusViewModel
+                {
+                    Status = group.Key == 0 ? "Pending" : group.Key == 1 ? "Approved" : "Declined",
+                    Count = group.Count()
+                }).ToList();
+
+            var articlesPerMonth = _context.Article
+                .Where(a => a.Faculty == faculty && a.CreatedDate.HasValue && a.CreatedDate.Value.Year == DateTimeOffset.Now.Year)
+                .ToList() 
+                .GroupBy(a => a.CreatedDate.Value.Month)
+                .Select(group => new ArticlesPerMonthViewModel
+                {
+                    Month = group.Key,
+                    Count = group.Count()
+                }).ToList();
+
+            var approvalAndDeclineRatesOverTime = _context.Article
+                .Where(a => a.Faculty == faculty && a.CreatedDate.HasValue)
+                .GroupBy(a => a.CreatedDate.Value.Month)
+                .Select(group => new
+                {
+                    Month = group.Key,
+                    ApprovedCount = group.Count(a => a.StatusId == 1),
+                    DeclinedCount = group.Count(a => a.StatusId == 2),
+                    TotalCount = group.Count()
+                })
+                .Select(data => new ApprovalRateViewModel
+                {
+                    Month = data.Month,
+                    ApprovalRate = (double)data.ApprovedCount / data.TotalCount,
+                    DeclineRate = (double)data.DeclinedCount / data.TotalCount
+                })
+                .ToList();
+
+
+
+            var articles = await _context.Article
+                .Where(a => a.Faculty == faculty)
+                .ToListAsync();
+
+            var groupedArticles = articles
+                .GroupBy(a => a.UserID)
+                .OrderByDescending(group => group.Count())
+                .Take(5)
+                .ToList();
+
+            var topContributors = new List<TopContributorViewModel>();
+            foreach (var group in groupedArticles)
+            {
+                var userName = group.Key.HasValue ? (await _userManager.FindByIdAsync(group.Key.Value.ToString()))?.UserName : null;
+                topContributors.Add(new TopContributorViewModel
+                {
+                    Contributor = userName,
+                    Count = group.Count()
+                });
+            }
+
+
+            var model = new StatisticViewModel
+            {
+                ArticlesByStatus = articlesByStatus,
+                ArticlesPerMonth = articlesPerMonth,
+                ApprovalRateOverTime = approvalAndDeclineRatesOverTime,
+                TopContributors = topContributors
+            };
+
+            return View(model);
+        }
+
         public async Task<IActionResult> TogglePublic(int AID)
         {
             Article article = await _context.Article.FindAsync(AID);

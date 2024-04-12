@@ -99,7 +99,6 @@ function renderCharts(articlesPerFaculty, articlesPerDay, articlesByStatus, arti
 
     var facultyLabels = articlesByFaculty.map(a => a.faculty);
 
-    // Extract counts for each status
     var dataByFaculty = articlesByFaculty.map(a => ({
         faculty: a.faculty,
         pending: a.pending,
@@ -107,7 +106,6 @@ function renderCharts(articlesPerFaculty, articlesPerDay, articlesByStatus, arti
         declined: a.declined
     }));
 
-    // Create datasets for each status
     var datasets = [
         {
             label: 'Pending',
@@ -126,7 +124,6 @@ function renderCharts(articlesPerFaculty, articlesPerDay, articlesByStatus, arti
         }
     ];
 
-    // Render multi-bar chart
     var ctxBar = document.getElementById('articlesByFacultyBarChart').getContext('2d');
     var articlesByFacultyBarChart = new Chart(ctxBar, {
         type: 'bar',
