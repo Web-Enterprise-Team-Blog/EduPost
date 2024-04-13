@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduPost.Models
 {
-    public class Comment
+	public class Comment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,5 +27,9 @@ namespace EduPost.Models
         [Column("comment_date")]
         [Required]
         public DateTimeOffset CreatedDate { get; set; }
-    }
+
+		[Column("edited")]
+		[Required]
+		public bool? IsEdited { get; set; }
+	}
 }

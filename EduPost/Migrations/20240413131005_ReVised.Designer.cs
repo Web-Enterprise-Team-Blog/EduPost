@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240413080521_Anonymous")]
-    partial class Anonymous
+    [Migration("20240413131005_ReVised")]
+    partial class ReVised
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -875,6 +875,8 @@ namespace EduPost.Migrations
 
                     b.HasKey("UserReactionId");
 
+                    b.HasIndex("ArticleId");
+
                     b.ToTable("UserReaction");
                 });
 
@@ -1080,6 +1082,15 @@ namespace EduPost.Migrations
                     b.Navigation("Article");
                 });
 
+            modelBuilder.Entity("EduPost.Models.UserReaction", b =>
+                {
+                    b.HasOne("EduPost.Models.Article", null)
+                        .WithMany("UserReactions")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("EduPost.Models.Role", null)
@@ -1138,6 +1149,8 @@ namespace EduPost.Migrations
                     b.Navigation("FeedBacks");
 
                     b.Navigation("Files");
+
+                    b.Navigation("UserReactions");
                 });
 
             modelBuilder.Entity("EduPost.Models.User", b =>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduPost.Migrations
 {
     /// <inheritdoc />
-    public partial class Revised : Migration
+    public partial class ReVised : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,7 @@ namespace EduPost.Migrations
                     user_email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     faculty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    first_login = table.Column<bool>(type: "bit", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
@@ -54,6 +55,21 @@ namespace EduPost.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AYear",
+                columns: table => new
+                {
+                    year_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    year_title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    begin_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    end_date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AYear", x => x.year_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,7 +254,8 @@ namespace EduPost.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     article_id = table.Column<int>(type: "int", nullable: false),
-                    user_id = table.Column<int>(type: "int", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: true),
+                    anonymous = table.Column<bool>(type: "bit", nullable: true),
                     comment_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
@@ -296,6 +313,27 @@ namespace EduPost.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserReaction",
+                columns: table => new
+                {
+                    UserReactionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_id = table.Column<int>(type: "int", nullable: false),
+                    article_id = table.Column<int>(type: "int", nullable: false),
+                    reaction_type = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserReaction", x => x.UserReactionId);
+                    table.ForeignKey(
+                        name: "FK_UserReaction_Article_article_id",
+                        column: x => x.article_id,
+                        principalTable: "Article",
+                        principalColumn: "article_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "role_id", "ConcurrencyStamp", "roleName", "NormalizedName" },
@@ -310,21 +348,21 @@ namespace EduPost.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "user_email", "EmailConfirmed", "faculty", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "role", "SecurityStamp", "TwoFactorEnabled", "user_name" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "user_email", "EmailConfirmed", "faculty", "first_login", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "role", "SecurityStamp", "TwoFactorEnabled", "user_name" },
                 values: new object[,]
                 {
-                    { 1, 0, "61521b0c-13fb-44a0-b67c-f753cf71bba5", "TestEmail@email.com", true, "Admin", true, null, "TESTEMAIL@EMAIL.COM", "TESTEMAIL@EMAIL.COM", "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==", null, false, "Admin", "P326W733E2RXH66PPK4ZYOQRQREJTMUD", false, "TestEmail@email.com" },
-                    { 2, 0, "d87eaa6a-5599-41b8-8ad9-a838f4f54469", "ITHead@email.com", true, "Information Tecnology", true, null, "ITHEAD@EMAIL.COM", "ITHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEAQBYKWo+E7dm+Ima6pOPGomuDXZgLdRgK1tLB5TzHPj02OnEYBxtByCJATakG/mrg==", null, false, "Coordinator", "44GZPSXJBR6BQBPNQYL6CLA4YJ45BLZR", false, "ITHead@email.com" },
-                    { 3, 0, "c45238d0-e841-48e0-a3dc-977f99dc4ccc", "CSHead@email.com", true, "Computer Science", true, null, "CSHEAD@EMAIL.COM", "CSHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEKr/dKYAC/NQ7UcliNfcOgErqZ+BSME9uFvc+pKZvd93r1IdlPCLeaLE/4TLjD0oxA==", null, false, "Coordinator", "75CKF5JSM6GVN3T23KGNTDZWLZIRUHJ4", false, "CSHead@email.com" },
-                    { 4, 0, "65eb5b53-ca56-486b-a259-d3298110283c", "EHead@email.com", true, "Economics", true, null, "EHEAD@EMAIL.COM", "EHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEI0CPsg46g7UZPhdS4w8AblJ7Rjr6ZTAHxldpci/hdk9VDZ4ZFv8Ttm/yCqYT7+ExQ==", null, false, "Coordinator", "2QYLW55AYTFQXCNENHOBC5CV7XUWNZS2", false, "EHead@email.com" },
-                    { 5, 0, "abc639ef-d26d-41ab-966f-f7354953bc2d", "ESHead@email.com", true, "Environmental Science", true, null, "ESHEAD@EMAIL.COM", "ESHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEMe25e1Gl1pCWK4HMaZxKQ8LZ0K/lrHK47jLVaEPeQM3Fsnl9QUjteNm5Lgw72mrWg==", null, false, "Coordinator", "DNKIX4TEPAINNDQVTKDCVRTWOGMOA5WX", false, "ESHead@email.com" },
-                    { 6, 0, "72db441f-2d91-4aac-8460-8009d80847d4", "PsyHead@email.com", true, "Psychology", true, null, "PSYHEAD@EMAIL.COM", "PSYHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEIzrdjW8BK7V/nYdV6Q7czg1WqmweIn+OxF7nNSjE79gGkchJOee73gXZGyVkwu1Eg==", null, false, "Coordinator", "WM5VWO55FUMUZ2WOELN73KXSFP7TIHXY", false, "PsyHead@email.com" },
-                    { 7, 0, "eb09b0fb-ec00-493a-922a-dac179910c75", "ITUser@email.com", true, "Information Tecnology", true, null, "ITUSER@EMAIL.COM", "ITUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEH+sZz3bFv5Wywum0wvsGfPWHcHzrU1eP3NFCsZgCv+i4iLsX/hbwo5UAoa5DXEY1Q==", null, false, "User", "KL4GXYEBVQCM4CMOUHUWGVA76X5GWPLK", false, "ITUser@email.com" },
-                    { 8, 0, "53038d4e-7b6d-4185-8e7f-2415763a63d5", "CSUser@email.com", true, "Computer Science", true, null, "CSUSER@EMAIL.COM", "CSUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEC2lBMmzn9Yz4SZc01Pp0gtWDaUXyEYFQkFmprsa93UzlO5IoXSktJ6WnO2wfzBAtw==", null, false, "User", "YO6SY4A2FLBOS7ZHD4GRYTXZTKCD4JOM", false, "CSUser@email.com" },
-                    { 9, 0, "5288bb02-53b6-47cf-9da5-a21eb80b3b13", "EUser@email.com", true, "Economics", true, null, "EUSER@EMAIL.COM", "EUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEJo3QDCo6vtJ6l1GW3RaXbYL0+jKR+Tp8/x+Ny1VoAJhh/Mb2c+JOEA3MF0K68wkUg==", null, false, "User", "7ASQ2UGT33TIBBIGWOHIZRSTT3ZZWSHA", false, "EUser@email.com" },
-                    { 10, 0, "893122b9-115a-41c3-b526-fc7cda035a6b", "ESUser@email.com", true, "Environmental Science", true, null, "ESUSER@EMAIL.COM", "ESUSER@EMAIL.COM", "AQAAAAIAAYagAAAAECmJwOOIUtxINztEbzdBGoIv8vic33hW/XaXWx524PnHCzAq0+r9h8qXWflV9dAreA==", null, false, "User", "ZDEUN3C3CICWEQN6KH4AI3UFWJCWGA5A", false, "ESUser@email.com" },
-                    { 11, 0, "99b4129c-6f43-4332-80e8-1abfd403d54f", "PsyUser@email.com", true, "Psychology", true, null, "PSYUSER@EMAIL.COM", "PSYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAELRnJOAVIaxsmhQAwr4S4MghTgxv8ZKuJVGGcIhRaHb55dkpwnwYC86GlM9qGthE4A==", null, false, "User", "XCVBJEVYK3X2AO3N26IMH2LTVOXNPWEN", false, "PsyUser@email.com" },
-                    { 12, 0, "f2a383ab-3759-4516-9107-fd7b075d1f23", "Manager@email.com", true, "Information Tecnology", true, null, "MANAGER@EMAIL.COM", "MANAGER@EMAIL.COM", "AQAAAAIAAYagAAAAEM+mPvVomCRp2EY60mU1dycFTYnWTmGIzkvnWy1R47/zs5zd9zIrRO2uDgX/wJoJmw==", null, false, "User", "OK5EHYUMTYTQDEY5FHJVZMIYUYUYXMP2", false, "Manager@email.com" }
+                    { 1, 0, "61521b0c-13fb-44a0-b67c-f753cf71bba5", "TestEmail@email.com", true, "Admin", null, true, null, "TESTEMAIL@EMAIL.COM", "TESTEMAIL@EMAIL.COM", "AQAAAAIAAYagAAAAEBdGZDqY/P61BXsLDI0xzUn5ZqaiwOMGgzYjGpoJKv8eMggcDxUGL2GZcoVXetrUpA==", null, false, "Admin", "P326W733E2RXH66PPK4ZYOQRQREJTMUD", false, "TestEmail@email.com" },
+                    { 2, 0, "d87eaa6a-5599-41b8-8ad9-a838f4f54469", "ITHead@email.com", true, "Information Tecnology", null, true, null, "ITHEAD@EMAIL.COM", "ITHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEAQBYKWo+E7dm+Ima6pOPGomuDXZgLdRgK1tLB5TzHPj02OnEYBxtByCJATakG/mrg==", null, false, "Coordinator", "44GZPSXJBR6BQBPNQYL6CLA4YJ45BLZR", false, "ITHead@email.com" },
+                    { 3, 0, "c45238d0-e841-48e0-a3dc-977f99dc4ccc", "CSHead@email.com", true, "Computer Science", null, true, null, "CSHEAD@EMAIL.COM", "CSHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEKr/dKYAC/NQ7UcliNfcOgErqZ+BSME9uFvc+pKZvd93r1IdlPCLeaLE/4TLjD0oxA==", null, false, "Coordinator", "75CKF5JSM6GVN3T23KGNTDZWLZIRUHJ4", false, "CSHead@email.com" },
+                    { 4, 0, "65eb5b53-ca56-486b-a259-d3298110283c", "EHead@email.com", true, "Economics", null, true, null, "EHEAD@EMAIL.COM", "EHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEI0CPsg46g7UZPhdS4w8AblJ7Rjr6ZTAHxldpci/hdk9VDZ4ZFv8Ttm/yCqYT7+ExQ==", null, false, "Coordinator", "2QYLW55AYTFQXCNENHOBC5CV7XUWNZS2", false, "EHead@email.com" },
+                    { 5, 0, "abc639ef-d26d-41ab-966f-f7354953bc2d", "ESHead@email.com", true, "Environmental Science", null, true, null, "ESHEAD@EMAIL.COM", "ESHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEMe25e1Gl1pCWK4HMaZxKQ8LZ0K/lrHK47jLVaEPeQM3Fsnl9QUjteNm5Lgw72mrWg==", null, false, "Coordinator", "DNKIX4TEPAINNDQVTKDCVRTWOGMOA5WX", false, "ESHead@email.com" },
+                    { 6, 0, "72db441f-2d91-4aac-8460-8009d80847d4", "PsyHead@email.com", true, "Psychology", null, true, null, "PSYHEAD@EMAIL.COM", "PSYHEAD@EMAIL.COM", "AQAAAAIAAYagAAAAEIzrdjW8BK7V/nYdV6Q7czg1WqmweIn+OxF7nNSjE79gGkchJOee73gXZGyVkwu1Eg==", null, false, "Coordinator", "WM5VWO55FUMUZ2WOELN73KXSFP7TIHXY", false, "PsyHead@email.com" },
+                    { 7, 0, "eb09b0fb-ec00-493a-922a-dac179910c75", "ITUser@email.com", true, "Information Tecnology", null, true, null, "ITUSER@EMAIL.COM", "ITUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEH+sZz3bFv5Wywum0wvsGfPWHcHzrU1eP3NFCsZgCv+i4iLsX/hbwo5UAoa5DXEY1Q==", null, false, "User", "KL4GXYEBVQCM4CMOUHUWGVA76X5GWPLK", false, "ITUser@email.com" },
+                    { 8, 0, "53038d4e-7b6d-4185-8e7f-2415763a63d5", "CSUser@email.com", true, "Computer Science", null, true, null, "CSUSER@EMAIL.COM", "CSUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEC2lBMmzn9Yz4SZc01Pp0gtWDaUXyEYFQkFmprsa93UzlO5IoXSktJ6WnO2wfzBAtw==", null, false, "User", "YO6SY4A2FLBOS7ZHD4GRYTXZTKCD4JOM", false, "CSUser@email.com" },
+                    { 9, 0, "5288bb02-53b6-47cf-9da5-a21eb80b3b13", "EUser@email.com", true, "Economics", null, true, null, "EUSER@EMAIL.COM", "EUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEJo3QDCo6vtJ6l1GW3RaXbYL0+jKR+Tp8/x+Ny1VoAJhh/Mb2c+JOEA3MF0K68wkUg==", null, false, "User", "7ASQ2UGT33TIBBIGWOHIZRSTT3ZZWSHA", false, "EUser@email.com" },
+                    { 10, 0, "893122b9-115a-41c3-b526-fc7cda035a6b", "ESUser@email.com", true, "Environmental Science", null, true, null, "ESUSER@EMAIL.COM", "ESUSER@EMAIL.COM", "AQAAAAIAAYagAAAAECmJwOOIUtxINztEbzdBGoIv8vic33hW/XaXWx524PnHCzAq0+r9h8qXWflV9dAreA==", null, false, "User", "ZDEUN3C3CICWEQN6KH4AI3UFWJCWGA5A", false, "ESUser@email.com" },
+                    { 11, 0, "99b4129c-6f43-4332-80e8-1abfd403d54f", "PsyUser@email.com", true, "Psychology", null, true, null, "PSYUSER@EMAIL.COM", "PSYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAELRnJOAVIaxsmhQAwr4S4MghTgxv8ZKuJVGGcIhRaHb55dkpwnwYC86GlM9qGthE4A==", null, false, "User", "XCVBJEVYK3X2AO3N26IMH2LTVOXNPWEN", false, "PsyUser@email.com" },
+                    { 12, 0, "f2a383ab-3759-4516-9107-fd7b075d1f23", "Manager@email.com", true, "Information Tecnology", null, true, null, "MANAGER@EMAIL.COM", "MANAGER@EMAIL.COM", "AQAAAAIAAYagAAAAEM+mPvVomCRp2EY60mU1dycFTYnWTmGIzkvnWy1R47/zs5zd9zIrRO2uDgX/wJoJmw==", null, false, "User", "OK5EHYUMTYTQDEY5FHJVZMIYUYUYXMP2", false, "Manager@email.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -438,6 +476,11 @@ namespace EduPost.Migrations
                 name: "IX_File_ArticleId",
                 table: "File",
                 column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserReaction_article_id",
+                table: "UserReaction",
+                column: "article_id");
         }
 
         /// <inheritdoc />
@@ -459,6 +502,9 @@ namespace EduPost.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AYear");
+
+            migrationBuilder.DropTable(
                 name: "Comment");
 
             migrationBuilder.DropTable(
@@ -475,6 +521,9 @@ namespace EduPost.Migrations
 
             migrationBuilder.DropTable(
                 name: "Status");
+
+            migrationBuilder.DropTable(
+                name: "UserReaction");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

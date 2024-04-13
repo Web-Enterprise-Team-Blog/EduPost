@@ -54,22 +54,43 @@
 			<div class="col-lg-6">
 				<h5 class="font-weight-bold spanborder"><span>Lastest Articles</span></h5>
 				<div class="flex-md-row mb-4 box-shadow h-xl-300">
-					@for (int i = 0; i <= Model.f1.Count() - 1; i++)
+					@for (int i = 0; i <= Model.f2.Count() - 1; i++)
 					{
 						<div class="mb-3 d-flex align-items-center">
 							<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
-
 							<div class="pl-3 text-truncate">
-								<h2 class="mb-2 h6 font-weight-bold">
-									<a class="text-dark" asp-action="Details" asp-route-id="@Model.f1[i].ArticleId">@Model.f1[i].ArticleTitle</a>
-								</h2>
-								<p class="card-text small m-0 text-truncate">
-									@Model.f1[i].Description
-								</p>
-								<div class="card-text text-muted small">
-									By @Model.f1[i].User.UserName
+								<div class="card" style="border:none">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h2 class="mb-2 h6 font-weight-bold">
+													<a class="text-dark" asp-action="Details" asp-route-id="@Model.f1[i].Article.ArticleId">@Model.f1[i].Article.ArticleTitle</a>
+												</h2>
+												<p class="card-text small m-0 text-truncate">
+													@Model.f1[i].Article.Description
+												</p>
+												<div class="card-text text-muted small">
+													By @Model.f1[i].Article.User.UserName
+												</div>
+												<small class="text-muted">@Model.f1[i].Article.CreatedDate.Value.Day/@Model.f1[i].Article.CreatedDate.Value.Month/@Model.f1[i].Article.CreatedDate.Value.Year</small>
+											</div>
+											<div class="col">
+												<div class="row">
+													<div class="col">
+														<p class="card-text text-muted small">
+															@Model.f1[i].LikeCount Likes
+														</p>
+													</div>
+													<div class="col">
+														<p class="card-text text-muted small">
+															@Model.f1[i].CommentCount Comments
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-								<small class="text-muted">@Model.f1[i].CreatedDate.Value.Day/@Model.f1[i].CreatedDate.Value.Month/@Model.f1[i].CreatedDate.Value.Year</small>
 							</div>
 						</div>
 					}
@@ -83,18 +104,39 @@
 					{
 						<div class="mb-3 d-flex align-items-center">
 							<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
-
 							<div class="pl-3 text-truncate">
-								<h2 class="mb-2 h6 font-weight-bold">
-									<a class="text-dark" asp-action="Details" asp-route-id="@Model.f2[i].ArticleId">@Model.f2[i].ArticleTitle</a>
-								</h2>
-								<p class="card-text small m-0 text-truncate">
-									@Model.f2[i].Description
-								</p>
-								<div class="card-text text-muted small">
-									By @Model.f2[i].User.UserName
+								<div class="card" style="border:none">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h2 class="mb-2 h6 font-weight-bold">
+													<a class="text-dark" asp-action="Details" asp-route-id="@Model.f2[i].Article.ArticleId">@Model.f2[i].Article.ArticleTitle</a>
+												</h2>
+												<p class="card-text small m-0 text-truncate">
+													@Model.f2[i].Article.Description
+												</p>
+												<div class="card-text text-muted small">
+													By @Model.f2[i].Article.User.UserName
+												</div>
+												<small class="text-muted">@Model.f2[i].Article.CreatedDate.Value.Day/@Model.f2[i].Article.CreatedDate.Value.Month/@Model.f2[i].Article.CreatedDate.Value.Year</small>
+											</div>
+											<div class="col">
+												<div class="row">
+													<div class="col">
+														<p class="card-text text-muted small">
+															@Model.f2[i].LikeCount Likes
+														</p>
+													</div>
+													<div class="col">
+														<p class="card-text text-muted small">
+															@Model.f2[i].CommentCount Comments
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-								<small class="text-muted">@Model.f2[i].CreatedDate.Value.Day/@Model.f2[i].CreatedDate.Value.Month/@Model.f2[i].CreatedDate.Value.Year</small>
 							</div>
 						</div>
 					}
@@ -110,26 +152,46 @@
 
 			<h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
 
-			@for (int i = 0; i <= @Model.f3.Count() - 1; i++)
+			@for (int i = 0; i <= Model.f1.Count() - 1; i++)
 			{
-				<div class="mb-3 d-flex flex-row">
-					<img height="120" src="~/mundana/assets/img/demo/5.jpg">
-
-					<div class="ml-5  text-truncate">
-						<h2 class="mb-1 h4 font-weight-bold">
-							<a class="text-dark" asp-action="Details" asp-route-id="@Model.f3[i].ArticleId">@Model.f3[i].ArticleTitle</a>
-						</h2>
-						<p class="card-text small m-0 text-truncate">
-							@Model.f3[i].Description
-						</p>
-						<div class="card-text text-muted small">
-							@Model.f3[i].User.UserName
+				<div class="mb-3 d-flex align-items-center">
+					<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
+					<div class="pl-3 text-truncate">
+						<div class="card" style="border:none">
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<h2 class="mb-2 h6 font-weight-bold">
+											<a class="text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
+										</h2>
+										<p class="card-text small m-0 text-truncate">
+											@Model.f3[i].Article.Description
+										</p>
+										<div class="card-text text-muted small">
+											By @Model.f3[i].Article.User.UserName
+										</div>
+										<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
+									</div>
+									<div class="col">
+										<div class="row">
+											<div class="col">
+												<p class="card-text text-muted small">
+													@Model.f3[i].LikeCount Likes
+												</p>
+											</div>
+											<div class="col">
+												<p class="card-text text-muted small">
+													@Model.f3[i].CommentCount Comments
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<small class="text-muted">@Model.f3[i].CreatedDate.Value.Day/@Model.f3[i].CreatedDate.Value.Month/@Model.f3[i].CreatedDate.Value.Year</small>
 					</div>
 				</div>
 			}
-
 		</div>
 	</div>
 

@@ -47,7 +47,13 @@ namespace EduPost.Data
             .HasForeignKey(c => c.ArticleId)
             .OnDelete(DeleteBehavior.Cascade);
 
-            SeedData(builder);
+			builder.Entity<Article>()
+			.HasMany(a => a.UserReactions)
+			.WithOne()
+			.HasForeignKey(c => c.ArticleId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+			SeedData(builder);
         }
 
         private void SeedData(ModelBuilder builder)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411061827_Reaction")]
-    partial class Reaction
+    [Migration("20240413161321_EditComment")]
+    partial class EditComment
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,33 @@ namespace EduPost.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EduPost.Models.AYear", b =>
+                {
+                    b.Property<int>("YearId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("year_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YearId"));
+
+                    b.Property<DateTime>("BeginDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("begin_date");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("end_date");
+
+                    b.Property<string>("YearTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("year_title");
+
+                    b.HasKey("YearId");
+
+                    b.ToTable("AYear");
+                });
 
             modelBuilder.Entity("EduPost.Models.Article", b =>
                 {
@@ -281,8 +308,16 @@ namespace EduPost.Migrations
                         .HasColumnType("datetimeoffset")
                         .HasColumnName("comment_date");
 
-                    b.Property<int?>("UserId")
+                    b.Property<bool?>("IsAnon")
+                        .HasColumnType("bit")
+                        .HasColumnName("anonymous");
+
+                    b.Property<bool?>("IsEdited")
                         .IsRequired()
+                        .HasColumnType("bit")
+                        .HasColumnName("edited");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("user_id");
 
@@ -548,6 +583,10 @@ namespace EduPost.Migrations
                     b.Property<string>("Faculty")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("faculty");
+
+                    b.Property<bool?>("FirstLogin")
+                        .HasColumnType("bit")
+                        .HasColumnName("first_login");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -828,19 +867,20 @@ namespace EduPost.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserReactionId"));
 
                     b.Property<int>("ArticleId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("article_id");
 
                     b.Property<bool>("ReactionType")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("reaction_type");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
 
                     b.HasKey("UserReactionId");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserReaction");
                 });
@@ -1049,21 +1089,11 @@ namespace EduPost.Migrations
 
             modelBuilder.Entity("EduPost.Models.UserReaction", b =>
                 {
-                    b.HasOne("EduPost.Models.Article", "Article")
-                        .WithMany()
+                    b.HasOne("EduPost.Models.Article", null)
+                        .WithMany("UserReactions")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EduPost.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -1124,6 +1154,8 @@ namespace EduPost.Migrations
                     b.Navigation("FeedBacks");
 
                     b.Navigation("Files");
+
+                    b.Navigation("UserReactions");
                 });
 
             modelBuilder.Entity("EduPost.Models.User", b =>

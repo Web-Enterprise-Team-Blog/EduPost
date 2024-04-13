@@ -25,33 +25,57 @@ namespace EduPost.Controllers
             _notificationHub = notificationHub;
         }
 
-        public async Task<IActionResult> Index()
-        {
-			var user = _userManager.GetUserAsync(User).Result;
+		public async Task<IActionResult> Index()
+		{
+			var user = await _userManager.GetUserAsync(User);
 			string faculty = user.Faculty;
 
 			HomeIndexViewModel model = new HomeIndexViewModel();
-			model.f1 = await _context.Article.Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
-			model.f2 = await _context.Article
-	            .Include(a => a.User)
-	            .Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
-	            .OrderByDescending(a => _context.UserReaction
-		            .Where(ur => ur.ArticleId == a.ArticleId && ur.ReactionType)
-		            .Count())
-	            .Take(3)
-	            .ToListAsync();
-			model.f3 = await _context.Article
+
+			model.f1 = await _context.Article
 				.Include(a => a.User)
-				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
-				.OrderByDescending(a => _context.Comment
-					.Where(ur => ur.ArticleId == a.ArticleId)
-					.Count())
+				.Where(a => a.Faculty == faculty && a.StatusId == 1)
+				.Select(a => new ArticleViewModel
+				{
+					Article = a,
+					CommentCount = a.Comments.Count,
+					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
+				})
+				.OrderByDescending(a => a.Article.CreatedDate)
 				.Take(3)
 				.ToListAsync();
+
+			model.f2 = await _context.Article
+				.Include(a => a.User)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1)
+				.Select(a => new ArticleViewModel
+				{
+					Article = a,
+					CommentCount = a.Comments.Count,
+					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
+				})
+				.OrderByDescending(a => a.LikeCount)
+				.Take(3)
+				.ToListAsync();
+
+			model.f3 = await _context.Article
+				.Include(a => a.User)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1)
+				.Select(a => new ArticleViewModel
+				{
+					Article = a,
+					CommentCount = a.Comments.Count,
+					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
+				})
+				.OrderByDescending(a => a.CommentCount)
+				.Take(3)
+				.ToListAsync();
+
 			return View(model);
 		}
 
-        public async Task<IActionResult> Notifications()
+
+		public async Task<IActionResult> Notifications()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             if (user == null)
@@ -120,8 +144,9 @@ namespace EduPost.Controllers
                     Content = Content,
                     CreatedDate = DateTimeOffset.Now,
                     UserId = user.Id,
-                    IsAnon = true
-                };
+                    IsAnon = true,
+					IsEdited = false
+				};
                 _context.Comment.Add(anoncomment);
                 await _context.SaveChangesAsync();
                 var message = $"An Anonymous User has commented on your article: \"{article.ArticleTitle}\"  .";
@@ -135,7 +160,8 @@ namespace EduPost.Controllers
                     Content = Content,
                     CreatedDate = DateTimeOffset.Now,
                     UserId = user.Id,
-                    IsAnon = false
+                    IsAnon = false,
+					IsEdited = false
                 };
                     _context.Comment.Add(comment);
                 await _context.SaveChangesAsync();
@@ -172,7 +198,36 @@ namespace EduPost.Controllers
             return RedirectToAction("Details", new { id = comment.ArticleId });
         }
 
-        public IActionResult Profile()
+		[HttpPost]
+		public async Task<IActionResult> EditComment(int commentId, string newContent)
+		{
+			var comment = await _context.Comment.FindAsync(commentId);
+			if (comment == null)
+			{
+				return NotFound();
+			}
+
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				return Unauthorized();
+			}
+
+			if (comment.UserId != user.Id)
+			{
+				return Forbid("You can edit only your own feedback!");
+			}
+
+			comment.Content = newContent;
+			comment.IsEdited = true;
+
+			_context.Comment.Update(comment);
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction("Details", new { id = comment.ArticleId });
+		}
+
+		public IActionResult Profile()
         {
             return View();
         }
@@ -185,8 +240,14 @@ namespace EduPost.Controllers
     }
 	public class HomeIndexViewModel
 	{
-		public List<Article> f1 = new List<Article>();
-		public List<Article> f2 = new List<Article>();  
-		public List<Article> f3 = new List<Article>();   
+		public List<ArticleViewModel> f1 = new List<ArticleViewModel>();
+		public List<ArticleViewModel> f2 = new List<ArticleViewModel>();  
+		public List<ArticleViewModel> f3 = new List<ArticleViewModel>();   
+	}
+	public class ArticleViewModel
+	{
+		public Article Article { get; set; }
+		public int CommentCount { get; set; }
+		public int LikeCount { get; set; }
 	}
 }

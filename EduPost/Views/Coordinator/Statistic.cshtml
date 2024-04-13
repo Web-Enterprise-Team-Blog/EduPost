@@ -160,10 +160,10 @@
         {
             renderCharts
             (
-            @Html.Raw(Json.Serialize(Model.ArticlesByStatus)),
-            @Html.Raw(Json.Serialize(Model.ArticlesPerMonth)),
-            @Html.Raw(Json.Serialize(Model.ApprovalRateOverTime)),
-            @Html.Raw(Json.Serialize(Model.TopContributors))
+                @Html.Raw(Json.Serialize(Model.ArticlesByStatus)),
+                @Html.Raw(Json.Serialize(Model.ArticlesPerMonth)),
+                @Html.Raw(Json.Serialize(Model.ApprovalRateOverTime)),
+                @Html.Raw(Json.Serialize(Model.TopContributors))
             );
         });
     </script>
