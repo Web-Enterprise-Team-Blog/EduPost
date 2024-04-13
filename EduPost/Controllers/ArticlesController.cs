@@ -203,7 +203,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Description")] Article article, IFormFile[] files, ModelStateDictionary modelState)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Description,ExpireDate")] Article article, IFormFile[] files, ModelStateDictionary modelState)
         {
             try
             {
@@ -258,7 +258,6 @@ namespace EduPost.Controllers
 
                 article.Faculty = _userManager.GetUserAsync(User).Result.Faculty;
                 article.CreatedDate = DateTime.Now;
-                article.ExpireDate = DateTime.Now.AddDays(14);
                 article.StatusId = 0;
                 var userId = int.Parse(_userManager.GetUserId(User));
                 article.UserID = userId;
