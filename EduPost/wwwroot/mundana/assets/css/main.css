@@ -26,6 +26,65 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
+.comments-section {
+    margin-top: 20px;
+}
+
+.comment-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;\
+}
+
+.comment-date {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.comment-content {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.comment-author {
+    font-style: italic;
+    color: #666;
+    margin-top: 10px;
+}
+
+.delete-comment-form button {
+    margin-top: 10px;
+}
+
+#pagination-controls {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#pagination-controls button {
+    padding: 8px 16px;
+    margin: 0 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#pagination-controls button:hover {
+    background-color: #0056b3;
+}
+
+#pagination-controls button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
 
 body {
     height: 100vh;

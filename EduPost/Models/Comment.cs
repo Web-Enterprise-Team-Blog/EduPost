@@ -19,8 +19,10 @@ namespace EduPost.Models
         public int? ArticleId { get; set; }
 
         [Column("user_id")]
-        [Required]
-        public int? UserId { get; set; } 
+        public int? UserId { get; set; }
+
+        [Column("anonymous")]
+        public bool? IsAnon{ get; set; }
 
         [Column("comment_date")]
         [Required]

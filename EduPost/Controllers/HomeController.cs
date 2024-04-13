@@ -107,28 +107,41 @@ namespace EduPost.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> AddComment(int ArticleId, string Content)
+		public async Task<IActionResult> AddComment(int ArticleId, string Content, bool IsAnon)
 		{
 			var user = await _userManager.GetUserAsync(User);
 			var article = await _context.Article.FindAsync(ArticleId);
 
-			if (user == null)
-			{
-				return Unauthorized();
-			}
-			var comment = new Comment
-			{
-				ArticleId = ArticleId,
-				Content = Content,
-				CreatedDate = DateTimeOffset.Now,
-				UserId = user.Id
-			};
-
-			_context.Comment.Add(comment);
-			await _context.SaveChangesAsync();
-
-			var message = $"User: \"{_userManager.GetUserAsync(User).Result.UserName}\" has commented on your article: \"{article.ArticleTitle}\"  .";
-			await _notificationHub.SendNotificationToUser(message, article.UserID);
+            if (IsAnon == true)
+            {
+                var anoncomment = new Comment
+                {
+                    ArticleId = ArticleId,
+                    Content = Content,
+                    CreatedDate = DateTimeOffset.Now,
+                    UserId = user.Id,
+                    IsAnon = true
+                };
+                _context.Comment.Add(anoncomment);
+                await _context.SaveChangesAsync();
+                var message = $"An Anonymous User has commented on your article: \"{article.ArticleTitle}\"  .";
+                await _notificationHub.SendNotificationToUser(message, article.UserID);
+            }
+            else
+            {
+                var comment = new Comment
+                {
+                    ArticleId = ArticleId,
+                    Content = Content,
+                    CreatedDate = DateTimeOffset.Now,
+                    UserId = user.Id,
+                    IsAnon = false
+                };
+                    _context.Comment.Add(comment);
+                await _context.SaveChangesAsync();
+                var message = $"User: \"{_userManager.GetUserAsync(User).Result.UserName}\" has commented on your article: \"{article.ArticleTitle}\"  .";
+                await _notificationHub.SendNotificationToUser(message, article.UserID);
+            };
 
 			return RedirectToAction("Details", new { id = ArticleId });
 		}
