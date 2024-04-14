@@ -20,7 +20,7 @@
 	<!-- Main CSS -->
 	<link href="~/mundana/assets/css/main.css" rel="stylesheet" />
 </head>
-<body style="margin: 0; padding: 0; margin-top:68px">
+<body style="margin: 0; padding: 0; margin-top:70px">
 	<!--------------------------------------
 	NAVBAR
 	--------------------------------------->
@@ -29,7 +29,7 @@
 	<!--------------------------------------
 	HEADER
 	--------------------------------------->
-	<div class="container">
+	<div class="container-fluid">
 		<div class="jumbotron jumbotron-fluid mb-3 pl-0 pt-0 pb-0 bg-white position-relative">
 			<div class="h-100 tofront">
 
@@ -47,7 +47,7 @@
 	<!--------------------------------------
 	MAIN
 	--------------------------------------->
-	<div class="container pt-4 pb-4">
+	<div class="container-fluid">
 		<div class="row justify-content-center">	
 			<div class="col-md-12 col-lg-8">
 				<article class="article-post" style="background-color:white">
@@ -55,7 +55,7 @@
 						@Model.Description
 					</p>
 				</article>
-				<div class="border p-5 bg-lightblue">
+				<div class="border p-5 bg-lightblue" style="margin-bottom:10px">
 					<h4>Documments come with this article:</h4>
 					@if (Model.Files != null && Model.Files.Any())
 					{

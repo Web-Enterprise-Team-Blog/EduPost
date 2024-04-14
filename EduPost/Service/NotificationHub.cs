@@ -30,19 +30,14 @@ namespace EduPost.Service
                 {
                     Message = message,
                     Timestamp = DateTime.Now,
-                    UserId = coordinator.Id
-                };
+                    UserId = coordinator.Id,
+					IsRead = false
+				};
 
                 _context.Notification.Add(notification);
             }
 
             await _context.SaveChangesAsync();
-
-            //redundant code
-            //foreach (var coordinator in coordinatorsWithSameFaculty)
-            //{
-            //    await Clients.User(coordinator.Id.ToString()).SendAsync("ReceiveNotification", message);
-            //}
         }
 
         public async Task SendNotificationToUser(string message, int? userId)
@@ -58,41 +53,17 @@ namespace EduPost.Service
                         {
                             Message = message,
                             Timestamp = DateTime.Now,
-                            UserId = user.Id
-                        };
+                            UserId = user.Id,
+							IsRead = false
+						};
 
                         _context.Notification.Add(notification);
                         await _context.SaveChangesAsync();
-                        //redundant code
-                        // Ensure Clients is not null before attempting to send a notification
-                        //if (Clients != null)
-                        //{
-                        //    await Clients.User(user.Id.ToString()).SendAsync("ReceiveNotification", message);
-                        //}
-
-                        //else
-                        //{
-                        //    // Log a warning if Clients is null
-                        //    Console.WriteLine("Warning: Clients is null in SendNotificationToUser method");
-                        //}
                     }
-                    //redundant code
-                    //    else
-                    //    {
-                    //        // Log a warning if user is null
-                    //        Console.WriteLine($"Warning: User with ID {userId} not found");
-                    //    }
                 }
-                //redundant code
-                //else
-                //{
-                //    // Log a warning if userId is null
-                //    Console.WriteLine("Warning: userId is null in SendNotificationToUser method");
-                //}
             }
             catch (Exception ex)
             {
-                // Log any exceptions that occur during the process
                 Console.WriteLine($"An error occurred in SendNotificationToUser method: {ex.Message}");
             }
         }

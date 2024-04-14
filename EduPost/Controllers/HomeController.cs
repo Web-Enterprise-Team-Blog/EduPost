@@ -1,5 +1,6 @@
 ﻿using EduPost.Data;
 using EduPost.Models;
+using EduPost.Models.ViewModels;
 using EduPost.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -87,12 +88,31 @@ namespace EduPost.Controllers
             var notifications = await _context.Notification
                                               .Where(n => n.UserId == userId)
                                               .OrderByDescending(n => n.Timestamp)
-                                              .Take(5)
                                               .ToListAsync();
-            return View(notifications);
+			var model = new NotificationViewModel
+			{
+				ReadNotifications = notifications.Where(n => n.IsRead == true),
+				UnreadNotifications = notifications.Where(n => n.IsRead == false || n.IsRead == null)
+			};
+
+			return View(model);
         }
 
-        public async Task<IActionResult> Details(int? id)
+		[HttpPost]
+		public ActionResult MarkAsRead(int id)
+		{
+			var notification = _context.Notification.Find(id);
+			if (notification == null)
+			{
+				return NotFound();
+			}
+
+			notification.IsRead = true;
+			_context.SaveChanges();
+
+			return RedirectToAction("Notifications");
+		}
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Article == null)
             {
