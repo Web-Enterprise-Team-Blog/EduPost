@@ -69,7 +69,7 @@ namespace EduPost
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Admin}/{action=Index}/{id?}");
+                pattern: "{controller=Users}/{action=Index}/{id?}");
 
             app.Use(async (context, next) =>
             {

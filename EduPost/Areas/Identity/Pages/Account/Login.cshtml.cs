@@ -128,7 +128,7 @@ namespace EduPost.Areas.Identity.Pages.Account
                         var roles = await _signInManager.UserManager.GetRolesAsync(user);
                         if (roles.Contains("Admin"))
                         {
-                            returnUrl = Url.Content("~/Admin/Index");
+                            returnUrl = Url.Content("~/Users/Index");
                         }
                         else if (roles.Contains("User"))
                         {
