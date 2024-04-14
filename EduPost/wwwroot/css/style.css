@@ -13,6 +13,19 @@
     z-index: 99;
 }
 
+body {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/wallpaperflare.com_wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+   
+}
+
 
 /*** Spinner ***/
 #spinner {
@@ -77,12 +90,13 @@
     background: var(--light);
     transition: 0.5s;
     z-index: 999;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius : 5px 5px 5px 5px
 }
 
 .content {
     margin-left: 250px;
     min-height: 100vh;
-    background: #FFFFFF;
     transition: 0.5s;
 }
 
@@ -127,8 +141,9 @@
     color: var(--dark);
     font-weight: 500;
     border-left: 3px solid var(--light);
-    border-radius: 0 30px 30px 0;
+    border-radius: 10px 30px 30px 10px;
     outline: none;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
