@@ -2,7 +2,6 @@
 {
     public class AcademicYearViewModel
     {
-        public int YearId { get; set; }
         public string YearTitle { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }

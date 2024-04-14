@@ -114,7 +114,7 @@ namespace EduPost.Controllers
                 return NotFound();
             }
 
-            var roles = await _roleManager.Roles.ToListAsync();
+            var roles = await _roleManager.Roles.Where(r => r.Name != "Admin").ToListAsync();
             ViewData["Roles"] = new SelectList(roles, "Name", "Name");
 
             var faculties = await _context.Faculty.ToListAsync();
