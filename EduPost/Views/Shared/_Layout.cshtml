@@ -6,71 +6,59 @@
     <title>@ViewData["Title"] - WebApplication1</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="~/dropdownmenu/styledrop.css" />
 </head>
 <body>
-
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-        <link rel="stylesheet" href="~/dropdownmenu/styledrop.css" />
-        <title>Profile Dropdown</title>
-    </head>
-    <body>
-        <nav class="navbar fixed-top navbar-expand-lg" style="background-color: black; height:auto">
-            <img src="~/images/logo_black.png" style="height:50px;width:200px;margin-left:50px" class="navbar-logo" alt="logo" />
-            <ul class="navbar-nav mr-auto d-flex align-items-center" style="margin-left:100PX;color:white">
-                @if (User.IsInRole("User"))
-                {
-                    <div style="overflow: auto; width:600px;">
-                        <div class="nav-item" style="float: left; width: 33.33%;">
-                            <a class="nav-link" href="/Home/Index" style="color:white">HomePage <span class="sr-only">(current)</span></a>
-                        </div>
-
-                        <div class="nav-item" style="float: left; width: 33.33%;">
-                            <a class="nav-link" href="/Home/Notifications" style="color:white">Notifications <span class="sr-only">(current)</span></a>
-                        </div>
-
-                        <div class="nav-item" style="float: left; width: 33.33%;">
-                            <a class="nav-link" href="/Articles/Index" style="color:white; display: inline-block;">Manage Articles <span class="sr-only">(current)</span></a>
-                        </div>
-                    </div>
-                }
-
-            </ul>
-            <div class="profile-dropdown" style="margin-right: 100px;">
-                <div onclick="toggle()" class="profile-dropdown-btn">
-                    <div class="profile-img">
-                        <i class="fa-solid fa-circle"></i>
+    <nav class="navbar fixed-top navbar-expand-lg" style="background-color: black; height:auto">
+        <img src="~/images/logo_black.png" style="height:50px;width:200px;margin-left:50px" class="navbar-logo" alt="logo" />
+        <ul class="navbar-nav mr-auto d-flex align-items-center" style="margin-left:100PX;color:white">
+            @if (User.IsInRole("User"))
+            {
+                <div style="overflow: auto; width:600px;">
+                    <div class="nav-item" style="float: left; width: 33.33%;">
+                        <a class="nav-link" href="/Home/Index" style="color:white">HomePage <span class="sr-only">(current)</span></a>
                     </div>
 
-                    <span style="color: white;">
-                        Menu
-                        <i class="fa-solid fa-angle-down"></i>
-                    </span>
+                    <div class="nav-item" style="float: left; width: 33.33%;">
+                        <a class="nav-link" href="/Home/Notifications" style="color:white">Notifications <span class="sr-only">(current)</span></a>
+                    </div>
+
+                    <div class="nav-item" style="float: left; width: 33.33%;">
+                        <a class="nav-link" href="/Articles/Index" style="color:white; display: inline-block;">Manage Articles <span class="sr-only">(current)</span></a>
+                    </div>
                 </div>
-                <ul class="profile-dropdown-list" style="z-index:10;">
-                    <li class="profile-dropdown-list-item">
-                        <a href="/Identity/Account/Manage">
-                            <i class="fa-regular fa-user"></i>
-                            Edit Profile
-                        </a>
-                    </li>
-                    <li class="profile-dropdown-list-item">
-                        <a href="/Identity/Account/Logout">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            Log out
-                        </a>
-                    </li>
-                </ul>
-            </div>           
-        </nav>
+            }
+        </ul>
+        <div class="profile-dropdown" style="margin-right: 100px;">
+            <div onclick="toggle()" class="profile-dropdown-btn">
+                <div class="profile-img">
+                    @await Component.InvokeAsync("Avatar")
+                </div>
 
-        <script src="~/dropdownmenu/script.js"></script>
-    </body>
+                <span style="color: white;">
+                    Menu
+                    <i class="fa-solid fa-angle-down"></i>
+                </span>
+            </div>
+            <ul class="profile-dropdown-list" style="z-index:10;">
+                <li class="profile-dropdown-list-item">
+                    <a href="/Identity/Account/Manage">
+                        <i class="fa-regular fa-user"></i>
+                        Edit Profile
+                    </a>
+                </li>
+                <li class="profile-dropdown-list-item">
+                    <a href="/Identity/Account/Logout">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        Log out
+                    </a>
+                </li>
+            </ul>
+        </div>           
+    </nav>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -78,6 +66,7 @@
         </main>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/dropdownmenu/script.js"></script>

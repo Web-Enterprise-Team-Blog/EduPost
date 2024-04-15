@@ -129,7 +129,7 @@ namespace EduPost.Controllers
 		[HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,NormalizedUserName,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,FirstLogin")] User userInput)
+		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id,EmailConfirmed")] User userInput)
 		{
 			if (id != userInput.Id)
 			{
@@ -146,8 +146,10 @@ namespace EduPost.Controllers
 			{
 				try
 				{
-					_context.Entry(userInDb).CurrentValues.SetValues(userInput);
-					_context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
+                    _context.Entry(userInDb).CurrentValues.SetValues(userInput);
+                    userInDb.NormalizedEmail = userInput.Email.ToUpperInvariant();
+                    userInDb.NormalizedUserName = userInput.Email.ToUpperInvariant();
+                    _context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
 					_context.Entry(userInDb).Property(x => x.SecurityStamp).IsModified = false;
 					_context.Entry(userInDb).Property(x => x.ConcurrencyStamp).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.PhoneNumber).IsModified = false;
@@ -157,8 +159,6 @@ namespace EduPost.Controllers
                     _context.Entry(userInDb).Property(x => x.LockoutEnabled).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.AccessFailedCount).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.FirstLogin).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.NormalizedEmail).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.NormalizedUserName).IsModified = false;
                     _context.Entry(userInDb).Property(x => x.Role).IsModified = true;
 					_context.Entry(userInDb).Property(x => x.Faculty).IsModified = true;
 					_context.SaveChanges();

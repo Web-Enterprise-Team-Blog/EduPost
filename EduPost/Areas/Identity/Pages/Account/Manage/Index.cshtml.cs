@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace EduPost.Areas.Identity.Pages.Account.Manage
         public string Faculty { get; set; }
         public string Role { get; set; }
         public string Email { get; set; }
+        public string? DisplayAvatar { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -68,22 +70,28 @@ namespace EduPost.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }*/
             public string Username { get; set; }
-            //public string avatar { get; set; }
+            [BindProperty]
+            public IFormFile InputAvatar { get; set; }
         }
 
         private async Task LoadAsync(User user)
         {
-            var faculty = user.Faculty;
-            var role = user.Role;
-            var email = user.Email;
-            var userName = await _userManager.GetUserNameAsync(user);
+            string faculty = user.Faculty;
+            string role = user.Role;
+            string email = user.Email;
+            string userName = await _userManager.GetUserNameAsync(user);
+            byte[]? avatar = user.Avatar;
             //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             //Username = userName;
             Faculty = faculty;
             Role = role;
             Email = email;
-
+            if(avatar != null)
+            {
+                DisplayAvatar = Convert.ToBase64String(avatar);
+            }
+            
             Input = new InputModel
             {
                 //PhoneNumber = phoneNumber
@@ -105,7 +113,8 @@ namespace EduPost.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var test = Input.InputAvatar;
+			var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -145,22 +154,40 @@ namespace EduPost.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-            
+
             //change avatar
-            /*var userName = await _userManager.GetUserNameAsync(user);
-            if (Input.Username != userName)
-            {
-                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Username);
-                if (!setUserNameResult.Succeeded)
+            if (Input.InputAvatar != null)
+            { 
+                user.Avatar = await ImageToByte(Input.InputAvatar);
+                _context.Update(user);
+                try
                 {
-                    StatusMessage = "Unexpected error when trying to change User Name.";
+                    await _context.SaveChangesAsync();
+                }
+                catch
+                {
+                    StatusMessage = "Unexpected error when trying to update the avatar.";
                     return RedirectToPage();
                 }
-            }*/
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
-    }
+
+        private async Task<byte[]?> ImageToByte(IFormFile? image)
+        {
+            using(var stream = new MemoryStream())
+            {
+                if(image != null)
+                {
+                    await image.CopyToAsync(stream);
+				    stream.Position = 0;
+                    return stream.ToArray();
+                }
+				return null;
+			}
+        }
+	}
 }

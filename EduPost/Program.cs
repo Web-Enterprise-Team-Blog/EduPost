@@ -37,6 +37,8 @@ namespace EduPost
             builder.Services.AddScoped<NotificationHub>();
 			builder.Services.AddScoped<ReactionService>();
 			builder.Services.AddScoped<NotificationViewComponent>();
+            builder.Services.AddScoped<AvatarViewComponent>();
+            builder.Services.AddScoped<ImageConverter> ();
 
             var app = builder.Build();
 

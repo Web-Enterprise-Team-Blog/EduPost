@@ -15,7 +15,26 @@
 	<h4 class="font-weight-bold py-3 mb-4">Account settings</h4>
 
     <div class="text-right mt-3">
-        <a href="/Home/Index" class="btn btn-default">Back to HomePage</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="/Users/Index" class="btn btn-default">Exit Profile</a>
+        }
+        else if (User.IsInRole("Manager"))
+        {
+            <a href="/Manager/Index" class="btn btn-default">Exit Profile</a>
+        }
+        else if (User.IsInRole("Coordinator"))
+        {
+            <a href="/Coordinator/Index" class="btn btn-default">Exit Profile</a>
+        }
+        else if (User.IsInRole("User"))
+        {
+            <a href="/Home/Index" class="btn btn-default">Exit Profile</a>
+        }
+        else if (User.IsInRole("Guest"))
+        {
+            <a href="/Guest/Index" class="btn btn-default">Exit Profile</a>
+        }
     </div>
 
     <div class="card overflow-hidden">

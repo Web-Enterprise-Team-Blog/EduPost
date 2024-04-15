@@ -18,7 +18,7 @@
 
         <div>
 
-            <form id="profile-form" method="post">
+            <form id="profile-form" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             
                 @* start of sample for img input *@
@@ -29,19 +29,27 @@
                 </div> *@
 
                 <div class="card-body media">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                         class="d-block ui-w-80" style="height: 100px;aspect-ratio: 1/1">
+                    @if (Model.DisplayAvatar == null)
+                    {
+                        <img id="profile-img" src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                        class="d-block ui-w-80" style="height: 100px;aspect-ratio: 1/1">
+                    }
+                    else
+                    {
+                        <img id="profile-img" src="data:image/png;base64, @Html.Raw(Model.DisplayAvatar)"
+                             class="d-block ui-w-80" style="height: 100px;aspect-ratio: 1/1">
+                    }
 
                     <div class="media-body ml-4" style="text-align:left;">
 
-                        <label class="btn btn-outline-primary" style="display: inline-block;">
+						<label class="btn btn-outline-primary" style="display: inline-block;">
                             Upload new photo
-                            <input type="file" style="position: absolute; visibility: hidden;">
+							<input asp-for="Input.InputAvatar" type="file" accept="image/png" style="position: absolute; visibility: hidden;" />
                         </label>
 
-                        <button type="button" class="btn btn-default md-btn-flat" style="display: inline-block;">Reset</button>
+                        <button type="button" onclick="restore()" class="btn btn-default md-btn-flat" style="display: inline-block;">Reset</button>
 
-                        <div class=" small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                        <div class=" small mt-1">Allowed JPG and PNG. Max size of 800KB</div>
                     </div>
                 </div>
                 @*end of sample for img input *@
@@ -73,6 +81,24 @@
 
     </div>
 </body>
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
+
+    <script>
+		let profileImg = document.getElementById("profile-img");
+		const originalProfileImg = profileImg.src;
+        let profileImgInput = document.getElementById("Input_InputAvatar");
+
+        //update the image to new image every input
+		profileImgInput.onchange = function(){
+		    profileImg.src = URL.createObjectURL(profileImgInput.files[0]);
+		}
+
+        //restore the img input to the original image
+		function restore(){
+		    profileImg.src = originalProfileImg;
+            profileImgInput.value = "";
+		}
+	</script>
 }

@@ -35,7 +35,7 @@
 
 				<h1 class="display-4 secondfont mb-3 font-weight-bold" style="width:100%">@Model.ArticleTitle</h1>
 				<div class="d-flex align-items-center">
-					<img class="rounded-circle" src="~/mundana/assets/img/demo/avatar2.jpg" width="70">
+					@await Component.InvokeAsync("Avatar", new { userId = @Model.UserID })
 					<small class="ml-2">
 						@ViewBag.CreatorUsername <span class="text-muted d-block">@Model.CreatedDate?.ToString("dd/MM/yyyy HH:mm:ss")</span>
 					</small>

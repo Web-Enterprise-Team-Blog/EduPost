@@ -10,7 +10,7 @@
         {
             <a href="#" class="dropdown-item">
                 <div class="d-flex align-items-center">
-                    <img class="rounded-circle" src="~/images/user.jpg" alt="" style="width: 40px; height: 40px;">
+                    @await Component.InvokeAsync("Avatar")
                     <div class="ms-2">
                         <h6 class="fw-normal mb-0">@notification.Message</h6>
                         <small>@notification.Timestamp.ToString("dd MMM yyyy HH:mm")</small>

@@ -23,5 +23,8 @@ namespace EduPost.Models
 
         [Column("first_login")]
         public bool? FirstLogin { get; set; }
+
+        [Column("avatar")]
+        public byte[]? Avatar { get; set; }
     }
 }
