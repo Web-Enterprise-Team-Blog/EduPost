@@ -24,7 +24,6 @@
 	<!--------------------------------------
 	NAVBAR
 	--------------------------------------->
-	
 	<!-- End Navbar -->
 	<!--------------------------------------
 	HEADER
@@ -48,7 +47,7 @@
 	MAIN
 	--------------------------------------->
 	<div class="container-fluid">
-		<div class="row justify-content-center">	
+		<div class="row justify-content-center">
 			<div class="col-md-12 col-lg-8">
 				<article class="article-post" style="background-color:white">
 					<p>
@@ -81,7 +80,7 @@
 					{
 						<p>No file was uploaded.</p>
 					}
-				</div>				
+				</div>
 			</div>
 		</div>
 	</div>
@@ -90,7 +89,7 @@
 		<div class="d-flex flex-column" style="width:110px">
 			<button id="likeButton" class="btn btn-primary" data-article-id="@Model.ArticleId">
 				<i class="fas fa-thumbs-up"></i> Like
-            </button>
+			</button>
 			<span id="likeCount" style="width:110px"></span> likes
 		</div>
 
@@ -104,7 +103,7 @@
 
 	<div>
 		<span id="userReaction" class="text-muted"></span>
-    </div>
+	</div>
 
 	<div class="container pt-4 pb-4">
 		<h5 class="font-weight-bold spanborder"><span>Comments</span></h5>
@@ -183,6 +182,7 @@
 				else
 				{
 					<p>No comments to display.</p>
+
 				}
 				<button onclick="topFunction()" id="toTop" title="Go to top">
 					↑
@@ -194,7 +194,6 @@
 	<!--------------------------------------
 	FOOTER
 	--------------------------------------->
-
 	<!-- End Footer -->
 	<!--------------------------------------
 	JAVASCRIPTS
@@ -207,6 +206,56 @@
 
 	@section Scripts {
 		<script>
+			if (document.getElementById("toTop")) {
+				function scrollFunction() {
+					document.getElementById("toTop").style.display = "block";
+				}
+
+				function topFunction() {
+					document.body.scrollTop = 0;
+					document.documentElement.scrollTop = 0;
+				}
+
+				scrollFunction();
+			}
+
+			if ($("#likeButton").length > 0 && $("#dislikeButton").length > 0) {
+				var articleId = $('#likeButton').data('article-id');
+				checkUserReaction(articleId);
+				getArticleReactionCounts(articleId);
+
+				$("#likeButton").click(function (e) {
+					e.preventDefault();
+					postReaction(true, articleId);
+					getArticleReactionCounts(articleId);
+				});
+
+				$("#dislikeButton").click(function (e) {
+					e.preventDefault();
+					postReaction(false, articleId);
+					getArticleReactionCounts(articleId);
+				});
+			}
+
+			if ($("#likeCount").length > 0 && $("#dislikeCount").length > 0) {
+				function getArticleReactionCounts(articleId) {
+					$.ajax({
+						url: '@Url.Action("GetArticleReactionCounts", "Articles")',
+						data: { articleId: articleId },
+						success: function (response) {
+							if (response.success) {
+								$('#likeCount').text(response.likeCount);
+								$('#dislikeCount').text(response.dislikeCount);
+							} else {
+								console.error(response.message);
+							}
+						},
+						error: function () {
+							console.error("Error fetching article reaction counts.");
+						}
+					});
+				}
+			}
 			function checkUserReaction(articleId) {
 				$.ajax({
 					url: '@Url.Action("GetUserReaction", "Articles")',
@@ -302,20 +351,12 @@
 				showPage(currentPage);
 			}
 
-			function scrollFunction() {
-				if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-					document.getElementById("toTop").style.display = "block";
-				} else {
-					document.getElementById("toTop").style.display = "none";
-				}
-			}
-
 			function topFunction() {
 				document.body.scrollTop = 0;
 				document.documentElement.scrollTop = 0;
 			}
 
-			
+
 			function showEditForm() {
 				document.getElementById("editButton").style.display = "none";
 				document.getElementById("confirmButton").style.display = "block";
@@ -340,7 +381,11 @@
 				}
 			});
 
-			$(document).ready(function () {
+			window.addEventListener("scroll", scrollFunction);
+
+			document.addEventListener("DOMContentLoaded", function () {
+				console.log("Document ready function called.");
+
 				var articleId = $('#likeButton').data('article-id');
 				checkUserReaction(articleId);
 				getArticleReactionCounts(articleId);
@@ -348,16 +393,30 @@
 				$("#likeButton").click(function (e) {
 					e.preventDefault();
 					postReaction(true, articleId);
+					getArticleReactionCounts(articleId);
 				});
 
 				$("#dislikeButton").click(function (e) {
 					e.preventDefault();
 					postReaction(false, articleId);
+					getArticleReactionCounts(articleId);
 				});
 
-				window.onscroll = scrollFunction;
-				window.paginate = paginate;
-				showPage(1);
+				var $comments = $('.comment-container');
+				console.log("$comments length: " + $comments.length);
+				if ($comments.length > 0) {
+					console.log("Comments exist, proceeding with pagination.");
+					showPage(1);
+					$comments.on('click', '.page-link', function (e) {
+						e.preventDefault();
+						var page = $(this).data('page');
+						showPage(page);
+					});
+				} else {
+					console.log("No comments found, displaying message.");
+					$('.comments-section').html('<p>No comments to displayyyy.</p>');
+					scrollFunction();
+				}
 			});
 		</script>
 	}
