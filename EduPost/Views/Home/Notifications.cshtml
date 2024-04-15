@@ -62,8 +62,8 @@
 						<ul class="list-group">
 							@foreach (var notification in Model.UnreadNotifications)
 							{
-								<li class="list-group-item">
-									<strong>@notification.Timestamp.ToString("dd/MM/yyyy HH:mm:ss"):</strong> @notification.Message
+								<li class="list-group-item" onclick="markAsRead(@notification.Id)">
+									<strong onclick="markAsRead(@notification.Id)">@notification.Timestamp.ToString("dd/MM/yyyy HH:mm:ss"):</strong> @notification.Message
 								</li>
 							}
 						</ul>
@@ -101,11 +101,12 @@
 	<script>
 		function markAsRead(id) {
 			$.post('/Home/MarkAsRead', { id: id }, function (data) {
-				success: function() {
-				var item = $('#notification-' + notificationId);
+				var item = $('#notification-' + id);
 				item.remove();
 				$('#readNotifications .list-group').append(item);
 				location.reload();
+			}).fail(function () {
+				console.error("Failed to mark notification as read.");
 			});
 		}
 	</script>

@@ -168,8 +168,19 @@ namespace EduPost.Controllers
 		public async Task<IActionResult> LikeArticle(int articleId)
 		{
 			var userId = int.Parse(_userManager.GetUserId(User));
-			await _reactionService.LikeArticle(userId, articleId);
+			try
+			{
+				var article = await _context.Article
+				.FirstOrDefaultAsync(a => a.ArticleId == articleId);
+				var message = $"User {_userManager.GetUserAsync(User).Result.UserName} has liked your article:\"{article.ArticleTitle}\".";
+				await _notificationHub.SendNotificationToUser(message, articleId);
+				await _reactionService.LikeArticle(userId, articleId);
 			return RedirectToAction("Details", new { id = articleId });
+			}
+			catch (Exception ex)
+			{
+				return RedirectToAction("Details", new { id = articleId, error = "An error occurred. Please try again later." });
+			}
 		}
 
 		[HttpPost]
@@ -177,6 +188,12 @@ namespace EduPost.Controllers
 		{
 			var userId = int.Parse(_userManager.GetUserId(User));
 			await _reactionService.DislikeArticle(userId, articleId);
+
+			var article = await _context.Article
+				.FirstOrDefaultAsync(a => a.ArticleId == articleId);
+			var message = $"User {_userManager.GetUserAsync(User).Result.UserName} has disliked your article:\"{article.ArticleTitle}\".";
+			await _notificationHub.SendNotificationToUser(message, articleId);
+
 			return RedirectToAction("Details", new { id = articleId });
 		}
 
@@ -326,6 +343,7 @@ namespace EduPost.Controllers
 
                 if (ModelState.IsValid)
                 {
+
                     try
                     {
                         if (files != null)
@@ -368,17 +386,13 @@ namespace EduPost.Controllers
                         }
 
                         var existingArticle = await _context.Article.FindAsync(article.ArticleId);
+                        
                         if (existingArticle != null)
                         {
                             existingArticle.ArticleTitle = article.ArticleTitle;
-                            existingArticle.Description = article.Description;
-
+                            existingArticle.Description = article.Description;       
                             _context.Entry(existingArticle).State = EntityState.Modified;
-                            await _context.SaveChangesAsync();
-
-
-                            var message = $"User {_userManager.GetUserAsync(User).Result.UserName} has changed some contents in the article:\"{article.ArticleTitle}\".";
-                            await _notificationHub.SendNotificationToCoordinator(message, article.Faculty);
+                            await _context.SaveChangesAsync();  
                         }
                     }
                     catch (DbUpdateConcurrencyException)

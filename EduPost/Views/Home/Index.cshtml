@@ -48,14 +48,14 @@
 	MAIN
 	--------------------------------------->
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-6">
+	<div class="container-fluid" style="height:auto">
+		<div class="row" style="height:auto">
+			<div class="col-lg-6" style="height:auto;overflow:visible">
 				<h5 class="font-weight-bold spanborder"><span>Lastest Articles</span></h5>
 				<div class="flex-md-row mb-4 box-shadow h-xl-300">
 					@for (int i = 0; i <= Model.f2.Count() - 1; i++)
 					{
-						<div class="mb-3 d-flex align-items-center">
+						<div class="mb-3 d-flex align-items-center" style="z-index:999">
 							<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
 							<div class="pl-3 text-truncate">
 								<div class="card" style="border:none">
@@ -96,7 +96,7 @@
 				</div>
 			</div>
 
-			<div class="col-lg-6">
+			<div class="col-lg-6" style="height:auto">
 				<h5 class="font-weight-bold spanborder"><span>Most Liked Articles</span></h5>
 				<div class="flex-md-row mb-4 box-shadow h-xl-300">
 					@for (int i = 0; i <= Model.f2.Count() - 1; i++)
@@ -141,47 +141,40 @@
 					}
 				</div>
 			</div>
-		</div>
-	</div>
-
-
-			
-	<div class="container-fluid">
-		<div>
-
+			<div class="col-lg-6" style="height:auto;visibility: hidden;">
 			<h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
-
-			@for (int i = 0; i <= Model.f1.Count() - 1; i++)
-			{
-				<div class="mb-3 d-flex align-items-center">
-					<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
-					<div class="pl-3 text-truncate">
-						<div class="card" style="border:none">
-							<div class="card-body">
-								<div class="row">
-									<div class="col">
-										<h2 class="mb-2 h6 font-weight-bold">
-											<a class="text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
-										</h2>
-										<p class="card-text small m-0 text-truncate">
-											@Model.f3[i].Article.Description
-										</p>
-										<div class="card-text text-muted small">
-											By @Model.f3[i].Article.User.UserName
-										</div>
-										<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
-									</div>
-									<div class="col">
-										<div class="row">
-											<div class="col">
-												<p class="card-text text-muted small">
-													@Model.f3[i].LikeCount Likes
-												</p>
+				@for (int i = 0; i <= Model.f1.Count() - 1; i++)
+				{
+					<div class="mb-3 d-flex align-items-center">
+						<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
+						<div class="pl-3 text-truncate">
+							<div class="card" style="border:none">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<h2 class="mb-2 h6 font-weight-bold">
+												<a class="text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
+											</h2>
+											<p class="card-text small m-0 text-truncate">
+												@Model.f3[i].Article.Description
+											</p>
+											<div class="card-text text-muted small">
+												By @Model.f3[i].Article.User.UserName
 											</div>
-											<div class="col">
-												<p class="card-text text-muted small">
-													@Model.f3[i].CommentCount Comments
-												</p>
+											<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
+										</div>
+										<div class="col">
+											<div class="row">
+												<div class="col">
+													<p class="card-text text-muted small">
+														@Model.f3[i].LikeCount Likes
+													</p>
+												</div>
+												<div class="col">
+													<p class="card-text text-muted small">
+														@Model.f3[i].CommentCount Comments
+													</p>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -189,10 +182,55 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			}
+				}
+			</div>
+			<div class="col-lg-6" style="height:auto;right: 0;">
+				<h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
+				@for (int i = 0; i <= Model.f1.Count() - 1; i++)
+				{
+					<div class="mb-3 d-flex align-items-center">
+						<img height="80" src="~/mundana/assets/img/demo/blog4.jpg">
+						<div class="pl-3 text-truncate">
+							<div class="card" style="border:none">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<h2 class="mb-2 h6 font-weight-bold">
+												<a class="text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
+											</h2>
+											<p class="card-text small m-0 text-truncate">
+												@Model.f3[i].Article.Description
+											</p>
+											<div class="card-text text-muted small">
+												By @Model.f3[i].Article.User.UserName
+											</div>
+											<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
+										</div>
+										<div class="col">
+											<div class="row">
+												<div class="col">
+													<p class="card-text text-muted small">
+														@Model.f3[i].LikeCount Likes
+													</p>
+												</div>
+												<div class="col">
+													<p class="card-text text-muted small">
+														@Model.f3[i].CommentCount Comments
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
 		</div>
 	</div>
+
+
 
 	<!--------------------------------------
 	FOOTER

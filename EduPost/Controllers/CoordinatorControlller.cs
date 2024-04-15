@@ -188,6 +188,28 @@ namespace EduPost.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Notifications()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+            {
+                return Content("User not found or not logged in.");
+            }
+
+            var userId = user.Id;
+            var notifications = await _context.Notification
+                                              .Where(n => n.UserId == userId)
+                                              .OrderByDescending(n => n.Timestamp)
+                                              .ToListAsync();
+            var model = new NotificationViewModel
+            {
+                ReadNotifications = notifications.Where(n => n.IsRead == true),
+                UnreadNotifications = notifications.Where(n => n.IsRead == false || n.IsRead == null)
+            };
+
+            return View(model);
+        }
+
         public async Task<IActionResult> TogglePublic(int AID)
         {
             Article article = await _context.Article.FindAsync(AID);
