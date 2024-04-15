@@ -12,6 +12,7 @@ using System.IO.Compression;
 using EduPost.Service;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.OutputCaching;
+using EduPost.Models.ViewModels;
 
 namespace EduPost.Controllers
 {
@@ -42,27 +43,33 @@ namespace EduPost.Controllers
         public async Task<IActionResult> Index()
         {
             bool isAdmin = User.IsInRole("Admin");
+            IEnumerable<Article> articles;
 
             if (isAdmin)
             {
-                var articles = await _context.Article.ToListAsync(); 
-                return View(articles);
+                articles = await _context.Article.ToListAsync();
             }
             else
             {
-                var userIdAsString = User.FindFirstValue(ClaimTypes.NameIdentifier); 
-                if (int.TryParse(userIdAsString, out int userId)) 
+                var userIdAsString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (int.TryParse(userIdAsString, out int userId))
                 {
-                    var articles = await _context.Article
-                        .Where(a => a.UserID == userId)
-                        .ToListAsync();
-
-                    return View(articles);
+                    articles = await _context.Article
+                                              .Where(a => a.UserID == userId)
+                                              .ToListAsync();
+                    var sortedArticlesViewModel = new SortedArticlesViewModel
+                    {
+                        PendingArticles = articles.Where(a => a.StatusId == 0).OrderByDescending(a => a.CreatedDate),
+                        AcceptedArticles = articles.Where(a => a.StatusId == 1).OrderByDescending(a => a.CreatedDate),
+                        DeclinedArticles = articles.Where(a => a.StatusId == 2).OrderByDescending(a => a.CreatedDate),
+                        ClosedArticles = articles.Where(a => a.StatusId == 3).OrderByDescending(a => a.CreatedDate)
+                    };
+                    return View(sortedArticlesViewModel);
                 }
-
-                return View(new List<Article>());
             }
+            return View(new SortedArticlesViewModel());  
         }
+
 
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -299,7 +306,6 @@ namespace EduPost.Controllers
 
             var faculties = await _context.Faculty.ToListAsync();
             ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
-
             return View(article);
 
         }
@@ -369,6 +375,10 @@ namespace EduPost.Controllers
 
                             _context.Entry(existingArticle).State = EntityState.Modified;
                             await _context.SaveChangesAsync();
+
+
+                            var message = $"User {_userManager.GetUserAsync(User).Result.UserName} has changed some contents in the article:\"{article.ArticleTitle}\".";
+                            await _notificationHub.SendNotificationToCoordinator(message, article.Faculty);
                         }
                     }
                     catch (DbUpdateConcurrencyException)
@@ -423,7 +433,6 @@ namespace EduPost.Controllers
                 return NotFound();
             }
 
-            // Get the Article object
             var article = await _context.Article
                 .Include(a => a.Files)
                 .FirstOrDefaultAsync(m => m.ArticleId == id);
@@ -447,7 +456,13 @@ namespace EduPost.Controllers
 			var reactions = await _context.UserReaction
 		        .Where(ur => ur.ArticleId == id)
 		        .ToListAsync();
-			_context.UserReaction.RemoveRange(reactions);
+
+
+            var message = $"User {_userManager.GetUserAsync(User).Result.UserName} has removed the article:\"{article.ArticleTitle}\".";
+            await _notificationHub.SendNotificationToCoordinator(message, article.Faculty);
+
+
+            _context.UserReaction.RemoveRange(reactions);
 
 			_context.Article.Remove(article);
 

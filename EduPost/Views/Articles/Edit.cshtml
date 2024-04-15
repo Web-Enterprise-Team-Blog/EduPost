@@ -1,76 +1,146 @@
 ﻿@model EduPost.Models.Article
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Your Article";
 }
 
-<h1>Edit</h1>
-
-<h4>Article</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ArticleId" />
-            <div class="form-group">
-                <label asp-for="ArticleTitle" class="control-label"></label>
-                <input asp-for="ArticleTitle" class="form-control" />
-                <span asp-validation-for="ArticleTitle" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/mundana/assets/img/favicon.ico">
+    <link rel="icon" type="image/png" href="~/mundana/assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Edu Post - @ViewData["Title"]</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Main CSS -->
+    <link href="~/mundana/assets/css/main.css" rel="stylesheet" />
+</head>
+<body style="margin: 0; padding: 0; margin-top: 70px">
+    <!--------------------------------------
+    NAVBAR
+    --------------------------------------->
+    <!-- End Navbar -->
+    <!--------------------------------------
+    HEADER
+    --------------------------------------->
+    <div class="container-fluid" stye=margin-top:50px>
+        <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
+            <div class="pl-4 pr-0 h-100 tofront">
+                <div class="row justify-content-between">
+                    <div class="col-md-6 pt-6 pb-6 align-self-center">
+                        <h1 class="secondfont mb-3 font-weight-bold">Edit Your Article</h1>
+                        <p class="mb-3">
+                            You can edit your article if your Coordinator havent approve your article.
+                        </p>
+                        @* <a href="~/mundana/article.html" class="btn btn-dark">Read More</a> *@
+                    </div>
+                    <div class="col-md-6 d-none d-md-block pr-0" style="background-size:cover;background-image:url(~/mundana/assets/img/demo/home.jpg);">	</div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Files" class="control-label">Upload files</label>
-                <input asp-for="Files" type="file" class="form-control" multiple />
-                <span asp-validation-for="Files" class="text-danger"></span>
-            </div>
-            @* <div class="form-group" style="margin-top:20px;">
-                <input asp-for="Public" type="checkbox" class="form-check-input" />
-                <label for="Public" class="form-check-label">Public (Check this to set this article viewable by guest users)</label>
-            </div> *@
-            <div class="form-group" style="margin-top:20px;">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group" style="margin-top:20px;">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <!-- End Header -->
+    <!--------------------------------------
+    MAIN
+    --------------------------------------->
 
-<div>
-    <h3 style="margin-top:20px;">Uploaded files</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>File name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var file in Model.Files)
-            {
-                <tr>
-                    <td>@file.FileName</td>
-                    <td>
-                        <form asp-action="DeleteFile" asp-route-id="@file.FileId" method="post">
-                            <input type="submit" value="Delete" class="btn btn-danger" />
-                            @Html.AntiForgeryToken()
+    <div class="container" style="border:none">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Edit</h1>
+
+                <h4>@Model.ArticleTitle</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Edit" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="ArticleId" />
+                            <div class="form-group">
+                                <label asp-for="ArticleTitle" class="control-label"></label>
+                                <input asp-for="ArticleTitle" class="form-control" />
+                                <span asp-validation-for="ArticleTitle" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Files" class="control-label">Upload files</label>
+                                <input asp-for="Files" type="file" class="form-control" multiple />
+                                <span asp-validation-for="Files" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="margin-top:20px;">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="margin-top:20px;">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
                         </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                    </div>
+                </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                <div>
+                    <h3 style="margin-top:20px;">Uploaded files</h3>
+                    @if (Model.Files != null && Model.Files.Any())
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>File name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                                @foreach (var file in Model.Files)
+                                {
+                                    <tr>
+                                        <td>@file.FileName</td>
+                                        <td>
+                                            <form asp-action="DeleteFile" asp-route-id="@file.FileId" method="post">
+                                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                                @Html.AntiForgeryToken()
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No file uploaded.</p>
+                    }                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    <!--------------------------------------
+    FOOTER
+    --------------------------------------->
+    <!-- End Footer -->
+    <!--------------------------------------
+    JAVASCRIPTS
+    --------------------------------------->
+    <script src="~/mundana/assets/js/vendor/jquery.min.js" type="text/javascript"></script>
+    <script src="~/mundana/assets/js/vendor/popper.min.js" type="text/javascript"></script>
+    <script src="~/mundana/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/mundana/assets/js/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-}
+</body>
+</html>
