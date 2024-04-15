@@ -99,6 +99,53 @@ namespace EduPost.Controllers
         }
 
 		[HttpPost]
+		public async Task<ActionResult> NotificationsDelete(int id)
+		{
+			var user = await _userManager.GetUserAsync(HttpContext.User);
+			if (user == null)
+			{
+				return Content("User not found or not logged in.");
+			}
+
+			var userId = user.Id;
+
+			var notificationToDelete = _context.Notification
+				.FirstOrDefault(n => n.Id == id && n.UserId == userId && n.IsRead);
+
+			if (notificationToDelete != null)
+			{
+				_context.Notification.Remove(notificationToDelete);
+				_context.SaveChanges();
+			}
+
+			return RedirectToAction("Notifications");
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> NotificationsDeleteAll()
+		{
+			var user = await _userManager.GetUserAsync(HttpContext.User);
+			if (user == null)
+			{
+				return Content("User not found or not logged in.");
+			}
+
+			var userId = user.Id;
+
+			var notificationsToDelete = _context.Notification
+				.Where(n => n.UserId == userId && n.IsRead)
+				.ToList();
+
+			if (notificationsToDelete.Any())
+			{
+				_context.Notification.RemoveRange(notificationsToDelete);
+				_context.SaveChanges();
+			}
+
+			return RedirectToAction("Notifications");
+		}
+
+		[HttpPost]
 		public ActionResult MarkAsRead(int id)
 		{
 			var notification = _context.Notification.Find(id);
