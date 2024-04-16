@@ -142,18 +142,25 @@
                                         <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.ExpireDate)
                                         </dt>
-                                        <dd class="col-sm-10">
-                                            <form id="expireDateForm" method="post" asp-action="UpdateExpireDate">
-                                                <input type="hidden" id="articleIdInput" name="articleid" value="@Model.ArticleId" />
-                                                <div class="form-group">
-                                                    <input asp-for="ExpireDate" id="expireDateInput" type="datetime-local" class="form-control" style="width:220px" />
-                                                    <span asp-validation-for="ExpireDate" class="text-danger"></span>
-                                                </div> 
-                                                <div style="margin-top:5px">
-                                                <button type="submit" class="btn btn-primary">Update Expire Date</button>
-                                                </div>
-                                            </form>
-                                        </dd>
+                                        @if (Model.StatusId == 3)
+                                        {
+                                            <dd class="col-sm-10">
+                                                @Html.DisplayFor(model => model.ExpireDate)
+                                            </dd>
+                                        }else{
+                                            <dd class="col-sm-10">
+                                                <form id="expireDateForm" method="post" asp-action="UpdateExpireDate">
+                                                    <input type="hidden" id="articleIdInput" name="articleid" value="@Model.ArticleId" />
+                                                    <div class="form-group">
+                                                        <input asp-for="ExpireDate" id="expireDateInput" type="datetime-local" class="form-control" style="width:220px" />
+                                                        <span asp-validation-for="ExpireDate" class="text-danger"></span>
+                                                    </div>
+                                                    <div style="margin-top:5px">
+                                                        <button type="submit" class="btn btn-primary">Update Expire Date</button>
+                                                    </div>
+                                                </form>
+                                            </dd>                                       
+                                        }
                                         <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.StatusId)
                                         </dt>
@@ -264,7 +271,7 @@
                                     {
                                         <div style="text-align: center; margin: 20px;">
                                             <p>This Article is expired. Select a new deadline to re-open the article</p>
-                                            <form asp-action="ExtendDeadline" method="post" style="display: inline-block; width: 60%; box-sizing: border-box;">
+                                            <form asp-action="ExtendDeadline" id="extendDeadlineForm" method="post" style="display: inline-block; width: 60%; box-sizing: border-box;" onsubmit="validateForm()">
                                                 <div class="form-group" style="width: 220px; margin: 0 auto;"> 
                                                     <input type="datetime-local" id="deadlineDate" name="deadlineDate" class="form-control" style="width: 100%;" />
                                                 </div>
@@ -312,7 +319,15 @@
     <script src="~/lib/tempusdominus/js/moment.min.js"></script>
     <script src="~/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="~/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script>
+        document.getElementById("extendDeadlineForm").addEventListener("submit", function (event) {
+            var newContent = document.getElementById("deadlineDate").value.trim();
+            if (newContent === "") {
+                alert("Please choose new deadline");
+                event.preventDefault();
+            }
+        });
+    </script>
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 
