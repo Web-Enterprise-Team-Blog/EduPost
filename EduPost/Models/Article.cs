@@ -23,6 +23,8 @@ namespace EduPost.Models
 
         [Column("description")]
         public string? Description { get; set; }
+        [Column("image")]
+        public byte[]? Image { get; set; }
 
         [Column("user_id")]
         public int? UserID { get; set; }

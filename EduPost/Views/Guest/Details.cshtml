@@ -1,4 +1,5 @@
 ﻿@model EduPost.Models.Article
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -6,122 +7,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="~/mundana/assets/img/favicon.ico">
-    <link rel="icon" type="image/png" href="~/mundana/assets/img/favicon.ico">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Edu Post - Home Page</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <!-- Main CSS -->
-    <link href="~/mundana/assets/css/main.css" rel="stylesheet" />
+	<meta charset="utf-8" />
+	<link rel="apple-touch-icon" sizes="76x76" href="./assets/img/favicon.ico">
+	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Mundana Template by WowThemesNet</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,700" rel="stylesheet">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<!-- Main CSS -->
+	<link href="~/mundana/assets/css/main.css" rel="stylesheet" />
 </head>
-<body style="margin: 0; padding: 0;">
+<body style="margin: 0; padding: 0; margin-top:70px">
+	<!--------------------------------------
+	NAVBAR
+	--------------------------------------->
+	<!-- End Navbar -->
+	<!--------------------------------------
+	HEADER
+	--------------------------------------->
+	<div class="container-fluid">
+		<div class="jumbotron jumbotron-fluid mb-3 pl-0 pt-0 pb-0 bg-white position-relative">
+			<div class="h-100 tofront">
 
-    <!--------------------------------------
-    MAIN
-    --------------------------------------->
-    <div class="container-fluid pt-4 px-4">
-        <div class="row g-4">
-            <div class="col-12">
-                <div class="bg-light rounded h-100 p-4">
-                    <div class="table-responsive">
-                        <div>
-                            <h4>Article</h4>
-                            <hr />
-                            <dl class="row">
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.UserID)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.UserID)
-                                </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.ArticleTitle)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.ArticleTitle)
-                                </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Faculty)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Faculty)
-                                </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.CreatedDate)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.CreatedDate)
-                                </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Description)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Description)
-                                </dd>
-                            </dl>
+				<h1 class="display-4 secondfont mb-3 font-weight-bold" style="width:100%">@Model.ArticleTitle</h1>
+				<div class="d-flex align-items-center">
+					@await Component.InvokeAsync("Avatar", new { userId = @Model.UserID })
+					<small class="ml-2">
+						@ViewBag.CreatorUsername <span class="text-muted d-block">@Model.CreatedDate?.ToString("dd/MM/yyyy HH:mm:ss")</span>
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Header -->
+	<!--------------------------------------
+	MAIN
+	--------------------------------------->
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-12 col-lg-8">
+				<article class="article-post" style="background-color:white; margin-bottom: 90px;">
+					@if (Model.Image != null)
+					{
+						<img id="display-img" src="data:image/png;base64, @Convert.ToBase64String(Model.Image)" style="width: 100%;aspect-ratio: 1.5/1">
+					}
+					else
+					{
+						<img id="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="width: 100%;aspect-ratio: 1.5/1">
+					}
+					<p>
+						@Model.Description
+					</p>
+				</article>
+				<div class="border p-5 bg-lightblue" style="margin-bottom:10px;">
+					<h4>Documments come with this article:</h4>
+					@if (Model.Files != null && Model.Files.Any())
+					{
+						<table class="table">
+							<thead>
+								<tr>
+									<th>File name</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
 
-                            <h4>Uploaded files</h4>
-                            @if (Model.Files != null && Model.Files.Any())
-                            {
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>File name</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+								@foreach (var file in Model.Files)
+								{
+									<tr>
+										<td>@file.FileName</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					}
+					else
+					{
+						<p>No file was uploaded.</p>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 
-                                        @foreach (var file in Model.Files)
-                                        {
-                                            <tr>
-                                                <td>@file.FileName</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            }
-                            else
-                            {
-                                <p>No file uploaded.</p>
-                            }
-                            <div class="comments-section">
-                                <h3>FeedBacks:</h3>
-                                @if (Model.FeedBacks != null && Model.FeedBacks.Any())
-                                {
-                                    <ul>
-                                        @foreach (var comment in Model.FeedBacks)
-                                        {
-                                            <li>
-                                                <strong>@comment.CreatedDate.ToString("dd MMM yyyy"): </strong>@comment.Content
-                                                <br>
-                                                <em>Posted by User ID: @comment.UserId</em>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <p>No feedbacks to display.</p>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--------------------------------------
-    JAVASCRIPTS
-    --------------------------------------->
-    <script src="~/mundana/assets/js/vendor/jquery.min.js" type="text/javascript"></script>
-    <script src="~/mundana/assets/js/vendor/popper.min.js" type="text/javascript"></script>
-    <script src="~/mundana/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
-    <script src="~/mundana/assets/js/functions.js" type="text/javascript"></script>
+	<div class="d-flex" style="width:auto">
+		<div class="d-flex flex-column" style="width:110px">
+			<button id="likeButton" class="btn btn-primary" data-article-id="@Model.ArticleId">
+				<i class="fas fa-thumbs-up"></i> Like
+			</button>
+			<span id="likeCount" style="width:110px"></span> likes
+		</div>
+
+		<div class="d-flex flex-column" style="width:110px; margin-left: 5px">
+			<button id="dislikeButton" class="btn btn-primary" data-article-id="@Model.ArticleId">
+				<i class="fas fa-thumbs-down"></i> Dislike
+			</button>
+			<span id="dislikeCount" style="width:110px"></span> dislikes
+		</div>
+	</div>
+
+	<div>
+		<span id="userReaction" class="text-muted"></span>
+	</div>
+
+	<div class="container pt-4 pb-4">
+		<h5 class="font-weight-bold spanborder"><span>Comments</span></h5>
+		<div class="row">
+			<h4>Give your comment here:</h4>
+			<form asp-action="AddComment" asp-controller="Home" method="post" class="comment-form">
+				<input type="hidden" name="ArticleId" value="@Model.ArticleId" />
+				<textarea name="Content" required class="form-control comment-textarea"></textarea>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="IsAnon" id="IsAnon" value="true">
+					<label class="form-check-label" for="IsAnon">
+						Post as anonymous
+					</label>
+				</div>
+				<button type="submit" class="btn btn-primary submit-comment-btn" style="margin-top:7px">Post Comment</button>
+			</form>
+			<div class="comments-section">
+				<div id="pagination-controls">
+					<button onclick="paginate(-1)">Previous</button>
+					<span id="page-number">1</span>
+					<button onclick="paginate(1)">Next</button>
+				</div>
+				@if (Model.Comments != null && Model.Comments.Any())
+				{
+					<div id="comments-container">
+						@foreach (var comment in Model.Comments.OrderByDescending(c => c.CreatedDate))
+						{
+							<div class="comment-container" style="display:none;">
+								<p class="comment-date"><strong>@comment.CreatedDate.ToString("dd MMM yyyy"):</strong></p>
+								@if (comment.IsEdited == true)
+								{
+									<div id="commentText" class="comment-content">
+										@Html.Raw(comment.Content) <span style="font-size: smaller; color: gray;">(Edited)</span>
+									</div>
+								}
+								else
+								{
+									<div id="commentText" class="comment-content">@Html.Raw(comment.Content)</div>
+								}
+								<p class="comment-author">
+									@{
+										if (comment.IsAnon == true || comment.UserId == null)
+										{
+											<span>Posted by: Anonymous User</span>
+										}
+										else
+										{
+											<span>Posted by: @(comment.UserId.HasValue && ViewBag.Usernames.ContainsKey(comment.UserId.Value) ? ViewBag.Usernames[comment.UserId.Value] : "Anonymous User")</span>
+										}
+									}
+								</p>
+								@{
+									var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+									int currentUserIdInt;
+									bool isCurrentUser = int.TryParse(currentUserId, out currentUserIdInt) && comment.UserId.HasValue && comment.UserId.Value == currentUserIdInt;
+
+									if (User.Identity.IsAuthenticated && isCurrentUser)
+									{
+										<form asp-action="DeleteComment" asp-controller="Home" method="post" class="delete-comment-form">
+											<input type="hidden" name="commentId" value="@comment.CommentId" />
+											<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this comment?');">Delete Comment</button>
+											<button id="editButton" onclick="showEditForm()" type="button">Edit Comment</button>
+										</form>
+										<form id="editCommentForm" asp-action="EditComment" asp-controller="Home" method="post" style="display: none;" onsubmit="validateForm()">
+											<input type="hidden" name="commentId" id="commentId" value="@comment.CommentId" />
+											<input type="text" name="newContent" id="newContent" style="display: none;" />
+											<button type="submit" id="confirmButton" style="display: none;">Confirm</button>
+											<button id="cancelbtn" onclick="cancel()" style="display: none;" type="button">Cancel</button>
+										</form>
+									}
+								}
+							</div>
+						}
+					</div>
+				}
+				else
+				{
+					<p>No comments to display.</p>
+
+				}
+				<button onclick="topFunction()" id="toTop" title="Go to top">
+					↑
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- End Main -->
+	<!--------------------------------------
+	FOOTER
+	--------------------------------------->
+	<!-- End Footer -->
+	<!--------------------------------------
+	JAVASCRIPTS
+	--------------------------------------->
+	<script src="~/mundana/assets/js/vendor/jquery.min.js" type="text/javascript"></script>
+	<script src="~/mundana/assets/js/vendor/popper.min.js" type="text/javascript"></script>
+	<script src="~/mundana/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
+	<script src="~/mundana/assets/js/functions.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	@section Scripts {
+		<script>
+			if (document.getElementById("toTop")) {
+				function scrollFunction() {
+					document.getElementById("toTop").style.display = "block";
+				}
+
+				function topFunction() {
+					document.body.scrollTop = 0;
+					document.documentElement.scrollTop = 0;
+				}
+
+				scrollFunction();
+			}
+
+			if ($("#likeButton").length > 0 && $("#dislikeButton").length > 0) {
+				var articleId = $('#likeButton').data('article-id');
+				checkUserReaction(articleId);
+				getArticleReactionCounts(articleId);
+
+				$("#likeButton").click(function (e) {
+					e.preventDefault();
+					postReaction(true, articleId);
+					getArticleReactionCounts(articleId);
+				});
+
+				$("#dislikeButton").click(function (e) {
+					e.preventDefault();
+					postReaction(false, articleId);
+					getArticleReactionCounts(articleId);
+				});
+			}
+
+			if ($("#likeCount").length > 0 && $("#dislikeCount").length > 0) {
+				function getArticleReactionCounts(articleId) {
+					$.ajax({
+						url: '@Url.Action("GetArticleReactionCounts", "Articles")',
+						data: { articleId: articleId },
+						success: function (response) {
+							if (response.success) {
+								$('#likeCount').text(response.likeCount);
+								$('#dislikeCount').text(response.dislikeCount);
+							} else {
+								console.error(response.message);
+							}
+						},
+						error: function () {
+							console.error("Error fetching article reaction counts.");
+						}
+					});
+				}
+			}
+			function checkUserReaction(articleId) {
+				$.ajax({
+					url: '@Url.Action("GetUserReaction", "Articles")',
+					data: { articleId: articleId },
+					success: function (response) {
+						if (response.success) {
+							if (response.isLike !== null) {
+								if (response.isLike) {
+									$('#likeButton').addClass('liked').removeClass('disliked');
+									$('#dislikeButton').removeClass('liked').removeClass('disliked');
+								} else {
+									$('#dislikeButton').addClass('disliked').removeClass('liked');
+									$('#likeButton').removeClass('disliked').removeClass('liked');
+								}
+							}
+
+							if (response.isLike !== undefined) {
+								if (response.isLike) {
+									$('#userReaction').text('You liked this article.');
+								} else {
+									$('#userReaction').text('You disliked this article.');
+								}
+							} if (response.message) {
+								$('#userReaction').text(response.message);
+							}
+						} else {
+							console.error(response.message);
+						}
+					},
+					error: function () {
+						console.error("Error fetching user reaction.");
+					}
+				});
+			}
+
+			function postReaction(isLike, articleId) {
+				var actionUrl = isLike ? '@Url.Action("LikeArticle", "Articles")' : '@Url.Action("DislikeArticle", "Articles")';
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: { articleId: articleId },
+					success: function (response) {
+						if (isLike) {
+							$('#likeButton').addClass('liked').removeClass('disliked');
+							$('#dislikeButton').removeClass('liked').removeClass('disliked');
+						} else {
+							$('#dislikeButton').addClass('disliked').removeClass('liked');
+							$('#likeButton').removeClass('disliked').removeClass('liked');
+						}
+						checkUserReaction(articleId);
+						getArticleReactionCounts(articleId);
+					}
+				});
+			}
+
+			function getArticleReactionCounts(articleId) {
+				$.ajax({
+					url: '@Url.Action("GetArticleReactionCounts", "Articles")',
+					data: { articleId: articleId },
+					success: function (response) {
+						if (response.success) {
+							$('#likeCount').text(response.likeCount);
+							$('#dislikeCount').text(response.dislikeCount);
+						} else {
+							console.error(response.message);
+						}
+					},
+					error: function () {
+						console.error("Error fetching article reaction counts.");
+					}
+				});
+			}
+
+			var currentPage = 1;
+			var commentsPerPage = 10;
+			var $comments = $('.comment-container');
+
+			function showPage(page) {
+				$comments.hide();
+				var totalComments = $comments.length;
+				var totalPages = Math.ceil(totalComments / commentsPerPage);
+				var start = (page - 1) * commentsPerPage;
+				var end = start + commentsPerPage;
+				$comments.slice(start, end).show();
+
+				$('#page-number').text(page + ' / ' + totalPages);
+				$('button[onclick="paginate(-1)"]').prop('disabled', page === 1);
+				$('button[onclick="paginate(1)"]').prop('disabled', page === totalPages);
+			}
+
+			function paginate(direction) {
+				currentPage += direction;
+				showPage(currentPage);
+			}
+
+			function topFunction() {
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			}
+
+
+			function showEditForm() {
+				document.getElementById("editButton").style.display = "none";
+				document.getElementById("confirmButton").style.display = "block";
+				document.getElementById("editCommentForm").style.display = "inline";
+				document.getElementById("newContent").style.display = "block";
+				document.getElementById("cancelbtn").style.display = "inline";
+			}
+
+			function cancel() {
+				document.getElementById("editButton").style.display = "inline";
+				document.getElementById("confirmButton").style.display = "none";
+				document.getElementById("editCommentForm").style.display = "none";
+				document.getElementById("newContent").style.display = "none";
+				document.getElementById("cancelbtn").style.display = "none"
+			}
+
+			document.getElementById("editCommentForm").addEventListener("submit", function (event) {
+				var newContent = document.getElementById("newContent").value.trim();
+				if (newContent === "") {
+					alert("Please enter new content for the comment.");
+					event.preventDefault();
+				}
+			});
+
+			window.addEventListener("scroll", scrollFunction);
+
+			document.addEventListener("DOMContentLoaded", function () {
+				console.log("Document ready function called.");
+
+				var articleId = $('#likeButton').data('article-id');
+				checkUserReaction(articleId);
+				getArticleReactionCounts(articleId);
+
+				$("#likeButton").click(function (e) {
+					e.preventDefault();
+					postReaction(true, articleId);
+					getArticleReactionCounts(articleId);
+				});
+
+				$("#dislikeButton").click(function (e) {
+					e.preventDefault();
+					postReaction(false, articleId);
+					getArticleReactionCounts(articleId);
+				});
+
+				var $comments = $('.comment-container');
+				console.log("$comments length: " + $comments.length);
+				if ($comments.length > 0) {
+					console.log("Comments exist, proceeding with pagination.");
+					showPage(1);
+					$comments.on('click', '.page-link', function (e) {
+						e.preventDefault();
+						var page = $(this).data('page');
+						showPage(page);
+					});
+				} else {
+					console.log("No comments found, displaying message.");
+					$('.comments-section').html('<p>No comments to displayyyy.</p>');
+					scrollFunction();
+				}
+			});
+		</script>
+	}
 </body>
 </html>

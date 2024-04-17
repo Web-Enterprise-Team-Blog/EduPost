@@ -112,7 +112,7 @@
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Roles Table</h6>
                             <p>
-                                <a asp-action="Create">Create New</a>
+                                <a class="btn btn-primary" asp-action="Create">Create New</a>
                             </p>
                             <div class="table-responsive">
                                 <table class="table">
@@ -133,9 +133,9 @@
                                                 @Html.DisplayFor(modelItem => item.Name)
                                             </td>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                             </td>
                                         </tr>
                                         }

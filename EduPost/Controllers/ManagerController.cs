@@ -105,6 +105,17 @@ namespace EduPost.Controllers
 
             ViewBag.Usernames = users;
 
+            string img;
+            if (article.Image != null)
+            {
+                img = Convert.ToBase64String(article.Image);
+            }
+            else
+            {
+                img = null;
+            }
+            ViewData["Image"] = img;
+
             if (article == null)
             {
                 return NotFound();
@@ -175,7 +186,35 @@ namespace EduPost.Controllers
                         .GroupBy(a => a.Faculty)
                         .OrderBy(g => g.Count())
                         .Select(g => g.Key)
-                        .FirstOrDefault()
+                        .FirstOrDefault(),
+
+					TotalComment = _context.Article.Include(a=>a.Comments).Where(a =>
+									a.CreatedDate.HasValue &&
+									a.CreatedDate.Value >= ay.BeginDate &&
+									a.CreatedDate.Value <= ay.EndDate)
+                                    .SelectMany(a=>a.Comments).Count().ToString(),
+
+					TotalLike = _context.Article.Include(a => a.UserReactions).Where(a =>
+									a.CreatedDate.HasValue &&
+									a.CreatedDate.Value >= ay.BeginDate &&
+									a.CreatedDate.Value <= ay.EndDate)
+									.SelectMany(a => a.UserReactions).Where(r=>r.ReactionType == true).Count().ToString(),
+                    TotalDisLike = _context.Article.Include(a => a.UserReactions).Where(a =>
+									a.CreatedDate.HasValue &&
+									a.CreatedDate.Value >= ay.BeginDate &&
+									a.CreatedDate.Value <= ay.EndDate)
+									.SelectMany(a => a.UserReactions).Where(r=>r.ReactionType == false).Count().ToString(),
+
+					TotalActiveUser = _context.User.Where(u => u.Article
+                                    .Any(a => a.CreatedDate.HasValue &&
+									a.CreatedDate.Value >= ay.BeginDate &&
+									a.CreatedDate.Value <= ay.EndDate))
+                                    .Count().ToString(),
+
+                    UserWithMostArticle = _context.User.FirstOrDefault(u=> u.Id == _context.Article.Where(a =>
+                                            a.CreatedDate.HasValue && a.CreatedDate.Value >= ay.BeginDate &&
+                                            a.CreatedDate.Value <= ay.EndDate).GroupBy(a => a.UserID)
+                                            .OrderByDescending(g => g.Count()).Select(g => g.FirstOrDefault().UserID).FirstOrDefault()).UserName,
                 })
                 .ToListAsync();
 

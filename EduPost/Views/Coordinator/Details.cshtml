@@ -73,6 +73,7 @@
                     <a href="/Coordinator/Articles" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Articles</a>
                     <a href="/Coordinator/Statistic" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Statistic</a>
                     <a href="/Users/Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Users</a>
+                    <a href="/Coordinator/AcademicYears" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Academic Years</a>
                 </div>
             </nav>
         </div>
@@ -147,7 +148,9 @@
                                             <dd class="col-sm-10">
                                                 @Html.DisplayFor(model => model.ExpireDate)
                                             </dd>
-                                        }else{
+                                        }
+                                        else
+                                        {
                                             <dd class="col-sm-10">
                                                 <form id="expireDateForm" method="post" asp-action="UpdateExpireDate">
                                                     <input type="hidden" id="articleIdInput" name="articleid" value="@Model.ArticleId" />
@@ -159,7 +162,7 @@
                                                         <button type="submit" class="btn btn-primary">Update Expire Date</button>
                                                     </div>
                                                 </form>
-                                            </dd>                                       
+                                            </dd>
                                         }
                                         <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.StatusId)
@@ -184,6 +187,21 @@
                                                     }
                                                 </a>
 											</div>
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.Image)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @if (@ViewData["Image"] != null)
+                                            {
+                                                <img id="display-img" src="data:image/png;base64, @ViewData["Image"]"
+                                                class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
+                                            }
+                                            else
+                                            {
+                                                <img style="height: 100px;aspect-ratio: 2/1" src="~/mundana/assets/img/demo/blog4.jpg">
+                                            }
+
                                         </dd>
                                         <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.Description)
@@ -328,6 +346,7 @@
             }
         });
     </script>
+
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 

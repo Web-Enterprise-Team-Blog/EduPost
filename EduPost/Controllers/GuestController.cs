@@ -30,11 +30,45 @@ namespace EduPost.Controllers
             string faculty = guest.Faculty;
 
             GuestIndexViewModel model = new GuestIndexViewModel();
-            model.f1 = await _context.Article.Include(a => a.Files).Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.CreatedDate).Take(3).ToListAsync();
-            model.f2 = await _context.Article.Include(a => a.Files).Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderBy(a => a.ArticleTitle).Take(4).ToListAsync();
-            model.f3 = await _context.Article.Include(a => a.Files).Include(a => a.User).Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public).OrderByDescending(a => a.CreatedDate).Take(3).ToListAsync();
+            model.f1 = await _context.Article
+            .Include(a => a.User)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.Select(a => new ArticleViewModel
+				{
+					Article = a,
+					CommentCount = a.Comments.Count,
+					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
+				})
+				.OrderByDescending(a => a.Article.CreatedDate)
+				.Take(3)
+				.ToListAsync();
 
-            if (model == null)
+			model.f2 = await _context.Article
+                .Include(a => a.User)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.Select(a => new ArticleViewModel
+				{
+					Article = a,
+					CommentCount = a.Comments.Count,
+					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
+				})
+				.OrderByDescending(a => a.LikeCount)
+				.Take(3)
+				.ToListAsync();
+			model.f3 = await _context.Article
+				.Include(a => a.User)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.Select(a => new ArticleViewModel
+				{
+					Article = a,
+					CommentCount = a.Comments.Count,
+					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
+				})
+				.OrderByDescending(a => a.CommentCount)
+				.Take(3)
+				.ToListAsync();
+
+			if (model == null)
             {
                 return RedirectToAction("NotFound", "Error");
             }
@@ -45,27 +79,46 @@ namespace EduPost.Controllers
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Article == null)
-            {
-                return NotFound();
-            }
+			if (id == null || _context.Article == null)
+			{
+				return NotFound();
+			}
 
-            var article = await _context.Article
-                .Include(a => a.Files)
-                .Include(a => a.FeedBacks)
-                .FirstOrDefaultAsync(a => a.ArticleId == id);
+			var article = await _context.Article
+				.Include(a => a.Files)
+				.Include(a => a.Comments)
+				.FirstOrDefaultAsync(a => a.ArticleId == id);
 
-            if (article == null)
-            {
-                return NotFound();
-            }
-            return View(article);
-        }        
+			var userIds = article.Comments.Select(c => c.UserId).Distinct();
+			var users = await _context.Users
+				.Where(u => userIds.Contains(u.Id))
+				.ToDictionaryAsync(u => u.Id, u => u.UserName);
+
+			ViewBag.Usernames = users;
+
+			var creatorUsername = await _context.Users
+				.Where(u => u.Id == article.UserID)
+				.Select(u => u.UserName)
+				.FirstOrDefaultAsync();
+
+			if (creatorUsername == null)
+			{
+				creatorUsername = "Unknown User";
+			}
+
+			ViewBag.CreatorUsername = creatorUsername;
+
+			if (article == null)
+			{
+				return NotFound();
+			}
+			return View(article);
+		}        
     }
     public class GuestIndexViewModel
     {
-        public List<Article> f1 = new List<Article>();
-        public List<Article> f2 = new List<Article>();
-        public List<Article> f3 = new List<Article>();
+        public List<ArticleViewModel> f1 = new List<ArticleViewModel>();
+        public List<ArticleViewModel> f2 = new List<ArticleViewModel>();
+        public List<ArticleViewModel> f3 = new List<ArticleViewModel>();
     }
 }

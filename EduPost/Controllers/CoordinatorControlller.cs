@@ -99,11 +99,93 @@ namespace EduPost.Controllers
 
             ViewBag.Usernames = users;
 
+            string img;
+            if(article.Image != null)
+            {
+                img = Convert.ToBase64String(article.Image);
+            }
+            else
+            {
+                img = null;
+            }
+            ViewData["Image"] = img;
+
             if (article == null)
             {
                 return NotFound();
             }
             return View(article);
+        }
+
+        public async Task<IActionResult> AcademicYears()
+        {
+            var coordinator = await _userManager.GetUserAsync(User);
+            var faculty = coordinator.Faculty;
+
+            var academicYearsWithStatistics = await _context.AYear
+                .Select(ay => new AcademicYearViewModel
+                {
+                    YearTitle = ay.YearTitle,
+                    BeginDate = ay.BeginDate,
+                    EndDate = ay.EndDate,
+                    ArticleCount = _context.Article
+                        .Count(a => a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty),
+
+                    MostApprovedArticlesFaculty = _context.Article
+                        .Where(a => a.StatusId == 1 &&
+                                    a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty)
+                        .Count().ToString(),
+
+                    MostDeclinedArticlesFaculty = _context.Article
+                        .Where(a => a.StatusId == 2 &&
+                                    a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty)
+                        .Count().ToString(),
+
+                    TotalComment = _context.Article.Include(a => a.Comments).Where(a =>
+                                    a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty)
+                                    .SelectMany(a => a.Comments).Count().ToString(),
+
+                    TotalLike = _context.Article.Include(a => a.UserReactions).Where(a =>
+                                    a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty)
+                                    .SelectMany(a => a.UserReactions).Where(r => r.ReactionType == true).Count().ToString(),
+                    TotalDisLike = _context.Article.Include(a => a.UserReactions).Where(a =>
+                                    a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty)
+                                    .SelectMany(a => a.UserReactions).Where(r => r.ReactionType == false).Count().ToString(),
+
+                    TotalActiveUser = _context.User.Where(u => u.Article
+                                    .Any(a => a.CreatedDate.HasValue &&
+                                    a.CreatedDate.Value >= ay.BeginDate &&
+                                    a.CreatedDate.Value <= ay.EndDate &&
+                                    a.Faculty == faculty))
+                                    .Count().ToString(),
+
+                    UserWithMostArticle = _context.User.FirstOrDefault(u => u.Id == _context.Article.Where(a =>
+                                            a.CreatedDate.HasValue && a.CreatedDate.Value >= ay.BeginDate &&
+                                            a.CreatedDate.Value <= ay.EndDate && a.Faculty == faculty)
+                                            .GroupBy(a => a.UserID).OrderByDescending(g => g.Count())
+                                            .Select(g => g.FirstOrDefault().UserID).FirstOrDefault()).UserName,
+                })
+                .ToListAsync();
+
+            return View(academicYearsWithStatistics);
         }
 
         public async Task<string> GetUserFaculty()

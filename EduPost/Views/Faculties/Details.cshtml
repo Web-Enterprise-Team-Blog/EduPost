@@ -113,7 +113,7 @@
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Faculties Table</h6>
                             <p>
-                                <a href="/Faculties/Index">Back to list</a>
+                                <a class="btn btn-primary" href="/Faculties/Index">Back to list</a>
                             </p>
                             <div class="table-responsive">
                                 <div class="row">
@@ -130,8 +130,7 @@
                                         </dl>
                                     </div>
                                     <div>
-                                        <a asp-action="Edit" asp-route-id="@Model?.FacultyId">Edit</a> |
-                                        <a asp-action="Index">Back to List</a>
+                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.FacultyId">Edit</a>
                                     </div>
                                 </div>
                             </div>

@@ -18,16 +18,16 @@
             @if (User.IsInRole("User"))
             {
                 <div style="overflow: auto; width:600px;">
-                    <div class="nav-item" style="float: left; width: 33.33%;">
-                        <a class="nav-link" href="/Home/Index" style="color:white">HomePage <span class="sr-only">(current)</span></a>
+                    <div class="nav-item" style="float: left; width: 30%;">
+                        <a class="nav-link btn btn-outline-light" href="/Home/Index">HomePage <span class="sr-only">(current)</span></a>
                     </div>
 
-                    <div class="nav-item" style="float: left; width: 33.33%;">
-                        <a class="nav-link" href="/Home/Notifications" style="color:white">Notifications <span class="sr-only">(current)</span></a>
+                    <div class="nav-item" style="float: left; width: 30%; margin-left: 15px;">
+                        <a class="nav-link btn btn-outline-light" href="/Home/Notifications" >Notifications <span class="sr-only">(current)</span></a>
                     </div>
 
-                    <div class="nav-item" style="float: left; width: 33.33%;">
-                        <a class="nav-link" href="/Articles/Index" style="color:white; display: inline-block;">Your Articles<span class="sr-only">(current)</span></a>
+                    <div class="nav-item" style="float: left; width: 30%; margin-left: 15px">
+                        <a class="nav-link btn btn-outline-light" href="/Articles/Index" style="display: inline-block;">Your Articles<span class="sr-only">(current)</span></a>
                     </div>
                 </div>
             }
@@ -43,7 +43,7 @@
                     <i class="fa-solid fa-angle-down"></i>
                 </span>
             </div>
-            <ul class="profile-dropdown-list" style="z-index:10;">
+            <ul class="profile-dropdown-list" style="z-index:10; padding: 0px">
                 <li class="profile-dropdown-list-item">
                     <a href="/Identity/Account/Manage">
                         <i class="fa-regular fa-user"></i>

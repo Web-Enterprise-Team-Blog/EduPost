@@ -71,6 +71,7 @@
                     <a href="/Coordinator/Articles" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Articles</a>
                     <a href="/Coordinator/Statistic" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Statistic</a>
                     <a href="/Users/Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Users</a>
+                    <a href="/Coordinator/AcademicYears" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Academic Years</a>
                 </div>
             </nav>
         </div>
@@ -185,8 +186,8 @@
                                                 @Html.DisplayFor(modelItem => item.Public)
                                             </td>
                                             <td>
-                                                <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                                                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ArticleId">Details</a>
+                                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
                                             </td>
                                         </tr>
                                     }

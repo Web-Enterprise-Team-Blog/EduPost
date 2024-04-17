@@ -95,6 +95,20 @@
                             @Html.DisplayFor(model => model.Public)
                         </dd>
                         <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Image)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @if (@ViewData["Image"] != null)
+                            {
+                                <img id="display-img" src="data:image/png;base64, @ViewData["Image"]"
+                                     class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
+                            }
+                            else
+                            {
+                                <img style="height: 100px;aspect-ratio: 2/1" src="~/mundana/assets/img/demo/blog4.jpg">
+                            }
+                        </dd>
+                        <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Description)
                         </dt>
                         <dd class="col-sm-10">
@@ -158,8 +172,8 @@
         </div>
     </div>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model?.ArticleId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.ArticleId">Edit</a>
+        <a class="btn btn-info" style="margin:10px;" asp-action="Index">Back to List</a>
     </div>
 
     <!--------------------------------------

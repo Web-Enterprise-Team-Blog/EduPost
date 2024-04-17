@@ -12,6 +12,12 @@
         public string? LeastArticlesFaculty { get; set; }
         public string? LeastApprovedArticlesFaculty { get; set; }
         public string? LeastDeclinedArticlesFaculty { get; set; }
+
+        public string? TotalComment { get; set; }
+        public string? TotalLike { get; set; }
+        public string? TotalDisLike { get; set; }
+        public string? TotalActiveUser { get; set; }
+        public string? UserWithMostArticle { get; set; }
     }
 
 }

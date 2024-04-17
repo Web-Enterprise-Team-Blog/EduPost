@@ -71,6 +71,24 @@
                                 <input asp-for="Files" type="file" class="form-control" multiple />
                                 <span asp-validation-for="Files" class="text-danger"></span>
                             </div>
+                            @* image input *@
+                            <div class="form-group">
+                                <label asp-for="Image" class="control-label">change image</label>
+                                <input asp-for="Image" type="file" class="form-control" multiple />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                                @if (ViewData["Image"] != null)
+                                {
+                                <img id="display-img" src="data:image/png;base64, @ViewData["Image"]"
+                                     class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
+                                }
+                                else
+                                {
+                                    <img id="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="height: 100px;aspect-ratio: 2/1">
+                                }
+                                <a onclick="restore()" class="btn btn-warning">delete image</a>
+
+                            </div>
+                            @* image input *@
                             <div class="form-group" style="margin-top:20px;">
                                 <label asp-for="Description" class="control-label"></label>
                                 <textarea asp-for="Description" class="form-control"></textarea>
@@ -120,7 +138,7 @@
         </div>
     </div>
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-info" asp-action="Index">Back to List</a>
     </div>
 
     <!--------------------------------------
@@ -137,6 +155,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        //add/chage image script
+        let displayImg = document.getElementById("display-img");
+        const originalDisplayImg = displayImg.src;
+        let displayImgInput = document.getElementById("Image");
+
+        //update the image to new image every input
+        displayImgInput.onchange = function () {
+            displayImg.src = URL.createObjectURL(displayImgInput.files[0]);
+        }
+
+        //restore the img input to the original image
+        function restore() {
+            displayImg.src = originalDisplayImg;
+            displayImgInput.value = "";
+        }
+    </script>
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -219,6 +219,20 @@
                                             @Html.DisplayFor(model => model.Public)
                                         </dd>
                                         <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.Image)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @if (@ViewData["Image"] != null)
+                                            {
+                                                <img id="display-img" src="data:image/png;base64, @ViewData["Image"]"
+                                                     class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
+                                            }
+                                            else
+                                            {
+                                                <img style="height: 100px;aspect-ratio: 2/1" src="~/mundana/assets/img/demo/blog4.jpg">
+                                            }
+                                        </dd>
+                                        <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.Description)
                                         </dt>
                                         <dd class="col-sm-10">
@@ -257,7 +271,7 @@
                                     <a href="@Url.Action("DownloadArticleFiles", new { id = Model.ArticleId })" class="btn btn-primary">Download Files</a>
                                 }
                             </div>
-
+                            <a class="btn btn-primary" asp-action="Articles">back to list</a>
                             <div class="comments-section">
                                 <h3>Comments:</h3>
                                 @if (Model.FeedBacks != null && Model.FeedBacks.Any())

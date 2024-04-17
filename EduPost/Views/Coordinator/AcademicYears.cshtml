@@ -1,7 +1,6 @@
-﻿@model EduPost.Models.Faculty
-
+﻿@model List<EduPost.Models.ViewModels.AcademicYearViewModel>
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Index";
 }
 
 @{
@@ -51,9 +50,10 @@
         </div>
         <!-- Spinner End -->
         <!-- Sidebar Start -->
+        <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="/Admin/Index" class="navbar-brand mx-4 mb-3">
+                <a href="/Manager/Index" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary">EDUPOST</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -63,19 +63,15 @@
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0">@User.Identity.Name</h6>
-                        <span>Admin</span>
+                        <span>Manager</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active show" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Management</a>
-                        <div class="dropdown-menu bg-transparent border-0 show">
-                            <a href="/Users/Index" class="dropdown-item">Users</a>
-                            <a href="/Roles/Index" class="dropdown-item">Roles</a>
-                            <a href="/Faculties/Index" class="dropdown-item active">Faculties</a>
-                            <a href="/AYears/Index" class="dropdown-item">Academic Years</a>
-                        </div>
-                    </div>
+                    <a href="/Coordinator/Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="/Coordinator/Articles" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Articles</a>
+                    <a href="/Coordinator/Statistic" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Statistic</a>
+                    <a href="/Users/Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Users</a>
+                    <a href="/Coordinator/AcademicYears" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Academic Years</a>
                 </div>
             </nav>
         </div>
@@ -90,7 +86,7 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <div class="navbar-nav align-items-center ms-auto">                    
+                <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             @await Component.InvokeAsync("Avatar")
@@ -99,48 +95,48 @@
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="/Identity/Account/Manage" class="dropdown-item">My Profile</a>
                             
-                            <a href="Identity/Account/Logout" class="dropdown-item">Log Out</a>
+                            <a href="/Identity/Account/Logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
-            <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Faculties Table</h6>
-                            <p>
-                                <a class="btn btn-primary" href="/Faculties/Index">Back to list</a>
-                            </p>
-                            <div class="table-responsive">
-                                <div class="row">
-                                    <div>
-                                        <h4>Faculty</h4>
-                                        <hr />
-                                        <dl class="row">
-                                            <dt class="col-sm-2">
-                                                @Html.DisplayNameFor(model => model.FacultyName)
-                                            </dt>
-                                            <dd class="col-sm-10">
-                                                @Html.DisplayFor(model => model.FacultyName)
-                                            </dd>
-                                        </dl>
+                            <h2>Academic Years</h2>
 
-                                        <form asp-action="Delete">
-                                            <input type="hidden" asp-for="FacultyId" />
-                                            <input type="submit" value="Delete" class="btn btn-danger" />
-                                        </form>
+                            @foreach (var academicYear in Model)
+                            {
+                                <div class="academic-year-box">
+                                    <h3>@academicYear.YearTitle</h3>
+                                    <p><strong>Begin Date:</strong> @academicYear.BeginDate.ToShortDateString()</p>
+                                    <p><strong>End Date:</strong> @academicYear.EndDate.ToShortDateString()</p>
+                                    <p><strong>Article Count:</strong> @academicYear.ArticleCount</p>
+                                    <div class="statistics-dropdown">
+                                        <button class="btn btn-info toggle-button">Show Statistics</button>
+                                        <div class="dropdown-content" style="display: none;">
+                                            <p>Number of Article approved: @academicYear.MostApprovedArticlesFaculty</p>
+                                            <p>Number of Article declined: @academicYear.MostDeclinedArticlesFaculty</p>
+
+                                            <p>Total number of comments: @academicYear.TotalComment</p>
+                                            <p>Total number of like: @academicYear.TotalLike</p>
+                                            <p>Total number of like: @academicYear.TotalDisLike</p>
+                                            <p>Total number of active user: @academicYear.TotalActiveUser</p>
+                                            <p>Total number of active user: @academicYear.UserWithMostArticle</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Table End -->
 
+        </div>
         </div>
         <!-- Content End -->
         <!-- Back to Top -->
@@ -150,6 +146,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="~/lib/chart/chart.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/waypoints/waypoints.min.js"></script>
@@ -160,7 +157,15 @@
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.toggle-button').click(function () {
+                $(this).siblings('.dropdown-content').toggle();
+            });
+        });
+    </script>
+
 </body>
 
 </html>
-

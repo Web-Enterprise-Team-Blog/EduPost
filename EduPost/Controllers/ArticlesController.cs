@@ -91,6 +91,17 @@ namespace EduPost.Controllers
 
             ViewBag.Usernames = users;
 
+            string img;
+            if (article.Image != null)
+            {
+                img = Convert.ToBase64String(article.Image);
+            }
+            else
+            {
+                img = null;
+            }
+            ViewData["Image"] = img;
+
             if (article == null)
             {
                 return NotFound();
@@ -227,7 +238,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Files,AgreeToTerms,Description")] Article article, IFormFile[] files, ModelStateDictionary modelState)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Image,Files,AgreeToTerms,Description")] Article article, IFormFile image, IFormFile[] files, ModelStateDictionary modelState)
         {
             try
             {
@@ -280,7 +291,13 @@ namespace EduPost.Controllers
                     }
                 }
 
-                article.Faculty = _userManager.GetUserAsync(User).Result.Faculty;
+				//add image
+				if (image != null)
+				{
+					article.Image = await ImageToByte(image);
+				}
+
+				article.Faculty = _userManager.GetUserAsync(User).Result.Faculty;
                 article.CreatedDate = DateTime.Now;
                 article.ExpireDate = DateTime.Now.AddDays(14);
                 article.StatusId = 0;
@@ -323,7 +340,18 @@ namespace EduPost.Controllers
 
             var faculties = await _context.Faculty.ToListAsync();
             ViewData["Faculties"] = new SelectList(faculties, "FacultyName", "FacultyName");
-            return View(article);
+			string img;
+			if (article.Image != null)
+			{
+				img = Convert.ToBase64String(article.Image);
+			}
+			else
+			{
+				img = null;
+			}
+			ViewData["Image"] = img;
+
+			return View(article);
 
         }
 
@@ -332,7 +360,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Files,Description")] Article article, IFormFile[] files)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Image,Files,Description")] Article article, IFormFile image, IFormFile[] files)
         {
             try
             {
@@ -390,7 +418,12 @@ namespace EduPost.Controllers
                         if (existingArticle != null)
                         {
                             existingArticle.ArticleTitle = article.ArticleTitle;
-                            existingArticle.Description = article.Description;       
+                            existingArticle.Description = article.Description;
+                            //update image
+                            if (image != null)
+                            {
+                                existingArticle.Image = await ImageToByte(image);
+                            }
                             _context.Entry(existingArticle).State = EntityState.Modified;
                             await _context.SaveChangesAsync();  
                         }
@@ -559,5 +592,19 @@ namespace EduPost.Controllers
                 return File(memoryStream.ToArray(), "application/zip", $"Article_{id}_Files.zip");
             }
         }
-    }
+
+		private async Task<byte[]?> ImageToByte(IFormFile? image)
+		{
+			using (var stream = new MemoryStream())
+			{
+				if (image != null)
+				{
+					await image.CopyToAsync(stream);
+					stream.Position = 0;
+					return stream.ToArray();
+				}
+				return null;
+			}
+		}
+	}
 }
