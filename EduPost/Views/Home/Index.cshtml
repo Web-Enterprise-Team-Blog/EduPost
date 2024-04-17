@@ -48,35 +48,36 @@
 	MAIN
 	--------------------------------------->
 
-	<div class="form-group container-fluid" style="margin-top:50px">
-		<div class="input-group" style="margin-bottom:10px;">
-			<input type="text" id="search" placeholder="Search article" class="form-control" style="margin-bottom:10px; background:#e8f3ec;" />
-		</div>
-	</div>
+	
 
 	<div class="container-fluid" style="height:auto">
 		<div class="row" style="height:auto">
 			<div class="col-lg-6" style="height:auto;overflow:visible">
 				<h5 class="font-weight-bold spanborder"><span>Lastest Articles</span></h5>
+				<div class="form-group" style="margin-top:5px">
+					<div class="input-group" style="margin-bottom:10px;">
+						<input type="text" id="search" placeholder="Search article" class="form-control" style="margin-bottom:10px; background:#e8f3ec;" />
+					</div>
+				</div>
 				<div class="flex-md-row mb-4 box-shadow h-xl-300">
 					@for (int i = 0; i <= Model.f1.Count() - 1; i++)
 					{
 						<div class="result mb-3 d-flex align-items-center" style="z-index:999">
-							@if (Model.f1[i].Article.Image != null)
-							{
-								<img class="display-img" src="data:image/png;base64, @Convert.ToBase64String(Model.f1[i].Article.Image)" style="height: 80px;aspect-ratio: 2/1">
-							}
-							else
-							{
-								<img class="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="height: 80px;aspect-ratio: 2/1">
-							}
 							<div class="pl-3 text-truncate">
 								<div class="card" style="border:none">
 									<div class="card-body">
 										<div class="row">
+											@if (Model.f1[i].Article.Image != null)
+											{
+												<img class="display-img" src="data:image/png;base64, @Convert.ToBase64String(Model.f1[i].Article.Image)" style="height: 160px;aspect-ratio: 2/1">
+											}
+											else
+											{
+												<img class="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="height: 160px;aspect-ratio: 2/1">
+											}
 											<div class="col">
 												<h2 class="mb-2 h6 font-weight-bold">
-													<a class="article-title text-dark" asp-action="Details" asp-route-id="@Model.f1[i].Article.ArticleId">@Model.f1[i].Article.ArticleTitle</a>
+													<a class="article-title-latest text-dark" asp-action="Details" asp-route-id="@Model.f1[i].Article.ArticleId">@Model.f1[i].Article.ArticleTitle</a>
 												</h2>
 												<p class="article-description card-text small m-0 text-truncate">
 													@Model.f1[i].Article.Description
@@ -104,6 +105,7 @@
 									</div>
 								</div>
 							</div>
+							<input type="hidden" id="article-match-@i" value="false">
 						</div>
 					}
 				</div>
@@ -282,9 +284,13 @@
 		$(document).ready(function () {
 			$("#search").on("keyup", function () {
 				var value = $(this).val().toLowerCase();
-				$(".article-title").filter(function () {
-					var articleBox = $(this).parent().parent().parent();
-					var matchFound = articleBox.find(".article-title").text().toLowerCase().indexOf(value) > -1;
+				$(".article-title-latest").filter(function () {
+					var index = $(this).index();
+					var articleBox = $(this).parent().parent().parent(); // Get the result container
+					var matchFound = articleBox.find(".article-title-latest").text().toLowerCase().indexOf(value) > -1;
+					$("#article-match-" + index).val(matchFound);
+
+					// Hide/show result container based on match
 					articleBox.toggle(matchFound);
 
 					return matchFound;

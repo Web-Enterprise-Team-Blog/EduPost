@@ -31,12 +31,12 @@
                 <div class="card-body media">
                     @if (Model.DisplayAvatar == null)
                     {
-                        <img id="profile-img" src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                        class="d-block ui-w-80" style="height: 100px;aspect-ratio: 1/1">
+                        <img id="form-profile-img" src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                             class="d-block ui-w-80" style="height: 100px;aspect-ratio: 1/1">
                     }
                     else
                     {
-                        <img id="profile-img" src="data:image/png;base64, @Html.Raw(Model.DisplayAvatar)"
+                        <img id="form-profile-img" src="data:image/png;base64, @Html.Raw(Model.DisplayAvatar)"
                              class="d-block ui-w-80" style="height: 100px;aspect-ratio: 1/1">
                     }
 
@@ -86,7 +86,7 @@
 	<partial name="_ValidationScriptsPartial" />
 
     <script>
-        let profileImg = document.getElementById("profile-img");
+        let profileImg = document.getElementById("form-profile-img");
         const originalProfileImg = profileImg.src;
         let profileImgInput = document.getElementById("Input_InputAvatar");
 
