@@ -198,12 +198,21 @@ namespace EduPost.Controllers
         {
             string faculty = await GetUserFaculty();
 
+            var statusNames = new Dictionary<int, string>
+            {
+                { 0, "Pending" },
+                { 1, "Approved" },
+                { 2, "Declined" },
+                { 3, "Expired" }
+            };
+
             var articlesByStatus = _context.Article
                 .Where(a => a.Faculty == faculty)
                 .GroupBy(a => a.StatusId)
+                .ToList() 
                 .Select(group => new ArticlesByStatusViewModel
                 {
-                    Status = group.Key == 0 ? "Pending" : group.Key == 1 ? "Approved" : "Declined",
+                    Status = statusNames.ContainsKey(group.Key ?? -1) ? statusNames[group.Key ?? -1] : "Unknown",
                     Count = group.Count()
                 }).ToList();
 

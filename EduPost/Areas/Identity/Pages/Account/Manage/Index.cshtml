@@ -86,19 +86,19 @@
 	<partial name="_ValidationScriptsPartial" />
 
     <script>
-		let profileImg = document.getElementById("profile-img");
-		const originalProfileImg = profileImg.src;
+        let profileImg = document.getElementById("profile-img");
+        const originalProfileImg = profileImg.src;
         let profileImgInput = document.getElementById("Input_InputAvatar");
 
         //update the image to new image every input
-		profileImgInput.onchange = function(){
-		    profileImg.src = URL.createObjectURL(profileImgInput.files[0]);
-		}
+        profileImgInput.onchange = function () {
+            profileImg.src = URL.createObjectURL(profileImgInput.files[0]);
+        }
 
         //restore the img input to the original image
-		function restore(){
-		    profileImg.src = originalProfileImg;
-            profileImgInput.value = "";
-		}
-	</script>
+        function restore() {
+            profileImg.src = originalProfileImg;
+            profileImgInput.value = null;
+        }
+    </script>
 }
