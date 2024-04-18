@@ -15,7 +15,7 @@
     <nav class="navbar fixed-top navbar-expand-lg" style="background-color: black; height:auto">
         <img src="~/images/logo_black.png" style="height:50px;width:200px;margin-left:50px" class="navbar-logo" alt="logo" />
         <ul class="navbar-nav mr-auto d-flex align-items-center" style="margin-left:100PX;color:white">
-            @if (User.IsInRole("User"))
+            @if (User.IsInRole("Student"))
             {
                 <div style="overflow: auto; width:600px;">
                     <div class="nav-item" style="float: left; width: 30%;">

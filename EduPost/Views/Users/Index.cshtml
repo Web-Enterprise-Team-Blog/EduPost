@@ -209,10 +209,10 @@
                                                             {
                                                                 <tr class="result">
                                                                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                                                                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                                                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                                                    <td>@Html.DisplayFor(modelItem => item.Faculty)</td>
-                                                                    <td>@Html.DisplayFor(modelItem => item.Role)</td>
+                                                                    <td class="text-truncate" style="max-width:175px">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                                    <td class="text-truncate" style="max-width:175px">@Html.DisplayFor(modelItem => item.Email)</td>
+                                                                    <td class="text-truncate" style="max-width:185px">@Html.DisplayFor(modelItem => item.Faculty)</td>
+                                                                    <td class="text-truncate" style="max-width:105px">@Html.DisplayFor(modelItem => item.Role)</td>
                                                                     <td>
                                                                         <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                                                         @if (User.IsInRole("Admin"))
@@ -248,10 +248,10 @@
                                             {
                                                 <tr class="result">
                                                     <td>@Html.DisplayFor(modelItem => user.Id)</td>
-                                                    <td>@Html.DisplayFor(modelItem => user.UserName)</td>
-                                                    <td>@Html.DisplayFor(modelItem => user.Email)</td>
-                                                    <td>@Html.DisplayFor(modelItem => user.Role)</td>
-                                                    <td>@Html.DisplayFor(modelItem => user.Faculty)</td>
+                                                    <td class="text-truncate" style="max-width:175px">@Html.DisplayFor(modelItem => user.UserName)</td>
+                                                    <td class="text-truncate" style="max-width:175px">@Html.DisplayFor(modelItem => user.Email)</td>
+                                                    <td class="text-truncate" style="max-width:105px">@Html.DisplayFor(modelItem => user.Role)</td>
+                                                    <td class="text-truncate" style="max-width:185px">@Html.DisplayFor(modelItem => user.Faculty)</td>
                                                     <td>
                                                         <a class="btn btn-info" asp-action="Details" asp-route-id="@user.Id">Details</a> 
                                                         @if (User.IsInRole("Admin"))
