@@ -71,7 +71,7 @@ namespace EduPost
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Users}/{action=Index}/{id?}");
+                pattern: "{controller=LandingPage}/{action=LandingPage}/{id?}");
 
             app.Use(async (context, next) =>
             {
@@ -80,7 +80,9 @@ namespace EduPost
                 var isAccessingAllowedPaths = path.StartsWithSegments("/Identity/Account/Login")
                                               || path.StartsWithSegments("/Identity/Account/Logout")
                                               || path.StartsWithSegments("/Identity/Account/ForgotPassword")
-                                              || path.StartsWithSegments("/Identity/Account/RegisterConfirmation");
+                                              || path.StartsWithSegments("/Identity/Account/RegisterConfirmation")
+                                              || path.StartsWithSegments("/LandingPage/LandingPage");
+
 
                 var isStaticFile = path.StartsWithSegments("/css") || path.StartsWithSegments("/js") || path.StartsWithSegments("/images");
 

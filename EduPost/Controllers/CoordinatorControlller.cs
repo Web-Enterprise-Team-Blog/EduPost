@@ -470,13 +470,16 @@ namespace EduPost.Controllers
 
         public async Task<IActionResult> ApproveStatus(int articleId)
         {
-            var article = await _context.Article.FindAsync(articleId);
+            var article = await _context.Article.Include(a=>a.User).FirstOrDefaultAsync(a=>a.ArticleId==articleId);
             if (article != null)
             {
                 article.StatusId = 1;
                 await _context.SaveChangesAsync();
                 var message = $"Your article: \"{article.ArticleTitle}\" has been Approved by coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
                 await _notificationHub.SendNotificationToUser(message, article.UserID);
+
+                var emailMessage = $"<html><body>Your article with the name of: \"{article.ArticleTitle}\". has been aproved by the site coordinators</body></html>";
+                MailSender.SendEmail(article.User.Email, "Your ariticle has been aproved", emailMessage);
             }
 
             return RedirectToAction(nameof(Articles));
@@ -484,13 +487,16 @@ namespace EduPost.Controllers
 
         public async Task<IActionResult> DeclineStatus(int articleId)
         {
-            var article = await _context.Article.FindAsync(articleId);
+            var article = await _context.Article.Include(a => a.User).FirstOrDefaultAsync(a => a.ArticleId == articleId);
             if (article != null)
             {
                 article.StatusId = 2;
                 await _context.SaveChangesAsync();
                 var message = $"Your article: \"{article.ArticleTitle}\" has been Declined by coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
                 await _notificationHub.SendNotificationToUser(message, article.UserID);
+
+                var emailMessage = $"<html><body>Your article with the name of: \"{article.ArticleTitle}\". has been decline by the site coordinators</body></html>";
+                MailSender.SendEmail(article.User.Email, "Your ariticle has been decline", emailMessage);
             }
 
             return RedirectToAction(nameof(Articles));

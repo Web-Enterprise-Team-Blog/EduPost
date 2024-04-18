@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -43,20 +45,33 @@
                     <i class="fa-solid fa-angle-down"></i>
                 </span>
             </div>
-            <ul class="profile-dropdown-list" style="z-index:10; padding: 0px">
-                <li class="profile-dropdown-list-item">
-                    <a href="/Identity/Account/Manage">
-                        <i class="fa-regular fa-user"></i>
-                        Edit Profile
-                    </a>
-                </li>
-                <li class="profile-dropdown-list-item">
-                    <a href="/Identity/Account/Logout">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        Log out
-                    </a>
-                </li>
-            </ul>
+            @if (@User.Identity.Name != null)
+            {
+                <ul class="profile-dropdown-list" style="z-index:10; padding: 0px">
+                    <li class="profile-dropdown-list-item">
+                        <a href="/Identity/Account/Manage">
+                            <i class="fa-regular fa-user"></i>
+                            Edit Profile
+                        </a>
+                    </li>
+                    <li class="profile-dropdown-list-item">
+                        <a href="/Identity/Account/Logout">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Log out
+                        </a>
+                    </li>
+                </ul>
+            } else
+            {
+                <ul class="profile-dropdown-list" style="z-index:10; padding: 0px">
+                    <li class="profile-dropdown-list-item">
+                        <a href="/Identity/Account/Login">
+                            <i class="fa-regular fa-user"></i>
+                           Login
+                        </a>
+                    </li>                  
+                </ul>
+            }
         </div>           
     </nav>
 
