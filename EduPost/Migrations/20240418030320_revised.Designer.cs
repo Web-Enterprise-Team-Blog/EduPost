@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240414152803_AddAvatar")]
-    partial class AddAvatar
+    [Migration("20240418030320_revised")]
+    partial class revised
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,10 @@ namespace EduPost.Migrations
                     b.Property<string>("Faculty")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("article_faculty");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("image");
 
                     b.Property<bool>("Public")
                         .HasColumnType("bit");
@@ -514,8 +518,8 @@ namespace EduPost.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "User",
-                            NormalizedName = "USER"
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         },
                         new
                         {
@@ -567,7 +571,7 @@ namespace EduPost.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("InputAvatar")
+                    b.Property<byte[]>("Avatar")
                         .HasColumnType("varbinary(max)")
                         .HasColumnName("avatar");
 
@@ -765,7 +769,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "ITUSER@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEH+sZz3bFv5Wywum0wvsGfPWHcHzrU1eP3NFCsZgCv+i4iLsX/hbwo5UAoa5DXEY1Q==",
                             PhoneNumberConfirmed = false,
-                            Role = "User",
+                            Role = "Student",
                             SecurityStamp = "KL4GXYEBVQCM4CMOUHUWGVA76X5GWPLK",
                             TwoFactorEnabled = false,
                             UserName = "ITUser@email.com"
@@ -783,7 +787,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "CSUSER@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEC2lBMmzn9Yz4SZc01Pp0gtWDaUXyEYFQkFmprsa93UzlO5IoXSktJ6WnO2wfzBAtw==",
                             PhoneNumberConfirmed = false,
-                            Role = "User",
+                            Role = "Student",
                             SecurityStamp = "YO6SY4A2FLBOS7ZHD4GRYTXZTKCD4JOM",
                             TwoFactorEnabled = false,
                             UserName = "CSUser@email.com"
@@ -801,7 +805,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "EUSER@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJo3QDCo6vtJ6l1GW3RaXbYL0+jKR+Tp8/x+Ny1VoAJhh/Mb2c+JOEA3MF0K68wkUg==",
                             PhoneNumberConfirmed = false,
-                            Role = "User",
+                            Role = "Student",
                             SecurityStamp = "7ASQ2UGT33TIBBIGWOHIZRSTT3ZZWSHA",
                             TwoFactorEnabled = false,
                             UserName = "EUser@email.com"
@@ -819,7 +823,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "ESUSER@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAECmJwOOIUtxINztEbzdBGoIv8vic33hW/XaXWx524PnHCzAq0+r9h8qXWflV9dAreA==",
                             PhoneNumberConfirmed = false,
-                            Role = "User",
+                            Role = "Student",
                             SecurityStamp = "ZDEUN3C3CICWEQN6KH4AI3UFWJCWGA5A",
                             TwoFactorEnabled = false,
                             UserName = "ESUser@email.com"
@@ -837,7 +841,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "PSYUSER@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAELRnJOAVIaxsmhQAwr4S4MghTgxv8ZKuJVGGcIhRaHb55dkpwnwYC86GlM9qGthE4A==",
                             PhoneNumberConfirmed = false,
-                            Role = "User",
+                            Role = "Student",
                             SecurityStamp = "XCVBJEVYK3X2AO3N26IMH2LTVOXNPWEN",
                             TwoFactorEnabled = false,
                             UserName = "PsyUser@email.com"
@@ -855,7 +859,7 @@ namespace EduPost.Migrations
                             NormalizedUserName = "MANAGER@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEM+mPvVomCRp2EY60mU1dycFTYnWTmGIzkvnWy1R47/zs5zd9zIrRO2uDgX/wJoJmw==",
                             PhoneNumberConfirmed = false,
-                            Role = "User",
+                            Role = "Student",
                             SecurityStamp = "OK5EHYUMTYTQDEY5FHJVZMIYUYUYXMP2",
                             TwoFactorEnabled = false,
                             UserName = "Manager@email.com"

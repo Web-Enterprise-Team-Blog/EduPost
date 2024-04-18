@@ -39,14 +39,14 @@ namespace EduPost.Controllers
             {
 
                 return _context.User != null ?
-                        View(await _context.User.Where(u => u.Role == "User").ToListAsync()) :
+                        View(await _context.User.Where(u => u.Role == "Student").ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.User'  is null.");
             }
             if (User.IsInRole("Coordinator"))
             {
                 User currentUser = await _userManager.GetUserAsync(User);
                 return _context.User != null ?
-                        View(await _context.User.Where(u => u.Role == "User" && u.Faculty == currentUser.Faculty).ToListAsync()) :
+                        View(await _context.User.Where(u => u.Role == "Student" && u.Faculty == currentUser.Faculty).ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.User'  is null.");
             }
             else

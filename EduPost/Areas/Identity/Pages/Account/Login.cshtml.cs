@@ -130,7 +130,7 @@ namespace EduPost.Areas.Identity.Pages.Account
                         {
                             returnUrl = Url.Content("~/Users/Index");
                         }
-                        else if (roles.Contains("User"))
+                        else if (roles.Contains("Student"))
                         {
                             returnUrl = Url.Content("~/Home/Index");
                         }
