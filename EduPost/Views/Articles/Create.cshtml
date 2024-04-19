@@ -62,28 +62,27 @@
                         <span asp-validation-for="ArticleTitle" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Files" class="control-label">Upload files</label>
-                        <input asp-for="Files" type="file" class="form-control" multiple />
+                        <label asp-for="Files" class="control-label">Upload Files</label>
+                        <input asp-for="Files" type="file" class="form-control" multiple accept=".doc, .docx, .pdf" />
                         <span asp-validation-for="Files" class="text-danger"></span>
                     </div>
                     @* image input *@
-@*                     <div class="form-group">
-                        
-						<label asp-for="Image" class="control-label">Upload image</label>
-						<input asp-for="Image" type="file" class="form-control" multiple />
-						<span asp-validation-for="Image" class="text-danger"></span>
-						<img id="display-img" src=""
-							 class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
-                        <a onclick="restore()" class="btn btn-warning">delete image</a>
-                        
+                    @*                     <div class="form-group">
+
+                    <label asp-for="Image" class="control-label">Upload image</label>
+                    <input asp-for="Image" type="file" class="form-control" multiple />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                    <img id="display-img" src=""
+                    class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
+                    <a onclick="restore()" class="btn btn-warning">delete image</a>
+
                     </div> *@
 
                     <div class="form-group">
                         <label asp-for="Image" class="control-label">Upload Image</label>
-                        <input asp-for="Image" type="file" class="form-control" multiple accept="image/*" />
+                        <input asp-for="Image" type="file" class="form-control" accept="image/*" />
                         <span asp-validation-for="Image" class="text-danger"></span>
                         <img id="display-img" src="" class="d-block ui-w-80" style="height: 150px; aspect-ratio: 1/1; width:300px; margin-top:10px; margin-bottom:10px">
-                        <a onclick="restore()" class="btn btn-warning">Delete Image</a>
                     </div>
 
 
@@ -97,23 +96,23 @@
                         <input asp-for="AgreeToTerms" id="AgreeToTermsCheckbox" type="checkbox" class="form-check-input" />
                         <label for="AgreeToTermsCheckbox" class="form-check-label">I have read and agree to the <a href="#" id="myBtn" style="font-weight:bold; text-decoration:none;">Terms and Service</a></label>
                         <div id="myModal" class="modal">
-                          <div class="modal-content">
-                            <span class="close">&times;</span>
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
                                 <h1>Terms and Conditions for EduPost</h1>
-                                <hr/>
+                                <hr />
                                 <h2>1. Introduction</h2>
                                 <p>Welcome to EduPost, a platform managed by GreenWich University. By accessing and using EduPost, you agree to comply with the following terms and conditions. If you do not agree with any part of these terms, you must not use this website.</p>
-    
+
                                 <h2>2. User Eligibility</h2>
                                 <p>EduPost is available to current students, faculty, and staff of GreenWich University. All users are required to maintain the confidentiality of their account credentials and are responsible for all activities under their account.</p>
-    
+
                                 <h2>3. Use of the Platform</h2>
                                 <p>EduPost allows students to contribute articles to the university's system. Users must ensure that their contributions are original, respectful of intellectual property rights, and do not infringe on the rights of third parties. Contributions must not contain any material that is defamatory, obscene, unlawful, or otherwise objectionable.</p>
-    
+
                                 <h2>4. Intellectual Property Rights</h2>
                                 <p><strong>4.1</strong> By submitting content to EduPost, you grant GreenWich University a non-exclusive, worldwide, royalty-free license to use, reproduce, publish, and distribute your contributions in any format.</p>
                                 <p><strong>4.2</strong> You warrant that you have the right to grant this license and that the content does not infringe on any other party's rights.</p>
-    
+
                                 <h2>5. User Conduct</h2>
                                 <p>Users must not use EduPost to:</p>
                                 <ul>
@@ -121,19 +120,19 @@
                                     <li>Engage in any activity that harms or exploits minors.</li>
                                     <li>Spread malware or disrupt the operation of the platform.</li>
                                 </ul>
-    
+
                                 <h2>6. Modification of Terms</h2>
                                 <p>GreenWich University reserves the right to modify these terms and conditions at any time. Changes will be effective immediately upon posting the revised terms on the platform.</p>
-    
+
                                 <h2>7. Termination</h2>
                                 <p>GreenWich University may terminate or suspend access to EduPost for violations of these terms, without prior notice or liability.</p>
-    
+
                                 <h2>8. Governing Law</h2>
                                 <p>These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which GreenWich University is located, without giving effect to any principles of conflicts of law.</p>
-    
+
                                 <h2>9. Contact Us</h2>
                                 <p>If you have any questions about these terms, please contact the department for more detailed information.</p>
-                          </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" id="submitButtonContainer" style="display: none;">
@@ -163,47 +162,109 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const agreeToTermsCheckbox = document.getElementById('AgreeToTermsCheckbox');
-        const submitButtonContainer = document.getElementById('submitButtonContainer');
-        const modal = document.getElementById("myModal");
-        const btn = document.getElementById("myBtn");
-        const span = document.getElementsByClassName("close")[0];
-        const displayImg = document.getElementById("display-img");
-        const originalDisplayImg = displayImg.src;
-        const displayImgInput = document.getElementById("Image");
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const agreeToTermsCheckbox = document.getElementById('AgreeToTermsCheckbox');
+            const submitButtonContainer = document.getElementById('submitButtonContainer');
+            const modal = document.getElementById("myModal");
+            const btn = document.getElementById("myBtn");
+            const span = document.getElementsByClassName("close")[0];
+            const displayImg = document.getElementById("display-img");
+            const originalDisplayImg = displayImg.src;
+            const maxFileSizeImage = 1024 * 1024;
+            const maxFileSizeFiles = 5 * 1024 * 1024;
+            const imageInput = document.getElementById('Image');
+            const filesInput = document.querySelector('input[type="file"][multiple]');
 
-        // Check for the agreement to Terms and display the submit button accordingly
-        agreeToTermsCheckbox.addEventListener('change', function () {
-            submitButtonContainer.style.display = agreeToTermsCheckbox.checked ? 'block' : 'none';
-        });
 
-        // Functionality to handle the Terms and Service modal popup
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) {
+
+            // Check for the agreement to Terms and display the submit button accordingly
+            agreeToTermsCheckbox.addEventListener('change', function () {
+                submitButtonContainer.style.display = agreeToTermsCheckbox.checked ? 'block' : 'none';
+            });
+
+            // Functionality to handle the Terms and Service modal popup
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+            span.onclick = function () {
                 modal.style.display = "none";
             }
-        }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
 
-        // Functionality to update the display image when a new image is input
-        displayImgInput.onchange = function () {
-            displayImg.src = URL.createObjectURL(displayImgInput.files[0]);
-        }
+            // Functionality to update the display image when a new image is input
+            imageInput.onchange = function () {
+                displayImg.src = URL.createObjectURL(imageInput.files[0]);
+            }
 
-        // Function to restore the original image
-        function restore() {
-            displayImg.src = originalDisplayImg;
-            displayImgInput.value = "";
-        }
-    });
-</script>
+            // Function to restore the original image
+            function restore() {
+                displayImg.src = originalDisplayImg;
+                displayImgInput.value = "";
+            }
+
+            function checkFileSize(input, maxSize, errorMessage) {
+                if (input.files.length > 0) {
+                    const fileSize = input.files[0].size;
+                    if (fileSize > maxSize) {
+                        alert(errorMessage);
+                        input.value = ''; // Clear the input
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Check file size when image input changes
+            imageInput.addEventListener('change', function () {
+                if (checkFileSize(this, maxFileSizeImage, 'Image size cannot exceed 1MB')) {
+                    displayImagePreview(this);
+                } else {
+                    restore();
+                }
+            });
+
+            // Check file size when files input changes
+            filesInput.addEventListener('change', function () {
+                if (!checkFileSize(this, maxFileSizeFiles, 'Total file size cannot exceed 5MB')) {
+                    return;
+                }
+                displaySelectedFiles(this);
+            });
+
+            function displaySelectedFiles(input) {
+                // Get the list of selected files
+                const fileList = input.files;
+                const fileNames = [];
+
+                // Loop through the files and display their names
+                for (let i = 0; i < fileList.length; i++) {
+                    fileNames.push(fileList[i].name);
+                }
+
+                // Display the file names in the UI
+                const fileNamesDiv = document.getElementById("fileNames");
+                fileNamesDiv.innerHTML = fileNames.join("<br>");
+            }
+
+            // Function to display image preview
+            function displayImagePreview(input) {
+                if (input.files.length > 0) {
+                    const displayImg = document.getElementById('display-img');
+                    displayImg.src = URL.createObjectURL(input.files[0]);
+                }
+            }
+
+            // Function to display selected files
+            function displaySelectedFiles(input) {
+                // Display selected files if needed
+            }
+        });
+    </script>
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
