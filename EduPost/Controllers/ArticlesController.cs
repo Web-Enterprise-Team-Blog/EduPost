@@ -264,7 +264,7 @@ namespace EduPost.Controllers
 
                                 var fileToAdd = new File
                                 {
-                                    FileName = file.FileName,
+                                    FileName = AppendRandomStringToFileName(file.FileName),
                                     FileData = ms.ToArray(),
                                     FileContentType = file.ContentType
                                 };
@@ -275,7 +275,7 @@ namespace EduPost.Controllers
                                     Directory.CreateDirectory(uploadFolder);
                                 }
 
-                                string fileSavePath = Path.Combine(uploadFolder, file.FileName);
+                                string fileSavePath = Path.Combine(uploadFolder, fileToAdd.FileName);
                                 using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                                 {
                                     ms.Position = 0;
@@ -291,7 +291,6 @@ namespace EduPost.Controllers
                     }
                 }
 
-				//add image
 				if (image != null)
 				{
 					article.Image = await ImageToByte(image);
@@ -371,7 +370,6 @@ namespace EduPost.Controllers
 
                 if (ModelState.IsValid)
                 {
-
                     try
                     {
                         if (files != null)
@@ -387,7 +385,7 @@ namespace EduPost.Controllers
 
                                         var fileToAdd = new File
                                         {
-                                            FileName = file.FileName,
+                                            FileName = AppendRandomStringToFileName(file.FileName),
                                             FileData = ms.ToArray(),
                                             FileContentType = file.ContentType,
                                             ArticleId = article.ArticleId
@@ -399,7 +397,7 @@ namespace EduPost.Controllers
                                             Directory.CreateDirectory(uploadFolder);
                                         }
 
-                                        string fileSavePath = Path.Combine(uploadFolder, file.FileName);
+                                        string fileSavePath = Path.Combine(uploadFolder, fileToAdd.FileName);
                                         using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                                         {
                                             ms.Position = 0;
@@ -414,7 +412,7 @@ namespace EduPost.Controllers
                         }
 
                         var existingArticle = await _context.Article.FindAsync(article.ArticleId);
-                        
+
                         if (existingArticle != null)
                         {
                             existingArticle.ArticleTitle = article.ArticleTitle;
@@ -425,7 +423,7 @@ namespace EduPost.Controllers
                                 existingArticle.Image = await ImageToByte(image);
                             }
                             _context.Entry(existingArticle).State = EntityState.Modified;
-                            await _context.SaveChangesAsync();  
+                            await _context.SaveChangesAsync();
                         }
                     }
                     catch (DbUpdateConcurrencyException)
@@ -447,7 +445,7 @@ namespace EduPost.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"Error creating article: {ex.Message}");
+                ModelState.AddModelError("", $"Error updating article: {ex.Message}");
                 return View(article);
             }
         }
@@ -606,5 +604,15 @@ namespace EduPost.Controllers
 				return null;
 			}
 		}
-	}
+
+        private string AppendRandomStringToFileName(string fileName)
+        {
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+            string extension = Path.GetExtension(fileName);
+            string randomString = Guid.NewGuid().ToString("N").Substring(0, 8);
+
+            return $"{fileNameWithoutExtension}_{randomString}{extension}";
+        }
+
+    }
 }

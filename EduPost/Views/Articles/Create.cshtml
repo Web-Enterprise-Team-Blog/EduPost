@@ -35,7 +35,7 @@
                     <div class="col-md-6 pt-4 pb-4 align-self-center">
                         <h1 class="secondfont mb-3 font-weight-bold">Article Submission</h1>
                         <p class="mb-3">
-                            Summit your new article here
+                            Submit your new article here
                         </p>
                         @* <a href="~/mundana/article.html" class="btn btn-dark">Read More</a> *@
                     </div>
@@ -176,14 +176,10 @@
             const imageInput = document.getElementById('Image');
             const filesInput = document.querySelector('input[type="file"][multiple]');
 
-
-
-            // Check for the agreement to Terms and display the submit button accordingly
             agreeToTermsCheckbox.addEventListener('change', function () {
                 submitButtonContainer.style.display = agreeToTermsCheckbox.checked ? 'block' : 'none';
             });
 
-            // Functionality to handle the Terms and Service modal popup
             btn.onclick = function () {
                 modal.style.display = "block";
             }
@@ -196,12 +192,10 @@
                 }
             }
 
-            // Functionality to update the display image when a new image is input
             imageInput.onchange = function () {
                 displayImg.src = URL.createObjectURL(imageInput.files[0]);
             }
 
-            // Function to restore the original image
             function restore() {
                 displayImg.src = originalDisplayImg;
                 displayImgInput.value = "";
@@ -212,14 +206,13 @@
                     const fileSize = input.files[0].size;
                     if (fileSize > maxSize) {
                         alert(errorMessage);
-                        input.value = ''; // Clear the input
+                        input.value = ''; 
                         return false;
                     }
                 }
                 return true;
             }
 
-            // Check file size when image input changes
             imageInput.addEventListener('change', function () {
                 if (checkFileSize(this, maxFileSizeImage, 'Image size cannot exceed 1MB')) {
                     displayImagePreview(this);
@@ -228,7 +221,6 @@
                 }
             });
 
-            // Check file size when files input changes
             filesInput.addEventListener('change', function () {
                 if (!checkFileSize(this, maxFileSizeFiles, 'Total file size cannot exceed 5MB')) {
                     return;
@@ -237,21 +229,16 @@
             });
 
             function displaySelectedFiles(input) {
-                // Get the list of selected files
                 const fileList = input.files;
                 const fileNames = [];
 
-                // Loop through the files and display their names
                 for (let i = 0; i < fileList.length; i++) {
                     fileNames.push(fileList[i].name);
                 }
-
-                // Display the file names in the UI
                 const fileNamesDiv = document.getElementById("fileNames");
                 fileNamesDiv.innerHTML = fileNames.join("<br>");
             }
 
-            // Function to display image preview
             function displayImagePreview(input) {
                 if (input.files.length > 0) {
                     const displayImg = document.getElementById('display-img');
@@ -259,9 +246,7 @@
                 }
             }
 
-            // Function to display selected files
             function displaySelectedFiles(input) {
-                // Display selected files if needed
             }
         });
     </script>
