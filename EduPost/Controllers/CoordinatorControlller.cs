@@ -375,6 +375,28 @@ namespace EduPost.Controllers
             }
             return RedirectToAction(nameof(Details), new {id = AID});
         }
+        public async Task<IActionResult> ToggleDownload(int AID)
+        {
+            Article article = await _context.Article.FindAsync(AID);
+            if(article == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            if(article.AllowFIleDownload == true)
+            {
+                article.AllowFIleDownload = false;
+                _context.Update(article);
+                await _context.SaveChangesAsync();
+
+            }
+            else
+            {
+                article.AllowFIleDownload = true;
+                _context.Update(article);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Details), new {id = AID});
+        }
 
 		[HttpGet]
         public async Task<IActionResult> DownloadArticleFiles(int? id)

@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using EduPost.Data;
 using EduPost.Models;
 using Microsoft.AspNetCore.Authorization;
-
 namespace EduPost.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -136,7 +135,10 @@ namespace EduPost.Controllers
                 return NotFound();
             }
 
-            return View(role);
+			bool hasUser = await _context.User.AnyAsync(u => u.Role == role.Name);
+			ViewBag.HasUser = hasUser;
+
+			return View(role);
         }
 
         // POST: Roles/Delete/5
@@ -149,7 +151,12 @@ namespace EduPost.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Role'  is null.");
             }
             var role = await _context.Role.FindAsync(id);
-            if (role != null)
+			bool hasUser = await _context.User.AnyAsync(u => u.Role == role.Name);
+			if (hasUser)
+			{
+				return Problem("this faculty can not be deleted due to it still having student in it.");
+			}
+			if (role != null)
             {
                 _context.Role.Remove(role);
             }

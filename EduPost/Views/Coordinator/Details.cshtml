@@ -179,14 +179,32 @@
 												<a class ="btn btn-primary" asp-action="TogglePublic" asp-route-AID="@Model.ArticleId" style="height:35px">
                                                     @if(Model.Public == false)
                                                     {
-														<p>Change to public</p>
+														<p>Change to Public</p>
 													}
                                                     else
                                                     {
-                                                        <p>Change to private</p>
+                                                        <p>Change to Private</p>
                                                     }
                                                 </a>
 											</div>
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.AllowFIleDownload)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(model => model.AllowFIleDownload)
+                                            <div style="display:inline">
+                                                <a class="btn btn-primary" asp-action="ToggleDownload" asp-route-AID="@Model.ArticleId" style="height:35px">
+                                                    @if (Model.AllowFIleDownload == false)
+                                                    {
+                                                        <p>Enable Download</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Disable Download</p>
+                                                    }
+                                                </a>
+                                            </div>
                                         </dd>
                                         <dt class="col-sm-2">
                                             @Html.DisplayNameFor(model => model.Image)

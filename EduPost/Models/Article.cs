@@ -42,6 +42,8 @@ namespace EduPost.Models
         public bool AgreeToTerms { get; set; }
 
         public bool Public { get; set; }
+        
+        public bool AllowFIleDownload { get; set; } = false;
 
         public bool IsExpired
         {

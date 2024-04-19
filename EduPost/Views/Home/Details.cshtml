@@ -83,6 +83,10 @@
 								}
 							</tbody>
 						</table>
+						@if (Model.AllowFIleDownload)
+						{
+							<a asp-controller="Articles" asp-action="DownloadArticleFiles" asp-route-id="@Model.ArticleId" class="btn btn-primary">Download Files</a>
+						}
 					}
 					else
 					{

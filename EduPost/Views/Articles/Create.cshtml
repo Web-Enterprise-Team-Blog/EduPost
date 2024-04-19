@@ -67,7 +67,7 @@
                         <span asp-validation-for="Files" class="text-danger"></span>
                     </div>
                     @* image input *@
-                    <div class="form-group">
+@*                     <div class="form-group">
                         
 						<label asp-for="Image" class="control-label">Upload image</label>
 						<input asp-for="Image" type="file" class="form-control" multiple />
@@ -76,7 +76,17 @@
 							 class="d-block ui-w-80" style="height: 100px;aspect-ratio: 2/1">
                         <a onclick="restore()" class="btn btn-warning">delete image</a>
                         
+                    </div> *@
+
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label">Upload Image</label>
+                        <input asp-for="Image" type="file" class="form-control" multiple accept="image/*" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                        <img id="display-img" src="" class="d-block ui-w-80" style="height: 150px; aspect-ratio: 1/1; width:300px; margin-top:10px; margin-bottom:10px">
+                        <a onclick="restore()" class="btn btn-warning">Delete Image</a>
                     </div>
+
+
                     @* image input *@
                     <div class="form-group" style="margin-top:20px;">
                         <label asp-for="Description" class="control-label"></label>

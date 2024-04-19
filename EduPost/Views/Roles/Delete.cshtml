@@ -121,7 +121,15 @@
                             </dl>
                             <form asp-action="Delete">
                                 <input type="hidden" asp-for="Id" />
-                                <input class="btn btn-danger" type="submit" value="Delete" class="btn btn-danger" />
+                                @if (!ViewBag.HasUser)
+                                {
+                                    <input class="btn btn-danger" type="submit" value="Delete" class="btn btn-danger" />
+                                }
+                                else
+                                {
+                                    <p class="text-danger"> you cant delete this role due to it still having user in it</p>
+                                    <input class="btn btn-danger" type="submit" value="Delete" class="btn btn-danger" disabled/>
+                                }
                                 <a class="btn btn-primary" asp-action="Index">Back to List</a>
                             </form>
                         </div>

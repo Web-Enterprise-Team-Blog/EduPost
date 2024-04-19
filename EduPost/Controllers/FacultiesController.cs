@@ -135,6 +135,9 @@ namespace EduPost.Controllers
                 return NotFound();
             }
 
+            bool hasUser = await _context.User.AnyAsync(u => u.Faculty == faculty.FacultyName);
+            ViewBag.HasUser = hasUser;
+
             return View(faculty);
         }
 
@@ -147,7 +150,13 @@ namespace EduPost.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Faculty'  is null.");
             }
+
             var faculty = await _context.Faculty.FindAsync(id);
+            bool hasUser = await _context.User.AnyAsync(u => u.Faculty == faculty.FacultyName);
+            if(hasUser)
+            {
+                return Problem("this faculty can not be deleted due to it still having student in it.");
+            }
             if (faculty != null)
             {
                 _context.Faculty.Remove(faculty);

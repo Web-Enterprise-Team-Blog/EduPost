@@ -130,7 +130,15 @@
 
                                         <form asp-action="Delete">
                                             <input type="hidden" asp-for="FacultyId" />
-                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                            @if (!ViewBag.HasUser)
+                                            {
+                                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                            }
+                                            else
+                                            {
+                                                <p class="text-danger"> you cant delete this faculty due to it still having student in it</p>
+                                                <input type="submit" value="Delete" class="btn btn-danger" disabled/>
+                                            }
                                         </form>
                                     </div>
                                 </div>

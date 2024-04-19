@@ -17,23 +17,23 @@
     <div class="text-right mt-3">
         @if (User.IsInRole("Admin"))
         {
-            <a href="/Users/Index" class="btn btn-default">Exit Profile</a>
+            <a href="/Users/Index" class="btn btn-success">Exit Profile</a>
         }
         else if (User.IsInRole("Manager"))
         {
-            <a href="/Manager/Index" class="btn btn-default">Exit Profile</a>
+            <a href="/Manager/Index" class="btn btn-success">Exit Profile</a>
         }
         else if (User.IsInRole("Coordinator"))
         {
-            <a href="/Coordinator/Index" class="btn btn-default">Exit Profile</a>
+            <a href="/Coordinator/Index" class="btn btn-success">Exit Profile</a>
         }
         else if (User.IsInRole("Student"))
         {
-            <a href="/Home/Index" class="btn btn-default">Exit Profile</a>
+            <a href="/Home/Index" class="btn btn-success">Exit Profile</a>
         }
         else if (User.IsInRole("Guest"))
         {
-            <a href="/Guest/Index" class="btn btn-default">Exit Profile</a>
+            <a href="/Guest/Index" class="btn btn-success">Exit Profile</a>
         }
     </div>
 
