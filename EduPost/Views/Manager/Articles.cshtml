@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EduPost.Models.Article>
+﻿@model IEnumerable<EduPost.Models.ViewModels.ArticleInfo>
 
 @{
     ViewData["Title"] = "Index";
@@ -131,7 +131,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>
-                                                                @Html.DisplayNameFor(model => model.UserID)
+                                                                User
                                                             </th>
                                                             <th>
                                                                 @Html.DisplayNameFor(model => model.ArticleTitle)
@@ -173,10 +173,10 @@
                                                                         break;
                                                                 }
                                                                 <tr>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.UserID)
+                                                                    <td class="text-truncate" style="max-width:175px">
+                                                                        @Html.DisplayFor(modelItem => item.UserName)
                                                                     </td>
-                                                                    <td>
+                                                                    <td class="text-truncate" style="max-width:105px">
                                                                         @Html.DisplayFor(modelItem => item.ArticleTitle)
                                                                     </td>
                                                                     <td>
@@ -209,7 +209,7 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.UserID)
+                                                    User
                                                 </th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => model.ArticleTitle)
@@ -249,10 +249,10 @@
                                                         break;
                                                 }
                                                 <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.UserID)
+                                                    <td class ="text-truncate" style="max-width:175px">
+                                                        @Html.DisplayFor(modelItem => item.UserName)
                                                     </td>
-                                                    <td>
+                                                    <td class="text-truncate" style="max-width:105px">
                                                         @Html.DisplayFor(modelItem => item.ArticleTitle)
                                                     </td>
                                                     <td>

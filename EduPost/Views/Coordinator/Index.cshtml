@@ -133,19 +133,19 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.UserID)
+                                                User
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.ArticleTitle)
+                                                @Html.DisplayNameFor(model => model.Articles[0].ArticleTitle)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.CreatedDate)
+                                                @Html.DisplayNameFor(model => model.Articles[0].CreatedDate)
                                             </th>
                                             <th>
                                                 Status
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Public)
+                                                @Html.DisplayNameFor(model => model.Articles[0].Public)
                                             </th>
                                             <th></th>
                                         </tr>
@@ -170,10 +170,10 @@
                                                 break;
                                         }
                                         <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UserID)
+                                            <td class="text-truncate" style="max-width:175px">
+                                                @Html.DisplayFor(modelItem => item.UserName)
                                             </td>
-                                            <td>
+                                            <td class="text-truncate" style="max-width:185px">
                                                 @Html.DisplayFor(modelItem => item.ArticleTitle)
                                             </td>
                                             <td>

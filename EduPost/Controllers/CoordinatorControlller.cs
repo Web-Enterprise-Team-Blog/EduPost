@@ -5,12 +5,8 @@ using EduPost.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using File = EduPost.Models.File;
 
 namespace EduPost.Controllers
 {
@@ -36,11 +32,20 @@ namespace EduPost.Controllers
             var faculty = coordinator.Faculty;
 
             var articles = _context.Article
-                .Include(a => a.Files)
+                .Include(a => a.Files) 
                 .Where(a => _context.User.Any(u => u.Id == a.UserID && u.Faculty == faculty) && a.StatusId == 1)
+                .Select(a => new ArticleInfo
+                {
+                    ArticleId = a.ArticleId,
+                    ArticleTitle = a.ArticleTitle,
+                    UserName = _context.User.Where(u => u.Id == a.UserID).Select(u => u.UserName).FirstOrDefault(),
+                    Public = a.Public,
+                    CreatedDate = a.CreatedDate.GetValueOrDefault().DateTime,
+                    StatusId = a.StatusId
+                })
                 .ToList();
 
-            if (articles == null)
+            if (!articles.Any()) // It's better to check for an empty list rather than null
             {
                 return RedirectToAction("NotFound", "Error");
             }
@@ -48,8 +53,8 @@ namespace EduPost.Controllers
             var notifications = _context.Notification
                 .Where(n => n.UserId == coordinator.Id)
                 .OrderByDescending(n => n.Timestamp)
-                .Take(5).
-                ToList();
+                .Take(5)
+                .ToList();
 
             var viewModel = new CoordinatorIndexViewModel
             {
@@ -59,6 +64,7 @@ namespace EduPost.Controllers
 
             return View(viewModel);
         }
+
 
 
         public async Task<IActionResult> Articles()
@@ -74,6 +80,17 @@ namespace EduPost.Controllers
                 .Where(x => x.User.Faculty == faculty)
                 .Select(x => x.Article)
                 .Where(a => a.StatusId != 1)
+                .OrderByDescending(a => a.CreatedDate)
+                .Select(a => new ArticleInfo
+                {
+                    ArticleId = a.ArticleId,
+                    ArticleTitle = a.ArticleTitle,
+                    UserName = _context.User.Where(u => u.Id == a.UserID).Select(u => u.UserName).FirstOrDefault(),
+                    Public = a.Public,
+                    CreatedDate = a.CreatedDate.GetValueOrDefault().DateTime,
+                    ExpireDate = a.ExpireDate.GetValueOrDefault().DateTime,
+                    StatusId = a.StatusId
+                })
                 .ToListAsync();
 
             return View(articles); 

@@ -81,9 +81,26 @@ namespace EduPost.Controllers
 
         public async Task<IActionResult> Articles()
         {
-            return _context.Role != null ?
-                        View(await _context.Article.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Role'  is null.");
+            if (_context.Role == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Role' is null.");
+            }
+
+            var articles = await _context.Article
+                .Include(a => a.User) 
+                .Select(a => new ArticleInfo
+                {
+                    ArticleId = a.ArticleId,
+                    ArticleTitle = a.ArticleTitle,
+                    Faculty = a.Faculty,
+                    UserName = _context.User.Where(u => u.Id == a.UserID).Select(u => u.UserName).FirstOrDefault(),
+                    Public = a.Public,
+                    CreatedDate = a.CreatedDate.GetValueOrDefault().DateTime,
+                    ExpireDate = a.ExpireDate.GetValueOrDefault().DateTime,
+                    StatusId = a.StatusId
+                }).ToListAsync();
+
+            return View(articles);
         }
 
         public async Task<IActionResult> Details(int? id)
