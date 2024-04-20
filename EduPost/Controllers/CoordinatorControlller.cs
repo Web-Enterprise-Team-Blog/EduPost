@@ -45,11 +45,6 @@ namespace EduPost.Controllers
                 })
                 .ToList();
 
-            if (!articles.Any()) // It's better to check for an empty list rather than null
-            {
-                return RedirectToAction("NotFound", "Error");
-            }
-
             var notifications = _context.Notification
                 .Where(n => n.UserId == coordinator.Id)
                 .OrderByDescending(n => n.Timestamp)
