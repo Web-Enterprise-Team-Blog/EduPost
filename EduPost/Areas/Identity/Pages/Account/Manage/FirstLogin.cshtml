@@ -63,8 +63,10 @@
                         <i class="bi bi-shield-lock custom-icon"></i>
                         <input asp-for="Input.OldPassword" class="form-control form-control-lg bg-light fs-6" autocomplete="current-password"
                                aria-required="true" placeholder="Please enter your old password." />
+						<button id="btnPassword-1" class="btn btn-outline-secondary" type="button"><span class="bi bi-eye-fill"></span></button>
                         <div class="invalid-feedback d-block">
                             <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+							<p id="warning-1" class="text-danger" style="display:none; margin-left:35px">Caplock is on</p>
                         </div>
                     </div>
 
@@ -72,8 +74,11 @@
                         <i class="bi bi-key-fill custom-icon"></i>
                         <input asp-for="Input.NewPassword" class="form-control form-control-lg bg-light fs-6" autocomplete="new-password"
                                aria-required="true" placeholder="Please enter your new password." />
+                        <button id="btnPassword-2" class="btn btn-outline-secondary" type="button"><span class="bi bi-eye-fill"></span></button>
                         <div class="invalid-feedback d-block">
                             <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                            <p id="warning-2" class="text-danger" style="display:none; margin-left:35px">Caplock is on</p>
+
                         </div>
                     </div>
 
@@ -81,8 +86,10 @@
                         <i class="bi bi-key-fill custom-icon"></i>
                         <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg bg-light fs-6" autocomplete="new-password"
                                aria-required="true" placeholder="Please confirm your new password." />
+                        <button id="btnPassword-3" class="btn btn-outline-secondary" type="button"><span class="bi bi-eye-fill"></span></button>
                         <div class="invalid-feedback d-block">
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            <p id="warning-3" class="text-danger" style="display:none; margin-left:35px">Caplock is on</p>
                         </div>
                     </div>
 
@@ -99,7 +106,64 @@
         </div>
 
     </div>
+	<script>
+		// Caplock on check (for Old Password)
+		const inputOldPassword = document.getElementById("Input_OldPassword");
+		const warningOldPassword = document.getElementById("warning-1");
 
+		inputOldPassword.addEventListener("keyup", function (event) {
+			if (event.getModifierState("CapsLock")) {
+				warningOldPassword.style.display = "block";
+			} else {
+				warningOldPassword.style.display = "none";
+			}
+		});
+
+		// Hide/show password (for Old Password)
+		const btnOldPassword = document.getElementById("btnPassword-1");
+
+		btnOldPassword.addEventListener("click", function () {
+			inputOldPassword.setAttribute("type", inputOldPassword.getAttribute("type") === "password" ? "text" : "password");
+		});
+
+		// Caplock on check (for New Password)
+		const inputNewPassword = document.getElementById("Input_NewPassword");
+		const warningNewPassword = document.getElementById("warning-2");
+
+		inputNewPassword.addEventListener("keyup", function (event) {
+			if (event.getModifierState("CapsLock")) {
+				warningNewPassword.style.display = "block";
+			} else {
+				warningNewPassword.style.display = "none";
+			}
+		});
+
+		// Hide/show password (for New Password)
+		const btnNewPassword = document.getElementById("btnPassword-2");
+
+		btnNewPassword.addEventListener("click", function () {
+			inputNewPassword.setAttribute("type", inputNewPassword.getAttribute("type") === "password" ? "text" : "password");
+		});
+
+		// Caplock on check (for Confirm Password)
+		const inputConfirmPassword = document.getElementById("Input_ConfirmPassword");
+		const warningConfirmPassword = document.getElementById("warning-3");
+
+		inputConfirmPassword.addEventListener("keyup", function (event) {
+			if (event.getModifierState("CapsLock")) {
+				warningConfirmPassword.style.display = "block";
+			} else {
+				warningConfirmPassword.style.display = "none";
+			}
+		});
+
+		// Hide/show password (for Confirm Password)
+		const btnConfirmPassword = document.getElementById("btnPassword-3");
+
+		btnConfirmPassword.addEventListener("click", function () {
+			inputConfirmPassword.setAttribute("type", inputConfirmPassword.getAttribute("type") === "password" ? "text" : "password");
+		});
+	</script>
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

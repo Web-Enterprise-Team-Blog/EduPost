@@ -244,9 +244,9 @@ namespace EduPost.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    return View(article);
                 }
-                if (!article.AgreeToTerms)
+                if (!ModelState.IsValid)
                 {
                     ModelState.AddModelError("AgreeToTerms", "You must agree to the Term and Conditions to create an article.");
                     return View(article);
