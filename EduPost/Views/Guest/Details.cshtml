@@ -110,7 +110,7 @@
 	</div>
 
 	<div>
-		<span id="userReaction" class="text-muted"></span>
+		<strong id="userReaction" style="color:darkgreen"></strong>
 	</div>
 
 	<div class="container pt-4 pb-4">
@@ -282,9 +282,9 @@
 
 							if (response.isLike !== undefined) {
 								if (response.isLike) {
-									$('#userReaction').text('You liked this article.');
+									$('#userReaction').text('You liked this article before.');
 								} else {
-									$('#userReaction').text('You disliked this article.');
+									$('#userReaction').text('You disliked this article before.');
 								}
 							} if (response.message) {
 								$('#userReaction').text(response.message);

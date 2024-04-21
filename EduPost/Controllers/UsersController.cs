@@ -129,7 +129,7 @@ namespace EduPost.Controllers
 		[HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id "/*,EmailConfirmed*/)] User userInput)
+		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id"/*,EmailConfirmed*/)] User userInput)
 		{
 			if (id != userInput.Id)
 			{
