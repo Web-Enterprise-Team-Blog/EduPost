@@ -62,37 +62,43 @@
 						@Model.Description
 					</p>
 				</article>
-				<div class="border p-5 bg-lightblue" style="margin-bottom:10px;">
-					<h4>Documments come with this article:</h4>
+
+				@if (Model.AllowFIleDownload)
+				{
 					@if (Model.Files != null && Model.Files.Any())
 					{
-						<table class="table">
-							<thead>
-								<tr>
-									<th>File name</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-
-								@foreach (var file in Model.Files)
-								{
+						<div class="border p-5 bg-lightblue" style="margin-bottom:10px;">
+							<h4>Documments come with this article:</h4>
+							<table class="table">
+								<thead>
 									<tr>
-										<td>@file.FileName</td>
+										<th>File name</th>
+										<th></th>
 									</tr>
-								}
-							</tbody>
-						</table>
-						@if (Model.AllowFIleDownload)
-						{
+								</thead>
+								<tbody>
+
+									@foreach (var file in Model.Files)
+									{
+										<tr>
+											<td>@file.FileName</td>
+										</tr>
+									}
+								</tbody>
+							</table>
 							<a asp-controller="Articles" asp-action="DownloadArticleFiles" asp-route-id="@Model.ArticleId" class="btn btn-primary">Download Files</a>
-						}
+						</div>
 					}
 					else
 					{
-						<p>No file was uploaded.</p>
+						<div class="border p-5 bg-lightblue" style="margin-bottom:10px;">
+							<h4>Documments come with this article:</h4>
+							<p>No file was uploaded.</p>
+						</div>
 					}
-				</div>
+				}
+
+
 			</div>
 		</div>
 	</div>

@@ -54,8 +54,8 @@ namespace EduPost.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            [Required]
-            public string UserName { get; set; }
+            /*[Required]
+            public string UserName { get; set; }*/
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -128,7 +128,7 @@ namespace EduPost.Areas.Identity.Pages.Account.Manage
             if (user.FirstLogin == null)
             {
                 user.FirstLogin = false;
-                user.UserName = Input.UserName;
+                /*user.UserName = Input.UserName;*/
                 _context.Update(user);
                 try
                 {

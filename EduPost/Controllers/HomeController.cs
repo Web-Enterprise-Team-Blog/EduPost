@@ -43,7 +43,7 @@ namespace EduPost.Controllers
 					LikeCount = a.UserReactions.Count(fb => fb.ReactionType == true)
 				})
 				.OrderByDescending(a => a.Article.CreatedDate)
-				.Take(3)
+				/*.Take(3)*/
 				.ToListAsync();
 
 			model.f2 = await _context.Article

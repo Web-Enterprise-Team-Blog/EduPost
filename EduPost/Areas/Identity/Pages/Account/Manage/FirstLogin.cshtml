@@ -50,14 +50,14 @@
                 <form id="change-password-form" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-                    <div class="input-group mb-3">
+                    @* <div class="input-group mb-3">
                         <i class="bi bi-person custom-icon"></i>
                         <input asp-for="Input.UserName" class="form-control form-control-lg bg-light fs-6" autocomplete="username"
                                aria-required="true" placeholder="Please enter your new username." />
                         <div class="invalid-feedback d-block">
                             <span asp-validation-for="Input.UserName" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
 
                     <div class="input-group mb-3">
                         <i class="bi bi-shield-lock custom-icon"></i>

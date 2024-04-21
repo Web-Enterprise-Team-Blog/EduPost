@@ -52,14 +52,14 @@
 
 	<div class="container-fluid" style="height:auto">
 		<div class="row" style="height:auto">
-			<div class="col-lg-6" style="height:auto;overflow:visible">
+			<div class="col-lg-6" style="overflow:visible">
 				<h5 class="font-weight-bold spanborder"><span>Lastest Articles</span></h5>
 				<div class="form-group" style="margin-top:5px">
 					<div class="input-group" style="margin-bottom:10px;">
 						<input type="text" id="search" placeholder="Search article" class="form-control" style="margin-bottom:10px; background:#e8f3ec;" />
 					</div>
 				</div>
-				<div class="flex-md-row mb-4 box-shadow h-xl-300">
+				<div class="flex-md-row mb-4 box-shadow h-xl-300 overflow-auto" style="height:100%">
 					@for (int i = 0; i <= Model.f1.Count() - 1; i++)
 					{
 						<div class="result mb-3 d-flex align-items-center">
@@ -161,107 +161,56 @@
 							</div>
 						</div>
 					}
+
+					<h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
+					@for (int i = 0; i <= Model.f3.Count() - 1; i++)
+					{
+						<div class="result mb-3 d-flex align-items-center">
+							@if (Model.f3[i].Article.Image != null)
+							{
+								<img id="display-img" src="data:image/png;base64, @Convert.ToBase64String(Model.f3[i].Article.Image)" style="height: 80px;aspect-ratio: 2/1">
+							}
+							else
+							{
+								<img id="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="height: 80px;aspect-ratio: 2/1">
+							}
+							<div class="pl-3 text-truncate">
+								<div class="card" style="border:none">
+									<div class="card-body">
+										<div class="row">
+											<div class="col">
+												<h2 class="mb-2 h6 font-weight-bold">
+													<a class="article-title text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
+												</h2>
+												<p class="article-description card-text small m-0 text-truncate">
+													@Model.f3[i].Article.Description
+												</p>
+												<div class="article-author card-text text-muted small">
+													By @Model.f3[i].Article.User.UserName
+												</div>
+												<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
+											</div>
+											<div class="col">
+												<div class="row">
+													<div class="col">
+														<p class="card-text text-muted small">
+															@Model.f3[i].LikeCount Likes
+														</p>
+													</div>
+													<div class="col">
+														<p class="card-text text-muted small">
+															@Model.f3[i].CommentCount Comments
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
 				</div>
-			</div>
-			<div class="col-lg-6" style="height:auto;visibility: hidden;">
-			@* <h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
-				@for (int i = 0; i <= Model.f3.Count() - 1; i++)
-				{
-					<div class="result mb-3 d-flex align-items-center">
-						@if (Model.f3[i].Article.Image != null)
-						{
-							<img id="display-img" src="data:image/png;base64, @Convert.ToBase64String(Model.f3[i].Article.Image)" style="height: 80px;aspect-ratio: 2/1">
-						}
-						else
-						{
-							<img id="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="height: 80px;aspect-ratio: 2/1">
-						}
-						<div class="pl-3 text-truncate">
-							<div class="card" style="border:none">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h2 class="mb-2 h6 font-weight-bold">
-												<a class="article-title text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
-											</h2>
-											<p class="article-description card-text small m-0 text-truncate">
-												@Model.f3[i].Article.Description
-											</p>
-											<div class="article-author card-text text-muted small">
-												By @Model.f3[i].Article.User.UserName
-											</div>
-											<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
-										</div>
-										<div class="col">
-											<div class="row">
-												<div class="col">
-													<p class="card-text text-muted small">
-														@Model.f3[i].LikeCount Likes
-													</p>
-												</div>
-												<div class="col">
-													<p class="card-text text-muted small">
-														@Model.f3[i].CommentCount Comments
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				} *@
-			</div>
-			<div class="col-lg-6" style="height:auto;right: 0;">
-				<h5 class="font-weight-bold spanborder"><span>Articles with the most comments</span></h5>
-				@for (int i = 0; i <= Model.f3.Count() - 1; i++)
-				{
-					<div class="result mb-3 d-flex align-items-center">
-						@if (Model.f3[i].Article.Image != null)
-						{
-							<img id="display-img" src="data:image/png;base64, @Convert.ToBase64String(Model.f3[i].Article.Image)" style="height: 80px;aspect-ratio: 2/1">
-						}
-						else
-						{
-							<img id="display-img" src="~/mundana/assets/img/demo/blog4.jpg" style="height: 80px;aspect-ratio: 2/1">
-						}
-						<div class="pl-3 text-truncate">
-							<div class="card" style="border:none">
-								<div class="card-body">
-									<div class="row">
-										<div class="col">
-											<h2 class="mb-2 h6 font-weight-bold">
-												<a class="article-title text-dark" asp-action="Details" asp-route-id="@Model.f3[i].Article.ArticleId">@Model.f3[i].Article.ArticleTitle</a>
-											</h2>
-											<p class="article-description card-text small m-0 text-truncate">
-												@Model.f3[i].Article.Description
-											</p>
-											<div class="article-author card-text text-muted small">
-												By @Model.f3[i].Article.User.UserName
-											</div>
-											<small class="text-muted">@Model.f3[i].Article.CreatedDate.Value.Day/@Model.f3[i].Article.CreatedDate.Value.Month/@Model.f3[i].Article.CreatedDate.Value.Year</small>
-										</div>
-										<div class="col">
-											<div class="row">
-												<div class="col">
-													<p class="card-text text-muted small">
-														@Model.f3[i].LikeCount Likes
-													</p>
-												</div>
-												<div class="col">
-													<p class="card-text text-muted small">
-														@Model.f3[i].CommentCount Comments
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				}
 			</div>
 		</div>
 	</div>
