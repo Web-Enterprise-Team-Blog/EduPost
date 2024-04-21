@@ -29,7 +29,7 @@ namespace EduPost.Controllers
             GuestIndexViewModel model = new GuestIndexViewModel();
             model.f1 = await _context.Article
             .Include(a => a.User)
-				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public == true)
 				.Select(a => new ArticleViewModel
 				{
 					Article = a,
@@ -42,7 +42,7 @@ namespace EduPost.Controllers
 
 			model.f2 = await _context.Article
                 .Include(a => a.User)
-				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public == true)
 				.Select(a => new ArticleViewModel
 				{
 					Article = a,
@@ -54,7 +54,7 @@ namespace EduPost.Controllers
 				.ToListAsync();
 			model.f3 = await _context.Article
 				.Include(a => a.User)
-				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public)
+				.Where(a => a.Faculty == faculty && a.StatusId == 1 && a.Public == true)
 				.Select(a => new ArticleViewModel
 				{
 					Article = a,
