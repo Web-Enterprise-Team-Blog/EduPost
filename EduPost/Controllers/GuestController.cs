@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EduPost.Controllers
 {
-    [Authorize]
+    [Authorize (Roles="Guest")]
     public class GuestController : Controller
     {
         private readonly ApplicationDbContext _context;
