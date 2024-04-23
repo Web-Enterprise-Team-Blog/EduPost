@@ -400,13 +400,13 @@
 				checkUserReaction(articleId);
 				getArticleReactionCounts(articleId);
 
-				$("#likeButton").click(function (e) {
+				$("#likeButton").off('click').on('click', function (e) {
 					e.preventDefault();
 					postReaction(true, articleId);
 					getArticleReactionCounts(articleId);
 				});
 
-				$("#dislikeButton").click(function (e) {
+				$("#dislikeButton").off('click').on('click', function (e) {
 					e.preventDefault();
 					postReaction(false, articleId);
 					getArticleReactionCounts(articleId);

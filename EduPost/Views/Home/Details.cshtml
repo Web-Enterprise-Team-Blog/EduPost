@@ -224,38 +224,113 @@
 
 	@section Scripts {
 		<script>
-			if (document.getElementById("toTop")) {
-				function scrollFunction() {
-					document.getElementById("toTop").style.display = "block";
+			(function () {
+				if (document.getElementById("toTop")) {
+					function scrollFunction() {
+						document.getElementById("toTop").style.display = "block";
+					}
+
+					function topFunction() {
+						document.body.scrollTop = 0;
+						document.documentElement.scrollTop = 0;
+					}
+
+					scrollFunction();
 				}
 
-				function topFunction() {
-					document.body.scrollTop = 0;
-					document.documentElement.scrollTop = 0;
+				if ($("#likeButton").length > 0 && $("#dislikeButton").length > 0) {
+					var articleId = $('#likeButton').data('article-id');
+					checkUserReaction(articleId);
+					getArticleReactionCounts(articleId);
+
+					$("#likeButton").click(function (e) {
+						e.preventDefault();
+						postReaction(true, articleId);
+						getArticleReactionCounts(articleId);
+					});
+
+					$("#dislikeButton").click(function (e) {
+						e.preventDefault();
+						postReaction(false, articleId);
+						getArticleReactionCounts(articleId);
+					});
 				}
 
-				scrollFunction();
-			}
+				if ($("#likeCount").length > 0 && $("#dislikeCount").length > 0) {
+					function getArticleReactionCounts(articleId) {
+						$.ajax({
+							url: '@Url.Action("GetArticleReactionCounts", "Articles")',
+							data: { articleId: articleId },
+							success: function (response) {
+								if (response.success) {
+									$('#likeCount').text(response.likeCount);
+									$('#dislikeCount').text(response.dislikeCount);
+								} else {
+									console.error(response.message);
+								}
+							},
+							error: function () {
+								console.error("Error fetching article reaction counts.");
+							}
+						});
+					}
+				}
 
-			if ($("#likeButton").length > 0 && $("#dislikeButton").length > 0) {
-				var articleId = $('#likeButton').data('article-id');
-				checkUserReaction(articleId);
-				getArticleReactionCounts(articleId);
+				function checkUserReaction(articleId) {
+					$.ajax({
+						url: '@Url.Action("GetUserReaction", "Articles")',
+						data: { articleId: articleId },
+						success: function (response) {
+							if (response.success) {
+								if (response.isLike !== null) {
+									if (response.isLike) {
+										$('#likeButton').addClass('liked').removeClass('disliked');
+										$('#dislikeButton').removeClass('liked').removeClass('disliked');
+									} else {
+										$('#dislikeButton').addClass('disliked').removeClass('liked');
+										$('#likeButton').removeClass('disliked').removeClass('liked');
+									}
+								}
 
-				$("#likeButton").click(function (e) {
-					e.preventDefault();
-					postReaction(true, articleId);
-					getArticleReactionCounts(articleId);
-				});
+								if (response.isLike !== undefined) {
+									if (response.isLike) {
+										$('#userReaction').text('You liked this article before.');
+									} else {
+										$('#userReaction').text('You disliked this article before.');
+									}
+								} if (response.message) {
+									$('#userReaction').text(response.message);
+								}
+							} else {
+								console.error(response.message);
+							}
+						},
+						error: function () {
+							console.error("Error fetching user reaction.");
+						}
+					});
+				}
 
-				$("#dislikeButton").click(function (e) {
-					e.preventDefault();
-					postReaction(false, articleId);
-					getArticleReactionCounts(articleId);
-				});
-			}
+				function postReaction(isLike, articleId) {
+					var actionUrl = isLike ? '@Url.Action("LikeArticle", "Articles")' : '@Url.Action("DislikeArticle", "Articles")';
+					$.ajax({
+						url: actionUrl,
+						type: 'POST',
+						data: { articleId: articleId },
+						success: function (response) {
+							if (isLike) {
+								$('#likeButton').addClass('liked').removeClass('disliked');
+								$('#dislikeButton').removeClass('liked').removeClass('disliked');
+							} else {
+								$('#dislikeButton').addClass('disliked').removeClass('liked');
+								$('#likeButton').removeClass('disliked').removeClass('liked');
+							}
+							checkUserReaction(articleId);
+							getArticleReactionCounts(articleId);
+						}
+					});
+				}
 
-			if ($("#likeCount").length > 0 && $("#dislikeCount").length > 0) {
 				function getArticleReactionCounts(articleId) {
 					$.ajax({
 						url: '@Url.Action("GetArticleReactionCounts", "Articles")',
@@ -273,171 +348,97 @@
 						}
 					});
 				}
-			}
-			function checkUserReaction(articleId) {
-				$.ajax({
-					url: '@Url.Action("GetUserReaction", "Articles")',
-					data: { articleId: articleId },
-					success: function (response) {
-						if (response.success) {
-							if (response.isLike !== null) {
-								if (response.isLike) {
-									$('#likeButton').addClass('liked').removeClass('disliked');
-									$('#dislikeButton').removeClass('liked').removeClass('disliked');
-								} else {
-									$('#dislikeButton').addClass('disliked').removeClass('liked');
-									$('#likeButton').removeClass('disliked').removeClass('liked');
-								}
-							}
 
-							if (response.isLike !== undefined) {
-								if (response.isLike) {
-									$('#userReaction').text('You liked this article before.');
-								} else {
-									$('#userReaction').text('You disliked this article before.');
-								}
-							} if (response.message) {
-								$('#userReaction').text(response.message);
-							}
-						} else {
-							console.error(response.message);
-						}
-					},
-					error: function () {
-						console.error("Error fetching user reaction.");
-					}
-				});
-			}
-
-			function postReaction(isLike, articleId) {
-				var actionUrl = isLike ? '@Url.Action("LikeArticle", "Articles")' : '@Url.Action("DislikeArticle", "Articles")';
-				$.ajax({
-					url: actionUrl,
-					type: 'POST',
-					data: { articleId: articleId },
-					success: function (response) {
-						if (isLike) {
-							$('#likeButton').addClass('liked').removeClass('disliked');
-							$('#dislikeButton').removeClass('liked').removeClass('disliked');
-						} else {
-							$('#dislikeButton').addClass('disliked').removeClass('liked');
-							$('#likeButton').removeClass('disliked').removeClass('liked');
-						}
-						checkUserReaction(articleId);
-						getArticleReactionCounts(articleId);
-					}
-				});
-			}
-
-			function getArticleReactionCounts(articleId) {
-				$.ajax({
-					url: '@Url.Action("GetArticleReactionCounts", "Articles")',
-					data: { articleId: articleId },
-					success: function (response) {
-						if (response.success) {
-							$('#likeCount').text(response.likeCount);
-							$('#dislikeCount').text(response.dislikeCount);
-						} else {
-							console.error(response.message);
-						}
-					},
-					error: function () {
-						console.error("Error fetching article reaction counts.");
-					}
-				});
-			}
-
-			var currentPage = 1;
-			var commentsPerPage = 10;
-			var $comments = $('.comment-container');
-
-			function showPage(page) {
-				$comments.hide();
-				var totalComments = $comments.length;
-				var totalPages = Math.ceil(totalComments / commentsPerPage);
-				var start = (page - 1) * commentsPerPage;
-				var end = start + commentsPerPage;
-				$comments.slice(start, end).show();
-
-				$('#page-number').text(page + ' / ' + totalPages);
-				$('button[onclick="paginate(-1)"]').prop('disabled', page === 1);
-				$('button[onclick="paginate(1)"]').prop('disabled', page === totalPages);
-			}
-
-			function paginate(direction) {
-				currentPage += direction;
-				showPage(currentPage);
-			}
-
-			showPage(currentPage);
-
-			function topFunction() {
-				document.body.scrollTop = 0;
-				document.documentElement.scrollTop = 0;
-			}
-
-
-			function showEditForm() {
-				document.getElementById("editButton").style.display = "none";
-				document.getElementById("confirmButton").style.display = "block";
-				document.getElementById("editCommentForm").style.display = "inline";
-				document.getElementById("newContent").style.display = "block";
-				document.getElementById("cancelbtn").style.display = "inline";
-			}
-
-			function cancel() {
-				document.getElementById("editButton").style.display = "inline";
-				document.getElementById("confirmButton").style.display = "none";
-				document.getElementById("editCommentForm").style.display = "none";
-				document.getElementById("newContent").style.display = "none";
-				document.getElementById("cancelbtn").style.display = "none"
-			}
-
-			document.getElementById("editCommentForm").addEventListener("submit", function (event) {
-				var newContent = document.getElementById("newContent").value.trim();
-				if (newContent === "") {
-					alert("Please enter new content for the comment.");
-					event.preventDefault();
-				}
-			});
-
-			window.addEventListener("scroll", scrollFunction);
-
-			document.addEventListener("DOMContentLoaded", function () {
-				console.log("Document ready function called.");
-
-				var articleId = $('#likeButton').data('article-id');
-				checkUserReaction(articleId);
-				getArticleReactionCounts(articleId);
-
-				$("#likeButton").click(function (e) {
-					e.preventDefault();
-					postReaction(true, articleId);
-					getArticleReactionCounts(articleId);
-				});
-
-				$("#dislikeButton").click(function (e) {
-					e.preventDefault();
-					postReaction(false, articleId);
-					getArticleReactionCounts(articleId);
-				});
-
+				var currentPage = 1;
+				var commentsPerPage = 10;
 				var $comments = $('.comment-container');
-				console.log("$comments length: " + $comments.length);
-				if ($comments.length > 0) {
-					console.log("Comments exist, proceeding with pagination.");
-					showPage(1);
-					$comments.on('click', '.page-link', function (e) {
-						e.preventDefault();
-						var page = $(this).data('page');
-						showPage(page);
-					});
-				} else {
-					console.log("No comments found, displaying message.");
-					$('.comments-section').html('<p>No comments to displayyyy.</p>');
-					scrollFunction();
+
+				function showPage(page) {
+					$comments.hide();
+					var totalComments = $comments.length;
+					var totalPages = Math.ceil(totalComments / commentsPerPage);
+					var start = (page - 1) * commentsPerPage;
+					var end = start + commentsPerPage;
+					$comments.slice(start, end).show();
+
+					$('#page-number').text(page + ' / ' + totalPages);
+					$('button[onclick="paginate(-1)"]').prop('disabled', page === 1);
+					$('button[onclick="paginate(1)"]').prop('disabled', page === totalPages);
 				}
-			});
+
+				function paginate(direction) {
+					currentPage += direction;
+					showPage(currentPage);
+				}
+
+				showPage(currentPage);
+
+				function topFunction() {
+					document.body.scrollTop = 0;
+					document.documentElement.scrollTop = 0;
+				}
+
+				function showEditForm() {
+					document.getElementById("editButton").style.display = "none";
+					document.getElementById("confirmButton").style.display = "block";
+					document.getElementById("editCommentForm").style.display = "inline";
+					document.getElementById("newContent").style.display = "block";
+					document.getElementById("cancelbtn").style.display = "inline";
+				}
+
+				function cancel() {
+					document.getElementById("editButton").style.display = "inline";
+					document.getElementById("confirmButton").style.display = "none";
+					document.getElementById("editCommentForm").style.display = "none";
+					document.getElementById("newContent").style.display = "none";
+					document.getElementById("cancelbtn").style.display = "none"
+				}
+
+				document.getElementById("editCommentForm").addEventListener("submit", function (event) {
+					var newContent = document.getElementById("newContent").value.trim();
+					if (newContent === "") {
+						alert("Please enter new content for the comment.");
+						event.preventDefault();
+					}
+				});
+
+				window.addEventListener("scroll", scrollFunction);
+
+				document.addEventListener("DOMContentLoaded", function () {
+					console.log("Document ready function called.");
+
+					var articleId = $('#likeButton').data('article-id');
+					checkUserReaction(articleId);
+					getArticleReactionCounts(articleId);
+
+					$("#likeButton").off('click').on('click', function (e) {
+						e.preventDefault();
+						postReaction(true, articleId);
+						getArticleReactionCounts(articleId);
+					});
+
+					$("#dislikeButton").off('click').on('click', function (e) {
+						e.preventDefault();
+						postReaction(false, articleId);
+						getArticleReactionCounts(articleId);
+					});
+
+					var $comments = $('.comment-container');
+					if ($comments.length > 0) {
+						console.log("Comments exist, proceeding with pagination.");
+						showPage(1);
+						$comments.on('click', '.page-link', function (e) {
+							e.preventDefault();
+							var page = $(this).data('page');
+							showPage(page);
+						});
+					} else {
+						console.log("No comments found, displaying message.");
+						$('.comments-section').html('<p>No commentsto display.</p>');
+						scrollFunction();
+					}
+				});
+			})();
 		</script>
 	}
 </body>

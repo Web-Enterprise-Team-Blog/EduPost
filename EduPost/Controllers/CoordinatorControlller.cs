@@ -509,7 +509,7 @@ namespace EduPost.Controllers
             {
                 article.StatusId = 1;
                 await _context.SaveChangesAsync();
-                var message = $"Your article: \"{article.ArticleTitle}\" has been Approved by coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
+                var message = $"Your article: \"{article.ArticleTitle}\" has been Approved by Coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
                 await _notificationHub.SendNotificationToUser(message, article.UserID);
 
                 var emailMessage = $"<html><body>Your article with the name of: \"{article.ArticleTitle}\". has been aproved by the site coordinators</body></html>";
@@ -526,7 +526,7 @@ namespace EduPost.Controllers
             {
                 article.StatusId = 2;
                 await _context.SaveChangesAsync();
-                var message = $"Your article: \"{article.ArticleTitle}\" has been Declined by coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
+                var message = $"Your article: \"{article.ArticleTitle}\" has been Declined by Coordinator \"{_userManager.GetUserAsync(User).Result.UserName}\".";
                 await _notificationHub.SendNotificationToUser(message, article.UserID);
 
                 var emailMessage = $"<html><body>Your article with the name of: \"{article.ArticleTitle}\". has been decline by the site coordinators</body></html>";
