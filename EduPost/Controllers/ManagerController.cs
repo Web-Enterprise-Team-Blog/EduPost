@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 using System.IO.Compression;
 
 namespace EduPost.Controllers
@@ -46,14 +47,22 @@ namespace EduPost.Controllers
                 })
                 .ToList();
 
+            var statusNames = new Dictionary<int, string>
+            {
+                { 0, "Pending" },
+                { 1, "Approved" },
+                { 2, "Declined" },
+                { 3, "Expired" }
+            };
+
             var articlesByStatus = _context.Article
-                 .GroupBy(a => a.StatusId)
-                 .Select(group => new ArticlesByStatusViewModel
-                 {
-                     Status = group.Key == 0 ? "Pending" : (group.Key == 1 ? "Approved" : "Declined"),
-                     Count = group.Count()
-                 })
-                 .ToList<ArticlesByStatusViewModel>();
+                .GroupBy(a => a.StatusId)
+                .ToList()
+                .Select(group => new ArticlesByStatusViewModel
+                {
+                    Status = statusNames.ContainsKey(group.Key ?? -1) ? statusNames[group.Key ?? -1] : "Unknown",
+                    Count = group.Count()
+                }).ToList();
 
             var articlesByFaculty = _context.Article
                 .GroupBy(a => new { a.Faculty, a.StatusId })

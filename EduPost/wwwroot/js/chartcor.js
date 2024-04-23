@@ -11,7 +11,7 @@ function renderCharts(articlesByStatus, articlesPerMonth, approvalRateOverTime, 
 
     var statusLabels = articlesByStatus.map(a => a.status);
     var statusData = articlesByStatus.map(a => a.count);
-    var statusColors = ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 206, 86, 0.7)'];
+    var statusColors = ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 206, 86, 0.7)', 'rgba(131, 131, 131, 0.7)'];
 
     var ctxStatus = document.getElementById('articlesByStatusChart').getContext('2d');
     var articlesByStatusChart = new Chart(ctxStatus, {

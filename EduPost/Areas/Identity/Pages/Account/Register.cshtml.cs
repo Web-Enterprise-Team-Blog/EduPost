@@ -131,7 +131,7 @@ namespace EduPost.Areas.Identity.Pages.Account
             }
             if (User.IsInRole("Coordinator") || User.IsInRole("Manager"))
             {
-                var roles = await _roleManager.Roles.Where(r => r.Name == "User" || r.Name == "Guest").ToListAsync();
+                var roles = await _roleManager.Roles.Where(r => r.Name == "Student").ToListAsync();
                 ViewData["Roles"] = new SelectList(roles, "Name", "Name");
             }
 

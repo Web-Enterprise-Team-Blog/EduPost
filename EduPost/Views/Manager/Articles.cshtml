@@ -19,7 +19,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="favicon.ico" rel="icon">
+     <link href="~/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -154,48 +154,50 @@
                                                     <tbody>
                                                         @foreach (var item in (group != null && group.Any()) ? group : Model)
                                                         {
-                                                            @if (item.StatusId == 1)
+
+                                                            string status;
+                                                            switch (item.StatusId)
                                                             {
-                                                                string status;
-                                                                switch (item.StatusId)
-                                                                {
-                                                                    case 0:
-                                                                        status = "Pending";
-                                                                        break;
-                                                                    case 1:
-                                                                        status = "Accepted";
-                                                                        break;
-                                                                    case 2:
-                                                                        status = "Declined";
-                                                                        break;
-                                                                    default:
-                                                                        status = "Unknown";
-                                                                        break;
-                                                                }
-                                                                <tr>
-                                                                    <td class="text-truncate" style="max-width:175px">
-                                                                        @Html.DisplayFor(modelItem => item.UserName)
-                                                                    </td>
-                                                                    <td class="text-truncate" style="max-width:105px">
-                                                                        @Html.DisplayFor(modelItem => item.ArticleTitle)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.Faculty)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                                                                    </td>
-                                                                    <td>
-                                                                        @status
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.Public)
-                                                                    </td>
-                                                                    <td>
-                                                                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ArticleId">Details</a>
-                                                                    </td>
-                                                                </tr>
+                                                                case 0:
+                                                                    status = "Pending";
+                                                                    break;
+                                                                case 1:
+                                                                    status = "Accepted";
+                                                                    break;
+                                                                case 2:
+                                                                    status = "Declined";
+                                                                    break;
+                                                                case 3:
+                                                                    status = "Expired";
+                                                                    break;
+                                                                default:
+                                                                    status = "Unknown";
+                                                                    break;
                                                             }
+                                                            <tr>
+                                                                <td class="text-truncate" style="max-width:175px">
+                                                                    @Html.DisplayFor(modelItem => item.UserName)
+                                                                </td>
+                                                                <td class="text-truncate" style="max-width:105px">
+                                                                    @Html.DisplayFor(modelItem => item.ArticleTitle)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Faculty)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                                </td>
+                                                                <td>
+                                                                    @status
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Public)
+                                                                </td>
+                                                                <td>
+                                                                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ArticleId">Details</a>
+                                                                </td>
+                                                            </tr>
+                                                            
                                                         }
                                                     </tbody>
                                                 </table>
@@ -230,7 +232,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Model.Where(i => i.StatusId == 1))
+                                            @foreach (var item in Model)
                                             {
                                                 string status;
                                                 switch (item.StatusId)
@@ -243,6 +245,9 @@
                                                         break;
                                                     case 2:
                                                         status = "Declined";
+                                                        break;
+                                                    case 3:
+                                                        status = "Expired";
                                                         break;
                                                     default:
                                                         status = "Unknown";
