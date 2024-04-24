@@ -476,13 +476,37 @@ namespace EduPost.Controllers
             }
 
             var article = await _context.Article
+                .Include(a => a.Files)
                 .FirstOrDefaultAsync(m => m.ArticleId == id);
             if (article == null)
             {
                 return NotFound();
             }
 
+            var userIds = article.FeedBacks.Select(c => c.UserId).Distinct();
+            var users = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id, u => u.UserName);
+
+            ViewBag.Usernames = users;
+
+            string img;
+            if (article.Image != null)
+            {
+                img = Convert.ToBase64String(article.Image);
+            }
+            else
+            {
+                img = null;
+            }
+            ViewData["Image"] = img;
+
+            if (article == null)
+            {
+                return NotFound();
+            }
             return View(article);
+
         }
 
         // POST: Articles/Delete/5

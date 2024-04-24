@@ -138,6 +138,8 @@ namespace EduPost.Controllers
                 .Select(ay => new AcademicYearViewModel
                 {
                     YearTitle = ay.YearTitle,
+                    BeginDate = ay.BeginDate,
+                    EndDate = ay.EndDate,
                     ArticleCount = _context.Article
                         .Count(a => a.CreatedDate.HasValue &&
                                     a.Ayear == ay.YearTitle &&
@@ -186,6 +188,7 @@ namespace EduPost.Controllers
                                             .OrderByDescending(g => g.Count())
                                             .Select(g => g.FirstOrDefault().UserID)
                                             .FirstOrDefault()).UserName,
+
                 })
                 .ToListAsync();
 
