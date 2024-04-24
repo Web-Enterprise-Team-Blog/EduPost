@@ -242,7 +242,7 @@ namespace EduPost.Data
                     Id = 12,
                     UserName = "CSUser01@email.com",
                     Email = "CSUser01@email.com",
-                    Faculty = "Information Tecnology",
+                    Faculty = "Computer Science",
                     Role = "Student",
                     NormalizedUserName = "CSUSER01@EMAIL.COM",
                     NormalizedEmail = "CSUSER01@EMAIL.COM",
