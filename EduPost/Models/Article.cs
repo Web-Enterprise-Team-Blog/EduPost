@@ -21,6 +21,10 @@ namespace EduPost.Models
         [Column("article_faculty")]
         public string? Faculty { get; set; }
 
+        [Column("academic_year")]
+        [Display(Name = "Academic Year")]
+        public string? Ayear { get; set; }
+
         [Column("description")]
         public string? Description { get; set; }
         [Column("image")]

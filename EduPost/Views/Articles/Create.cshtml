@@ -92,6 +92,13 @@
                         <textarea asp-for="Description" class="form-control"></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
+
+                    <div class="form-group">
+                        <label asp-for="Ayear" class="control-label"></label>
+                        <select asp-for="Ayear" class="form-control" asp-items="ViewBag.AcademicYears"></select>
+                        <span asp-validation-for="Ayear" class="text-danger"></span>
+                    </div>
+
                     <div class="form-group" style="margin-top:20px; margin-left:20px">
                         <input asp-for="AgreeToTerms" id="AgreeToTermsCheckbox" type="checkbox" class="form-check-input" />
                         <label for="AgreeToTermsCheckbox" class="form-check-label">I have read and agree to the <a href="#" id="myBtn" style="font-weight:bold; text-decoration:none;">Terms and Service</a></label>

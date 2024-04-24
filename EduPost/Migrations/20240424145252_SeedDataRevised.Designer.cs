@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240424053756_SeedData05")]
-    partial class SeedData05
+    [Migration("20240424145252_SeedDataRevised")]
+    partial class SeedDataRevised
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,15 @@ namespace EduPost.Migrations
                     b.HasKey("YearId");
 
                     b.ToTable("AYear");
+
+                    b.HasData(
+                        new
+                        {
+                            YearId = 1,
+                            BeginDate = new DateTime(2024, 1, 1, 8, 0, 36, 895, DateTimeKind.Local).AddTicks(8253),
+                            EndDate = new DateTime(2024, 9, 1, 8, 0, 36, 895, DateTimeKind.Local).AddTicks(8253),
+                            YearTitle = "2024"
+                        });
                 });
 
             modelBuilder.Entity("EduPost.Models.Article", b =>
@@ -71,6 +80,10 @@ namespace EduPost.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("article_name");
+
+                    b.Property<string>("Ayear")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("academic_year");
 
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset")
@@ -116,7 +129,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle01",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 23, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -129,7 +143,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle02",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 23, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -142,7 +157,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle03",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 23, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
@@ -155,7 +171,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle04",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 23, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
@@ -168,7 +184,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle05",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 23, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -181,7 +198,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle06",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 22, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -194,7 +212,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle07",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 22, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -207,7 +226,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle08",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 22, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
@@ -220,7 +240,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle09",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 22, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
@@ -233,7 +254,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle10",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 22, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -246,7 +268,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle11",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 21, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -259,7 +282,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle12",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 21, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
@@ -272,7 +296,8 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle13",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 21, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
@@ -285,6 +310,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle14",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -298,6 +324,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle15",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -311,6 +338,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle16",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -324,6 +352,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle17",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -337,6 +366,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle18",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -350,6 +380,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle19",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -363,6 +394,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle20",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -376,6 +408,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle21",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -389,6 +422,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle22",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -402,6 +436,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle23",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -415,6 +450,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle24",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -428,6 +464,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle25",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
@@ -441,6 +478,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle01",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -454,6 +492,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle02",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -467,6 +506,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle03",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -480,6 +520,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle04",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -493,6 +534,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle05",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -506,6 +548,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle06",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -519,6 +562,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle07",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -532,6 +576,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle08",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -545,6 +590,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle09",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -558,6 +604,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle10",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -571,6 +618,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle11",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -584,6 +632,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle12",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -597,6 +646,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle13",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -610,6 +660,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle14",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -623,6 +674,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle15",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -636,6 +688,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle16",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -649,6 +702,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle17",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -662,6 +716,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle18",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -675,6 +730,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle19",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -688,6 +744,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle20",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -701,6 +758,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle21",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -714,6 +772,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle22",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -727,6 +786,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle23",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -740,6 +800,7 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle24",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
@@ -753,12 +814,1063 @@ namespace EduPost.Migrations
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
                             ArticleTitle = "CSArticle25",
+                            Ayear = "2024",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Computer Science",
                             Public = true,
                             StatusId = 3,
                             UserID = 16
+                        },
+                        new
+                        {
+                            ArticleId = 51,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle1",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 17
+                        },
+                        new
+                        {
+                            ArticleId = 52,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle2",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 17
+                        },
+                        new
+                        {
+                            ArticleId = 53,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle3",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 17
+                        },
+                        new
+                        {
+                            ArticleId = 54,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle4",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 17
+                        },
+                        new
+                        {
+                            ArticleId = 55,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle5",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 17
+                        },
+                        new
+                        {
+                            ArticleId = 56,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle6",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 18
+                        },
+                        new
+                        {
+                            ArticleId = 57,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle7",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 18
+                        },
+                        new
+                        {
+                            ArticleId = 58,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle8",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 18
+                        },
+                        new
+                        {
+                            ArticleId = 59,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle9",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 18
+                        },
+                        new
+                        {
+                            ArticleId = 60,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle10",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 18
+                        },
+                        new
+                        {
+                            ArticleId = 61,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle11",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 19
+                        },
+                        new
+                        {
+                            ArticleId = 62,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle12",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 19
+                        },
+                        new
+                        {
+                            ArticleId = 63,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle13",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 19
+                        },
+                        new
+                        {
+                            ArticleId = 64,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle14",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 19
+                        },
+                        new
+                        {
+                            ArticleId = 65,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle15",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 19
+                        },
+                        new
+                        {
+                            ArticleId = 66,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle16",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 20
+                        },
+                        new
+                        {
+                            ArticleId = 67,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle17",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 20
+                        },
+                        new
+                        {
+                            ArticleId = 68,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle18",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 20
+                        },
+                        new
+                        {
+                            ArticleId = 69,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle19",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 20
+                        },
+                        new
+                        {
+                            ArticleId = 70,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle20",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 20
+                        },
+                        new
+                        {
+                            ArticleId = 71,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle21",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 21
+                        },
+                        new
+                        {
+                            ArticleId = 72,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle22",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 21
+                        },
+                        new
+                        {
+                            ArticleId = 73,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle23",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 21
+                        },
+                        new
+                        {
+                            ArticleId = 74,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle24",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 21
+                        },
+                        new
+                        {
+                            ArticleId = 75,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "EArticle25",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 21
+                        },
+                        new
+                        {
+                            ArticleId = 76,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle1",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 22
+                        },
+                        new
+                        {
+                            ArticleId = 77,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle2",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 22
+                        },
+                        new
+                        {
+                            ArticleId = 78,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle3",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 22
+                        },
+                        new
+                        {
+                            ArticleId = 79,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle4",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 22
+                        },
+                        new
+                        {
+                            ArticleId = 80,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle5",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 22
+                        },
+                        new
+                        {
+                            ArticleId = 81,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle6",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 23
+                        },
+                        new
+                        {
+                            ArticleId = 82,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle7",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 23
+                        },
+                        new
+                        {
+                            ArticleId = 83,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle8",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 23
+                        },
+                        new
+                        {
+                            ArticleId = 84,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle9",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 23
+                        },
+                        new
+                        {
+                            ArticleId = 85,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticle10",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 23
+                        },
+                        new
+                        {
+                            ArticleId = 86,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl11",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 24
+                        },
+                        new
+                        {
+                            ArticleId = 87,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl12",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 24
+                        },
+                        new
+                        {
+                            ArticleId = 88,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl13",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 24
+                        },
+                        new
+                        {
+                            ArticleId = 89,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl14",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 24
+                        },
+                        new
+                        {
+                            ArticleId = 90,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl15",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 24
+                        },
+                        new
+                        {
+                            ArticleId = 91,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl16",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 25
+                        },
+                        new
+                        {
+                            ArticleId = 92,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl17",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 25
+                        },
+                        new
+                        {
+                            ArticleId = 93,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl18",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 25
+                        },
+                        new
+                        {
+                            ArticleId = 94,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl19",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 25
+                        },
+                        new
+                        {
+                            ArticleId = 95,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl20",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 25
+                        },
+                        new
+                        {
+                            ArticleId = 96,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl21",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 26
+                        },
+                        new
+                        {
+                            ArticleId = 97,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl22",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 26
+                        },
+                        new
+                        {
+                            ArticleId = 98,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl23",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 26
+                        },
+                        new
+                        {
+                            ArticleId = 99,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl24",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 26
+                        },
+                        new
+                        {
+                            ArticleId = 100,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ESArticl25",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 26
+                        },
+                        new
+                        {
+                            ArticleId = 101,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle1",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 27
+                        },
+                        new
+                        {
+                            ArticleId = 102,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle2",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 27
+                        },
+                        new
+                        {
+                            ArticleId = 103,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle3",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 27
+                        },
+                        new
+                        {
+                            ArticleId = 104,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle4",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 27
+                        },
+                        new
+                        {
+                            ArticleId = 105,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle5",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 27
+                        },
+                        new
+                        {
+                            ArticleId = 106,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle6",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 28
+                        },
+                        new
+                        {
+                            ArticleId = 107,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle7",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 28
+                        },
+                        new
+                        {
+                            ArticleId = 108,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle8",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 28
+                        },
+                        new
+                        {
+                            ArticleId = 109,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle9",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 28
+                        },
+                        new
+                        {
+                            ArticleId = 110,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle10",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 28
+                        },
+                        new
+                        {
+                            ArticleId = 111,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle11",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 29
+                        },
+                        new
+                        {
+                            ArticleId = 112,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle12",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 29
+                        },
+                        new
+                        {
+                            ArticleId = 113,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle13",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 29
+                        },
+                        new
+                        {
+                            ArticleId = 114,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle14",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 29
+                        },
+                        new
+                        {
+                            ArticleId = 115,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle15",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 29
+                        },
+                        new
+                        {
+                            ArticleId = 116,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle16",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 30
+                        },
+                        new
+                        {
+                            ArticleId = 117,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle17",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 30
+                        },
+                        new
+                        {
+                            ArticleId = 118,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle18",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 30
+                        },
+                        new
+                        {
+                            ArticleId = 119,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle19",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 30
+                        },
+                        new
+                        {
+                            ArticleId = 120,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle20",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 30
+                        },
+                        new
+                        {
+                            ArticleId = 121,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle21",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 31
+                        },
+                        new
+                        {
+                            ArticleId = 122,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle22",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 31
+                        },
+                        new
+                        {
+                            ArticleId = 123,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle23",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 31
+                        },
+                        new
+                        {
+                            ArticleId = 124,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle24",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 31
+                        },
+                        new
+                        {
+                            ArticleId = 125,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "PsyArticle25",
+                            Ayear = "2024",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 31
                         });
                 });
 
@@ -1728,6 +2840,101 @@ namespace EduPost.Migrations
                             SecurityStamp = "V4VYKCZNXY76FWYHKSDCEGLO2MP2FS5P",
                             TwoFactorEnabled = false,
                             UserName = "Manager@email.com"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d449369b-49f4-4e85-9591-9fd0546846ca",
+                            Email = "ITGuest@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Information Tecnology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ITGUEST@EMAIL.COM",
+                            NormalizedUserName = "ITGUEST@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIuOAqghlyCsJHSFkk1QxufuTJvIOzh9XYC+MzI4XUi0dTS3rrz/2zlFQCubTm330g==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Guest",
+                            SecurityStamp = "JH72B5EEOK774Y36RUPHM5KRX7O5MOPL",
+                            TwoFactorEnabled = false,
+                            UserName = "ITGuest@email.com"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9e3131ec-28e6-4567-a039-e8875f7b6ec5",
+                            Email = "CSGuest@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Computer Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "CSGUEST@EMAIL.COM",
+                            NormalizedUserName = "CSGUEST@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGNVSCHo+uQ+ZDbe3PYnpHJAltrxdwcPdKA3iu90oPRpw8issEFD/w2didOB21PzpQ==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Guest",
+                            SecurityStamp = "JU4DCZG4LVMWCSDNHHBBAGESXH4EYZGO",
+                            TwoFactorEnabled = false,
+                            UserName = "CSGuest@email.com"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "461fd3d3-c8a7-4bb8-80df-e22e235df345",
+                            Email = "EGuest@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Economics",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EGUEST@EMAIL.COM",
+                            NormalizedUserName = "EGUEST@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBta1WhrszHwhKoZSjDQFxPuNNOyzQdLTY1GgZliix5kXFSIROxLSYFAOwk9oMlSXw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Guest",
+                            SecurityStamp = "LD7AKDHL6D3FKQMW7XG43U4F733PSXY4",
+                            TwoFactorEnabled = false,
+                            UserName = "EGuest@email.com"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c85e5c01-e96b-477b-bf68-747ac9db790c",
+                            Email = "ESGuest@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Environmental Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ESGUEST@EMAIL.COM",
+                            NormalizedUserName = "ESGUEST@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECbSDKZqILxjlyR17FmDb0xY170DhYpS+30AZPyYOJ88NWTji3n4srJH2e0tTnns3w==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Guest",
+                            SecurityStamp = "WW2E7L25Z6JXBPB5K2EAKWBJLIUGXEOE",
+                            TwoFactorEnabled = false,
+                            UserName = "ESGuest@email.com"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2fcf42e7-d19e-41c4-af60-372e2c94566b",
+                            Email = "PsyGuest@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Psychology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PSYGUEST@EMAIL.COM",
+                            NormalizedUserName = "PSYGUEST@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDrTCTlbqZKShzfAXvgKhKRnOO6aKlPn7+iOR6RZEJSAeRSW54a8q6x1sXPXuWJKvg==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Guest",
+                            SecurityStamp = "UXWLLERLOWKWDAFYMBRB4FTAJ44CHGVF",
+                            TwoFactorEnabled = false,
+                            UserName = "PsyGuest@email.com"
                         });
                 });
 

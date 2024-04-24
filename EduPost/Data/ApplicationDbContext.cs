@@ -572,8 +572,90 @@ namespace EduPost.Data
 					ConcurrencyStamp = "2040ba93-fae1-49d7-a2f3-2fdd94874d7d",
 					LockoutEnabled = true,
 					FirstLogin = false
-				}
-			};
+				},
+
+                new User
+				{
+				Id = 33,
+				UserName = "ITGuest@email.com",
+				Email = "ITGuest@email.com",
+				Faculty = "Information Tecnology",
+				Role = "Guest",
+				NormalizedUserName = "ITGUEST@EMAIL.COM",
+				NormalizedEmail = "ITGUEST@EMAIL.COM",
+				EmailConfirmed = true,
+				PasswordHash = "AQAAAAIAAYagAAAAEIuOAqghlyCsJHSFkk1QxufuTJvIOzh9XYC+MzI4XUi0dTS3rrz/2zlFQCubTm330g==",
+				SecurityStamp = "JH72B5EEOK774Y36RUPHM5KRX7O5MOPL",
+				ConcurrencyStamp = "d449369b-49f4-4e85-9591-9fd0546846ca",
+				LockoutEnabled = true,
+				FirstLogin = false
+                },
+				new User
+				{
+				Id = 34,
+				UserName = "CSGuest@email.com",
+				Email = "CSGuest@email.com",
+				Faculty = "Computer Science",
+				Role = "Guest",
+				NormalizedUserName = "CSGUEST@EMAIL.COM",
+				NormalizedEmail = "CSGUEST@EMAIL.COM",
+				EmailConfirmed = true,
+				PasswordHash = "AQAAAAIAAYagAAAAEGNVSCHo+uQ+ZDbe3PYnpHJAltrxdwcPdKA3iu90oPRpw8issEFD/w2didOB21PzpQ==",
+				SecurityStamp = "JU4DCZG4LVMWCSDNHHBBAGESXH4EYZGO",
+				ConcurrencyStamp = "9e3131ec-28e6-4567-a039-e8875f7b6ec5",
+				LockoutEnabled = true,
+				FirstLogin = false
+                },
+				new User
+				{
+				Id = 35,
+				UserName = "EGuest@email.com",
+				Email = "EGuest@email.com",
+				Faculty = "Economics",
+				Role = "Guest",
+				NormalizedUserName = "EGUEST@EMAIL.COM",
+				NormalizedEmail = "EGUEST@EMAIL.COM",
+				EmailConfirmed = true,
+				PasswordHash = "AQAAAAIAAYagAAAAEBta1WhrszHwhKoZSjDQFxPuNNOyzQdLTY1GgZliix5kXFSIROxLSYFAOwk9oMlSXw==",
+				SecurityStamp = "LD7AKDHL6D3FKQMW7XG43U4F733PSXY4",
+				ConcurrencyStamp = "461fd3d3-c8a7-4bb8-80df-e22e235df345",
+				LockoutEnabled = true,
+				FirstLogin = false
+				},
+				new User
+				{
+				Id = 36,
+				UserName = "ESGuest@email.com",
+				Email = "ESGuest@email.com",
+				Faculty = "Environmental Science",
+				Role = "Guest",
+				NormalizedUserName = "ESGUEST@EMAIL.COM",
+				NormalizedEmail = "ESGUEST@EMAIL.COM",
+				EmailConfirmed = true,
+				PasswordHash = "AQAAAAIAAYagAAAAECbSDKZqILxjlyR17FmDb0xY170DhYpS+30AZPyYOJ88NWTji3n4srJH2e0tTnns3w==",
+				SecurityStamp = "WW2E7L25Z6JXBPB5K2EAKWBJLIUGXEOE",
+				ConcurrencyStamp = "c85e5c01-e96b-477b-bf68-747ac9db790c",
+				LockoutEnabled = true,
+				FirstLogin = false
+                },
+				new User
+				{
+				Id = 37,
+				UserName = "PsyGuest@email.com",
+				Email = "PsyGuest@email.com",
+				Faculty = "Psychology",
+				Role = "Guest",
+				NormalizedUserName = "PSYGUEST@EMAIL.COM",
+				NormalizedEmail = "PSYGUEST@EMAIL.COM",
+				EmailConfirmed = true,
+				PasswordHash = "AQAAAAIAAYagAAAAEDrTCTlbqZKShzfAXvgKhKRnOO6aKlPn7+iOR6RZEJSAeRSW54a8q6x1sXPXuWJKvg==",
+				SecurityStamp = "UXWLLERLOWKWDAFYMBRB4FTAJ44CHGVF",
+				ConcurrencyStamp = "2fcf42e7-d19e-41c4-af60-372e2c94566b",
+				LockoutEnabled = true,
+				FirstLogin = false
+				},
+
+            };
             builder.Entity<User>().HasData(adminusers);
 
             var userRolePairs = new[]
@@ -608,8 +690,13 @@ namespace EduPost.Data
 				new IdentityUserRole<int> { UserId = 29, RoleId = 2 },
 				new IdentityUserRole<int> { UserId = 30, RoleId = 2 },
 				new IdentityUserRole<int> { UserId = 31, RoleId = 2 },
-				new IdentityUserRole<int> { UserId = 32, RoleId = 4 }
-			};
+				new IdentityUserRole<int> { UserId = 32, RoleId = 4 },
+                new IdentityUserRole<int> { UserId = 33, RoleId = 5 },
+                new IdentityUserRole<int> { UserId = 34, RoleId = 5 },
+                new IdentityUserRole<int> { UserId = 35, RoleId = 5 },
+                new IdentityUserRole<int> { UserId = 36, RoleId = 5 },
+                new IdentityUserRole<int> { UserId = 37, RoleId = 5 }
+            };
             builder.Entity<IdentityUserRole<int>>().HasData(userRolePairs);
 
             var roles = new[]
@@ -632,6 +719,12 @@ namespace EduPost.Data
             };
             builder.Entity<Faculty>().HasData(faculties);
 
+			var academicyear = new[]
+			{
+				new AYear { YearId = 1, BeginDate = DateTime.Parse("2024-01-01 8:00:36.8958253 +07:00"), EndDate = DateTime.Parse("2024-09-01 8:00:36.8958253 +07:00"), YearTitle = "2024"}
+			};
+            builder.Entity<AYear>().HasData(academicyear);
+
             var articles = new[]
             {
 				//Information Tecnology
@@ -641,11 +734,12 @@ namespace EduPost.Data
                     ArticleTitle = "ITArticle01",
                     Faculty = "Information Tecnology",
                     UserID = 7,
-                    CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+                    CreatedDate = DateTimeOffset.Parse("2024-04-23 20:11:36.8958253 +07:00"),
                     ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
                     StatusId = 0,
                     AgreeToTerms = true,
-                    Public = true
+                    Public = true,
+					Ayear = "2024"
                 },
                 new Article
                 {
@@ -653,11 +747,12 @@ namespace EduPost.Data
                     ArticleTitle = "ITArticle02",
                     Faculty = "Information Tecnology",
                     UserID = 7,
-                    CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+                    CreatedDate = DateTimeOffset.Parse("2024-04-23 20:11:52.6334713 +07:00"),
                     ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
                     StatusId = 1,
                     AgreeToTerms = true,
-                    Public = true
+                    Public = true,
+                    Ayear = "2024"
                 },
                 new Article
                 {
@@ -665,11 +760,12 @@ namespace EduPost.Data
                     ArticleTitle = "ITArticle03",
                     Faculty = "Information Tecnology",
                     UserID = 7,
-                    CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+                    CreatedDate = DateTimeOffset.Parse("2024-04-23 20:11:59.7223506 +07:00"),
                     ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
                     StatusId = 2,
                     AgreeToTerms = true,
-                    Public = false
+                    Public = false,
+                    Ayear = "2024"
                 },
                 new Article
                 {
@@ -677,7 +773,7 @@ namespace EduPost.Data
                     ArticleTitle = "ITArticle04",
                     Faculty = "Information Tecnology",
                     UserID = 7,
-                    CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+                    CreatedDate = DateTimeOffset.Parse("2024-04-23 20:12:11.4871948 +07:00"),
                     ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
                     StatusId = 3,
                     AgreeToTerms = true,
@@ -689,11 +785,12 @@ namespace EduPost.Data
                     ArticleTitle = "ITArticle05",
                     Faculty = "Information Tecnology",
                     UserID = 7,
-                    CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+                    CreatedDate = DateTimeOffset.Parse("2024-04-23 20:12:24.2273664 +07:00"),
                     ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
                     StatusId = 3,
                     AgreeToTerms = true,
-                    Public = true
+                    Public = true,
+                    Ayear = "2024"
                 },
 				new Article
 				{
@@ -701,96 +798,104 @@ namespace EduPost.Data
 					ArticleTitle = "ITArticle06",
 					Faculty = "Information Tecnology",
 					UserID = 8,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-22 20:11:36.8958253 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 7,
 					ArticleTitle = "ITArticle07",
 					Faculty = "Information Tecnology",
 					UserID = 8,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-22 20:11:52.6334713 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 8,
 					ArticleTitle = "ITArticle08",
 					Faculty = "Information Tecnology",
 					UserID = 8,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-22 20:11:59.7223506 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 9,
 					ArticleTitle = "ITArticle09",
 					Faculty = "Information Tecnology",
 					UserID = 8,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-22 20:12:11.4871948 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 10,
 					ArticleTitle = "ITArticle10",
 					Faculty = "Information Tecnology",
 					UserID = 8,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-22 20:12:24.2273664 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 11,
 					ArticleTitle = "ITArticle11",
 					Faculty = "Information Tecnology",
 					UserID = 9,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-21 20:11:36.8958253 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+					Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 12,
 					ArticleTitle = "ITArticle12",
 					Faculty = "Information Tecnology",
 					UserID = 9,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-21 20:11:52.6334713 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 13,
 					ArticleTitle = "ITArticle13",
 					Faculty = "Information Tecnology",
 					UserID = 9,
-					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					CreatedDate = DateTimeOffset.Parse("2024-04-21 20:11:59.7223506 +07:00"),
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 14,
@@ -801,8 +906,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 15,
@@ -813,8 +919,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 16,
@@ -825,8 +932,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 17,
@@ -837,8 +945,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 18,
@@ -849,8 +958,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 19,
@@ -861,8 +971,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 20,
@@ -873,8 +984,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 21,
@@ -885,8 +997,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 22,
@@ -897,8 +1010,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 23,
@@ -909,8 +1023,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 24,
@@ -921,8 +1036,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 25,
@@ -933,8 +1049,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 
 				//Computer Science
 				new Article
@@ -947,8 +1064,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 27,
@@ -959,8 +1077,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 28,
@@ -971,8 +1090,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 29,
@@ -983,8 +1103,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 30,
@@ -995,8 +1116,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 31,
@@ -1007,8 +1129,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 32,
@@ -1019,8 +1142,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 33,
@@ -1031,8 +1155,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 34,
@@ -1043,8 +1168,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 35,
@@ -1055,8 +1181,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 36,
@@ -1067,8 +1194,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 37,
@@ -1079,8 +1207,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 38,
@@ -1091,8 +1220,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 39,
@@ -1103,8 +1233,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 40,
@@ -1115,8 +1246,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 41,
@@ -1127,8 +1259,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 42,
@@ -1139,8 +1272,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 43,
@@ -1151,8 +1285,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 44,
@@ -1163,8 +1298,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 45,
@@ -1175,8 +1311,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 46,
@@ -1187,8 +1324,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
 					StatusId = 0,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 47,
@@ -1199,8 +1337,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
 					StatusId = 1,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 48,
@@ -1211,8 +1350,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
 					StatusId = 2,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 49,
@@ -1223,8 +1363,9 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = false
-				},
+					Public = false,
+                    Ayear = "2024"
+                },
 				new Article
 				{
 					ArticleId = 50,
@@ -1235,8 +1376,993 @@ namespace EduPost.Data
 					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
 					StatusId = 3,
 					AgreeToTerms = true,
-					Public = true
-				},
+					Public = true,
+                    Ayear = "2024"
+                },
+
+				//Economics
+				new Article
+				{
+					ArticleId = 51,
+					ArticleTitle = "EArticle1",
+					Faculty = "Economics",
+					UserID = 17,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 52,
+					ArticleTitle = "EArticle2",
+					Faculty = "Economics",
+					UserID = 17,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 53,
+					ArticleTitle = "EArticle3",
+					Faculty = "Economics",
+					UserID = 17,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 54,
+					ArticleTitle = "EArticle4",
+					Faculty = "Economics",
+					UserID = 17,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 55,
+					ArticleTitle = "EArticle5",
+					Faculty = "Economics",
+					UserID = 17,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 56,
+					ArticleTitle = "EArticle6",
+					Faculty = "Economics",
+					UserID = 18,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 57,
+					ArticleTitle = "EArticle7",
+					Faculty = "Economics",
+					UserID = 18,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 58,
+					ArticleTitle = "EArticle8",
+					Faculty = "Economics",
+					UserID = 18,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 59,
+					ArticleTitle = "EArticle9",
+					Faculty = "Economics",
+					UserID = 18,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 60,
+					ArticleTitle = "EArticle10",
+					Faculty = "Economics",
+					UserID = 18,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 61,
+					ArticleTitle = "EArticle11",
+					Faculty = "Economics",
+					UserID = 19,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 62,
+					ArticleTitle = "EArticle12",
+					Faculty = "Economics",
+					UserID = 19,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 63,
+					ArticleTitle = "EArticle13",
+					Faculty = "Economics",
+					UserID = 19,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 64,
+					ArticleTitle = "EArticle14",
+					Faculty = "Economics",
+					UserID = 19,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 65,
+					ArticleTitle = "EArticle15",
+					Faculty = "Economics",
+					UserID = 19,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 66,
+					ArticleTitle = "EArticle16",
+					Faculty = "Economics",
+					UserID = 20,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 67,
+					ArticleTitle = "EArticle17",
+					Faculty = "Economics",
+					UserID = 20,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 68,
+					ArticleTitle = "EArticle18",
+					Faculty = "Economics",
+					UserID = 20,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 69,
+					ArticleTitle = "EArticle19",
+					Faculty = "Economics",
+					UserID = 20,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 70,
+					ArticleTitle = "EArticle20",
+					Faculty = "Economics",
+					UserID = 20,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+
+				new Article
+				{
+					ArticleId = 71,
+					ArticleTitle = "EArticle21",
+					Faculty = "Economics",
+					UserID = 21,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 72,
+					ArticleTitle = "EArticle22",
+					Faculty = "Economics",
+					UserID = 21,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 73,
+					ArticleTitle = "EArticle23",
+					Faculty = "Economics",
+					UserID = 21,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+					Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 74,
+					ArticleTitle = "EArticle24",
+					Faculty = "Economics",
+					UserID = 21,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 75,
+					ArticleTitle = "EArticle25",
+					Faculty = "Economics",
+					UserID = 21,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+
+				//Environmental Science
+				new Article
+				{
+					ArticleId = 76,
+					ArticleTitle = "ESArticle1",
+					Faculty = "Environmental Science",
+					UserID = 22,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 77,
+					ArticleTitle = "ESArticle2",
+					Faculty = "Environmental Science",
+					UserID = 22,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 78,
+					ArticleTitle = "ESArticle3",
+					Faculty = "Environmental Science",
+					UserID = 22,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 79,
+					ArticleTitle = "ESArticle4",
+					Faculty = "Environmental Science",
+					UserID = 22,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 80,
+					ArticleTitle = "ESArticle5",
+					Faculty = "Environmental Science",
+					UserID = 22,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 81,
+					ArticleTitle = "ESArticle6",
+					Faculty = "Environmental Science",
+					UserID = 23,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 82,
+					ArticleTitle = "ESArticle7",
+					Faculty = "Environmental Science",
+					UserID = 23,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 83,
+					ArticleTitle = "ESArticle8",
+					Faculty = "Environmental Science",
+					UserID = 23,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 84,
+					ArticleTitle = "ESArticle9",
+					Faculty = "Environmental Science",
+					UserID = 23,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 85,
+					ArticleTitle = "ESArticle10",
+					Faculty = "Environmental Science",
+					UserID = 23,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 86,
+					ArticleTitle = "ESArticl11",
+					Faculty = "Environmental Science",
+					UserID = 24,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 87,
+					ArticleTitle = "ESArticl12",
+					Faculty = "Environmental Science",
+					UserID = 24,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 88,
+					ArticleTitle = "ESArticl13",
+					Faculty = "Environmental Science",
+					UserID = 24,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 89,
+					ArticleTitle = "ESArticl14",
+					Faculty = "Environmental Science",
+					UserID = 24,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 90,
+					ArticleTitle = "ESArticl15",
+					Faculty = "Environmental Science",
+					UserID = 24,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 91,
+					ArticleTitle = "ESArticl16",
+					Faculty = "Environmental Science",
+					UserID = 25,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 92,
+					ArticleTitle = "ESArticl17",
+					Faculty = "Environmental Science",
+					UserID = 25,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 93,
+					ArticleTitle = "ESArticl18",
+					Faculty = "Environmental Science",
+					UserID = 25,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 94,
+					ArticleTitle = "ESArticl19",
+					Faculty = "Environmental Science",
+					UserID = 25,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 95,
+					ArticleTitle = "ESArticl20",
+					Faculty = "Environmental Science",
+					UserID = 25,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 96,
+					ArticleTitle = "ESArticl21",
+					Faculty = "Environmental Science",
+					UserID = 26,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 97,
+					ArticleTitle = "ESArticl22",
+					Faculty = "Environmental Science",
+					UserID = 26,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 98,
+					ArticleTitle = "ESArticl23",
+					Faculty = "Environmental Science",
+					UserID = 26,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 99,
+					ArticleTitle = "ESArticl24",
+					Faculty = "Environmental Science",
+					UserID = 26,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 100,
+					ArticleTitle = "ESArticl25",
+					Faculty = "Environmental Science",
+					UserID = 26,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+
+				//Psychology
+
+				new Article
+				{
+					ArticleId = 101,
+					ArticleTitle = "PsyArticle1",
+					Faculty = "Psychology",
+					UserID = 27,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 102,
+					ArticleTitle = "PsyArticle2",
+					Faculty = "Psychology",
+					UserID = 27,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 103,
+					ArticleTitle = "PsyArticle3",
+					Faculty = "Psychology",
+					UserID = 27,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 104,
+					ArticleTitle = "PsyArticle4",
+					Faculty = "Psychology",
+					UserID = 27,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 105,
+					ArticleTitle = "PsyArticle5",
+					Faculty = "Psychology",
+					UserID = 27,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 106,
+					ArticleTitle = "PsyArticle6",
+					Faculty = "Psychology",
+					UserID = 28,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 107,
+					ArticleTitle = "PsyArticle7",
+					Faculty = "Psychology",
+					UserID = 28,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 108,
+					ArticleTitle = "PsyArticle8",
+					Faculty = "Psychology",
+					UserID = 28,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 109,
+					ArticleTitle = "PsyArticle9",
+					Faculty = "Psychology",
+					UserID = 28,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 110,
+					ArticleTitle = "PsyArticle10",
+					Faculty = "Psychology",
+					UserID = 28,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 111,
+					ArticleTitle = "PsyArticle11",
+					Faculty = "Psychology",
+					UserID = 29,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 112,
+					ArticleTitle = "PsyArticle12",
+					Faculty = "Psychology",
+					UserID = 29,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 113,
+					ArticleTitle = "PsyArticle13",
+					Faculty = "Psychology",
+					UserID = 29,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 114,
+					ArticleTitle = "PsyArticle14",
+					Faculty = "Psychology",
+					UserID = 29,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 115,
+					ArticleTitle = "PsyArticle15",
+					Faculty = "Psychology",
+					UserID = 29,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 116,
+					ArticleTitle = "PsyArticle16",
+					Faculty = "Psychology",
+					UserID = 30,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 117,
+					ArticleTitle = "PsyArticle17",
+					Faculty = "Psychology",
+					UserID = 30,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 118,
+					ArticleTitle = "PsyArticle18",
+					Faculty = "Psychology",
+					UserID = 30,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 119,
+					ArticleTitle = "PsyArticle19",
+					Faculty = "Psychology",
+					UserID = 30,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 120,
+					ArticleTitle = "PsyArticle20",
+					Faculty = "Psychology",
+					UserID = 30,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 121,
+					ArticleTitle = "PsyArticle21",
+					Faculty = "Psychology",
+					UserID = 31,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:36.8958253 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:36.8959251 +07:00"),
+					StatusId = 0,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 122,
+					ArticleTitle = "PsyArticle22",
+					Faculty = "Psychology",
+					UserID = 31,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:52.6334713 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:52.6334770 +07:00"),
+					StatusId = 1,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 123,
+					ArticleTitle = "PsyArticle23",
+					Faculty = "Psychology",
+					UserID = 31,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:11:59.7223506 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-30 20:11:59.7223572 +07:00"),
+					StatusId = 2,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 124,
+					ArticleTitle = "PsyArticle24",
+					Faculty = "Psychology",
+					UserID = 31,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:11.4871948 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:11.4872005 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = false,
+                    Ayear = "2024"
+                },
+				new Article
+				{
+					ArticleId = 125,
+					ArticleTitle = "PsyArticle25",
+					Faculty = "Psychology",
+					UserID = 31,
+					CreatedDate = DateTimeOffset.Parse("2024-04-02 20:12:24.2273664 +07:00"),
+					ExpireDate = DateTimeOffset.Parse("2024-04-16 20:12:24.2273751 +07:00"),
+					StatusId = 3,
+					AgreeToTerms = true,
+					Public = true,
+                    Ayear = "2024"
+                },
+
 			};
             builder.Entity<Article>().HasData(articles);
         }

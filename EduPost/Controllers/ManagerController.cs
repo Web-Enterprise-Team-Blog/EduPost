@@ -155,16 +155,12 @@ namespace EduPost.Controllers
                 .Select(ay => new AcademicYearViewModel
                 {
                     YearTitle = ay.YearTitle,
-                    BeginDate = ay.BeginDate,
-                    EndDate = ay.EndDate,
                     ArticleCount = _context.Article
                         .Count(a => a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate),
+                                    a.Ayear == ay.YearTitle),
                     MostArticlesFaculty = _context.Article
                         .Where(a => a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate)
+                                    a.Ayear == ay.YearTitle)
                         .GroupBy(a => a.Faculty)
                         .OrderByDescending(g => g.Count())
                         .Select(g => g.Key)
@@ -172,8 +168,7 @@ namespace EduPost.Controllers
                     MostApprovedArticlesFaculty = _context.Article
                         .Where(a => a.StatusId == 1 &&
                                     a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate)
+                                    a.Ayear == ay.YearTitle)
                         .GroupBy(a => a.Faculty)
                         .OrderByDescending(g => g.Count())
                         .Select(g => g.Key)
@@ -181,16 +176,14 @@ namespace EduPost.Controllers
                     MostDeclinedArticlesFaculty = _context.Article
                         .Where(a => a.StatusId == 2 &&
                                     a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate)
+                                    a.Ayear == ay.YearTitle)
                         .GroupBy(a => a.Faculty)
                         .OrderByDescending(g => g.Count())
                         .Select(g => g.Key)
                         .FirstOrDefault(),
                     LeastArticlesFaculty = _context.Article
                         .Where(a => a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate)
+                                    a.Ayear == ay.YearTitle)
                         .GroupBy(a => a.Faculty)
                         .OrderBy(g => g.Count())
                         .Select(g => g.Key)
@@ -198,8 +191,7 @@ namespace EduPost.Controllers
                     LeastApprovedArticlesFaculty = _context.Article
                         .Where(a => a.StatusId == 1 &&
                                     a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate)
+                                    a.Ayear == ay.YearTitle)
                         .GroupBy(a => a.Faculty)
                         .OrderBy(g => g.Count())
                         .Select(g => g.Key)
@@ -207,45 +199,119 @@ namespace EduPost.Controllers
                     LeastDeclinedArticlesFaculty = _context.Article
                         .Where(a => a.StatusId == 2 &&
                                     a.CreatedDate.HasValue &&
-                                    a.CreatedDate.Value >= ay.BeginDate &&
-                                    a.CreatedDate.Value <= ay.EndDate)
+                                    a.Ayear == ay.YearTitle)
                         .GroupBy(a => a.Faculty)
                         .OrderBy(g => g.Count())
                         .Select(g => g.Key)
                         .FirstOrDefault(),
 
-					TotalComment = _context.Article.Include(a=>a.Comments).Where(a =>
-									a.CreatedDate.HasValue &&
-									a.CreatedDate.Value >= ay.BeginDate &&
-									a.CreatedDate.Value <= ay.EndDate)
-                                    .SelectMany(a=>a.Comments).Count().ToString(),
+                    TotalComment = _context.Article.Include(a => a.Comments)
+                                    .Where(a => a.Ayear == ay.YearTitle && a.CreatedDate.HasValue)
+                                    .SelectMany(a => a.Comments).Count().ToString(),
 
-					TotalLike = _context.Article.Include(a => a.UserReactions).Where(a =>
-									a.CreatedDate.HasValue &&
-									a.CreatedDate.Value >= ay.BeginDate &&
-									a.CreatedDate.Value <= ay.EndDate)
-									.SelectMany(a => a.UserReactions).Where(r=>r.ReactionType == true).Count().ToString(),
-                    TotalDisLike = _context.Article.Include(a => a.UserReactions).Where(a =>
-									a.CreatedDate.HasValue &&
-									a.CreatedDate.Value >= ay.BeginDate &&
-									a.CreatedDate.Value <= ay.EndDate)
-									.SelectMany(a => a.UserReactions).Where(r=>r.ReactionType == false).Count().ToString(),
+                    TotalLike = _context.Article.Include(a => a.UserReactions)
+                                    .Where(a => a.Ayear == ay.YearTitle && a.CreatedDate.HasValue)
+                                    .SelectMany(a => a.UserReactions).Where(r => r.ReactionType == true).Count().ToString(),
 
-					TotalActiveUser = _context.User.Where(u => u.Article
-                                    .Any(a => a.CreatedDate.HasValue &&
-									a.CreatedDate.Value >= ay.BeginDate &&
-									a.CreatedDate.Value <= ay.EndDate))
+                    TotalDisLike = _context.Article.Include(a => a.UserReactions)
+                                    .Where(a => a.Ayear == ay.YearTitle && a.CreatedDate.HasValue)
+                                    .SelectMany(a => a.UserReactions).Where(r => r.ReactionType == false).Count().ToString(),
+
+                    TotalActiveUser = _context.User.Where(u => u.Article
+                                    .Any(a => a.Ayear == ay.YearTitle && a.CreatedDate.HasValue))
                                     .Count().ToString(),
 
-                    UserWithMostArticle = _context.User.FirstOrDefault(u=> u.Id == _context.Article.Where(a =>
-                                            a.CreatedDate.HasValue && a.CreatedDate.Value >= ay.BeginDate &&
-                                            a.CreatedDate.Value <= ay.EndDate).GroupBy(a => a.UserID)
-                                            .OrderByDescending(g => g.Count()).Select(g => g.FirstOrDefault().UserID).FirstOrDefault()).UserName,
+                    UserWithMostArticle = _context.User.FirstOrDefault(u => u.Id == _context.Article
+                                            .Where(a => a.Ayear == ay.YearTitle && a.CreatedDate.HasValue)
+                                            .GroupBy(a => a.UserID)
+                                            .OrderByDescending(g => g.Count())
+                                            .Select(g => g.FirstOrDefault().UserID)
+                                            .FirstOrDefault()).UserName,
                 })
                 .ToListAsync();
 
             return View(academicYearsWithStatistics);
         }
+
+        public ActionResult YearChart(string yearTitle)
+        {
+            var articlesPerFaculty = _context.Article
+                .Join(_context.AYear,
+                      article => article.Ayear,
+                      year => year.YearTitle,
+                      (article, year) => new { Article = article, Year = year })
+                .Where(join => join.Year.YearTitle == yearTitle)
+                .GroupBy(join => join.Article.Faculty)
+                .Select(group => new ArticlesPerFacultyViewModel
+                {
+                    Faculty = group.Key,
+                    Count = group.Count()
+                })
+                .ToList();
+
+            var startDate = DateTimeOffset.Now.AddMonths(-11);
+            var endDate = DateTimeOffset.Now;
+
+            var articlesPerMonth = _context.Article
+                .Where(a => a.Ayear == yearTitle && a.CreatedDate.HasValue && a.CreatedDate.Value.Year == DateTimeOffset.Now.Year)
+                .GroupBy(a => a.CreatedDate.Value.Month)
+                .Select(group => new ArticlesPerMonthViewModel
+                {
+                    Month = group.Key,
+                    Count = group.Count()
+                })
+                .ToList();
+
+            var statusNames = new Dictionary<int, string>
+                {
+                    { 0, "Pending" },
+                    { 1, "Approved" },
+                    { 2, "Declined" },
+                    { 3, "Expired" }
+                };
+
+            var articlesByStatus = _context.Article
+                .Join(_context.AYear,
+                      article => article.Ayear,
+                      year => year.YearTitle,
+                      (article, year) => new { Article = article, Year = year })
+                .Where(join => join.Year.YearTitle == yearTitle)
+                .GroupBy(join => join.Article.StatusId)
+                .ToList()
+                .Select(group => new ArticlesByStatusViewModel
+                {
+                    Status = statusNames.ContainsKey(group.Key ?? -1) ? statusNames[group.Key ?? -1] : "Unknown",
+                    Count = group.Count()
+                }).ToList();
+
+            var articlesByFaculty = _context.Article
+                .Join(_context.AYear,
+                      article => article.Ayear,
+                      year => year.YearTitle,
+                      (article, year) => new { Article = article, Year = year })
+                .Where(join => join.Year.YearTitle == yearTitle)
+                .GroupBy(join => new { join.Article.Faculty, join.Article.StatusId })
+                .Select(group => new ArticlesByFacultyViewModel
+                {
+                    Faculty = group.Key.Faculty,
+                    Pending = group.Key.StatusId == 0 ? group.Count() : 0,
+                    Approved = group.Key.StatusId == 1 ? group.Count() : 0,
+                    Declined = group.Key.StatusId == 2 ? group.Count() : 0
+                })
+                .ToList();
+
+            var model = new ManagerYearChartViewModel
+            {
+                YearTitle = yearTitle,
+                ArticlesPerFaculty = articlesPerFaculty,
+                ArticlesPerMonth = articlesPerMonth,
+                ArticlesByStatus = articlesByStatus,
+                ArticlesByFaculty = articlesByFaculty
+            };
+
+            return View(model);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> DownloadArticleFiles(int? id)

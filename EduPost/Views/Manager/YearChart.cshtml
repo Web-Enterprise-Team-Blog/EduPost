@@ -1,6 +1,7 @@
-﻿@model List<EduPost.Models.ViewModels.AcademicYearViewModel>
+﻿@model EduPost.Models.ViewModels.ManagerYearChartViewModel;
+
 @{
-    ViewData["Title"] = "Academic Year";
+    ViewData["Title"] = "Year Charts";
 }
 
 @{
@@ -18,7 +19,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-     <link href="~/favicon.ico" rel="icon">
+    <link href="~/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,7 +94,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="/Identity/Account/Manage" class="dropdown-item">My Profile</a>
-                            
+
                             <a href="/Identity/Account/Logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
@@ -104,48 +105,37 @@
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h2>Academic Years</h2>
-
-                            @foreach (var academicYear in Model)
-                            {
-                                <div class="academic-year-box">
-                                    <a href="@Url.Action("YearChart", "Manager", new { yearTitle = academicYear.YearTitle })">
-                                        <h3>@academicYear.YearTitle</h3>
-                                    </a>
-                                    <p><strong>Begin Date:</strong> @academicYear.BeginDate.ToShortDateString()</p>
-                                    <p><strong>End Date:</strong> @academicYear.EndDate.ToShortDateString()</p>
-                                    <p><strong>Article Count:</strong> @academicYear.ArticleCount</p>
-                                    <div class="statistics-dropdown">
-                                        <button class="btn btn-info toggle-button">Show Statistics</button>
-                                        <div class="dropdown-content" style="display: none;">
-                                            <p>The Faculty has the most Articles created: @academicYear.MostArticlesFaculty</p>
-                                            <p>The Faculty has the most Article approved: @academicYear.MostApprovedArticlesFaculty</p>
-                                            <p>The Faculty has the most Article declined: @academicYear.MostDeclinedArticlesFaculty</p>
-                                            <p>The Faculty has the least Articles created: @academicYear.LeastArticlesFaculty</p>
-                                            <p>The Faculty has the least Article approved: @academicYear.LeastApprovedArticlesFaculty</p>
-                                            <p>The Faculty has the least declined: @academicYear.LeastDeclinedArticlesFaculty</p>
-
-                                            <p>Total number of comments: @academicYear.TotalComment</p>
-                                            <p>Total number of like: @academicYear.TotalLike</p>
-                                            <p>Total number of Dislike: @academicYear.TotalDisLike</p>
-                                            <p>Total number of active user: @academicYear.TotalActiveUser</p>
-                                            <p>The student has the most article: @academicYear.UserWithMostArticle</p>
-                                        </div>
-                                    </div>
+                            <h5 class="mb-4">Charts for statistics of academic year of @Model.YearTitle</h5>
+                            <a class="btn btn-primary" asp-action="AcademicYears">Back to Academic Years</a>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div style="flex: 1; margin: 10px; height: 50%;">
+                                    <canvas id="articlesPerFacultyChart"></canvas>
                                 </div>
-                            }
+                                <div style="flex: 1; margin: 10px; height: 50%;">
+                                    <canvas id="monthlySubmissionChart"></canvas>
+                                </div>
 
+                            </div>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div style="flex: 1; margin: 10px; height: 50%;">
+                                    <canvas id="articlesByStatusChart"></canvas>
+                                </div>
+                                <div style="flex: 1; margin: 10px; height: 50%;">
+                                    <canvas id="articlesByFacultyBarChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Table End -->
 
         </div>
-        </div>
-        <!-- Content End -->
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+    <!-- Content End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -163,11 +153,17 @@
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/js/chartyearmanager.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.toggle-button').click(function () {
-                $(this).siblings('.dropdown-content').toggle();
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            renderCharts
+            (
+                @Html.Raw(Json.Serialize(Model.ArticlesPerFaculty)),
+                @Html.Raw(Json.Serialize(Model.ArticlesPerMonth)),
+                @Html.Raw(Json.Serialize(Model.ArticlesByStatus)),
+                @Html.Raw(Json.Serialize(Model.ArticlesByFaculty))
+            );
         });
     </script>
 

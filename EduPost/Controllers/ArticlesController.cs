@@ -208,9 +208,9 @@ namespace EduPost.Controllers
 			return RedirectToAction("Details", new { id = articleId });
 		}
 
-		// GET: Articles/Create
-		[HttpGet]
-        public IActionResult Create()
+        // GET: Articles/Create
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
             var article = new Article
             {
@@ -219,7 +219,7 @@ namespace EduPost.Controllers
 
             try
             {
-                var user = _userManager.GetUserAsync(User).Result;
+                var user = await _userManager.GetUserAsync(User);
                 if (user != null)
                 {
                     article.UserID = user.Id;
@@ -228,17 +228,26 @@ namespace EduPost.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Error retrieving user information: {ex.Message}");
+                return RedirectToAction("Error", "Home");
             }
+
+            var today = DateTime.Now;
+            var academicYears = await _context.AYear
+                .Where(ay => ay.EndDate > today)
+                .ToListAsync();
+
+            ViewData["AcademicYears"] = new SelectList(academicYears, "YearTitle", "YearTitle");
 
             return View(article);
         }
+
 
         // POST: Articles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Image,Files,AgreeToTerms,Description")] Article article, IFormFile image, IFormFile[] files, ModelStateDictionary modelState)
+        public async Task<IActionResult> Create([Bind("ArticleId,ArticleTitle,Image,Files,AgreeToTerms,Description,Ayear")] Article article, IFormFile image, IFormFile[] files, ModelStateDictionary modelState)
         {
             try
             {
@@ -350,7 +359,14 @@ namespace EduPost.Controllers
 			}
 			ViewData["Image"] = img;
 
-			return View(article);
+            var today = DateTime.Now;
+            var academicYears = await _context.AYear
+                .Where( ay => ay.EndDate > today )
+                .ToListAsync();
+
+            ViewData["AcademicYears"] = new SelectList(academicYears, "YearTitle", "YearTitle");
+
+            return View(article);
 
         }
 
@@ -359,7 +375,7 @@ namespace EduPost.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Image,Files,Description")] Article article, IFormFile image, IFormFile[] files)
+        public async Task<IActionResult> Edit(int? id, [Bind("ArticleId,ArticleTitle,Image,Files,Description,Ayear")] Article article, IFormFile image, IFormFile[] files)
         {
             try
             {
@@ -417,6 +433,7 @@ namespace EduPost.Controllers
                         {
                             existingArticle.ArticleTitle = article.ArticleTitle;
                             existingArticle.Description = article.Description;
+                            existingArticle.Ayear = article.Ayear;
                             //update image
                             if (image != null)
                             {

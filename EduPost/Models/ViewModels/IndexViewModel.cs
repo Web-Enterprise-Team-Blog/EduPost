@@ -5,6 +5,7 @@ namespace EduPost.Models.ViewModels
 {
     public class IndexViewModel
     {
+        public string? YearTitle { get; set; }
         public IList<ArticlesPerFacultyViewModel> ArticlesPerFaculty { get; set; }
         public IList<ArticlesPerDayViewModel> ArticlesPerDay { get; set; }
         public IList<ArticlesByStatusViewModel> ArticlesByStatus { get; set; }
