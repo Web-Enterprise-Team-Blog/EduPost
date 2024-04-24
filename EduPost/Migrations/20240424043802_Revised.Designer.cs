@@ -4,6 +4,7 @@ using EduPost.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424043802_Revised")]
+    partial class Revised
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +117,7 @@ namespace EduPost.Migrations
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle01",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
                             StatusId = 0,
@@ -127,10 +130,10 @@ namespace EduPost.Migrations
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle02",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
-                            StatusId = 1,
+                            StatusId = 0,
                             UserID = 7
                         },
                         new
@@ -140,10 +143,10 @@ namespace EduPost.Migrations
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle03",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
-                            StatusId = 2,
+                            StatusId = 0,
                             UserID = 7
                         },
                         new
@@ -156,7 +159,7 @@ namespace EduPost.Migrations
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
-                            StatusId = 3,
+                            StatusId = 0,
                             UserID = 7
                         },
                         new
@@ -169,7 +172,7 @@ namespace EduPost.Migrations
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
-                            StatusId = 3,
+                            StatusId = 0,
                             UserID = 7
                         },
                         new
@@ -177,10 +180,10 @@ namespace EduPost.Migrations
                             ArticleId = 6,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle06",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
+                            ArticleTitle = "CSArticle01",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4099), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4158), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Computer Science",
                             Public = true,
                             StatusId = 0,
                             UserID = 8
@@ -190,12 +193,12 @@ namespace EduPost.Migrations
                             ArticleId = 7,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle07",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 1,
+                            ArticleTitle = "CSArticle02",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4727), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4775), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Computer Science",
+                            Public = false,
+                            StatusId = 0,
                             UserID = 8
                         },
                         new
@@ -203,12 +206,12 @@ namespace EduPost.Migrations
                             ArticleId = 8,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle08",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 2,
+                            ArticleTitle = "CSArticle03",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(277), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(327), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Computer Science",
+                            Public = true,
+                            StatusId = 0,
                             UserID = 8
                         },
                         new
@@ -216,12 +219,12 @@ namespace EduPost.Migrations
                             ArticleId = 9,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle09",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 3,
+                            ArticleTitle = "CSArticle04",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(2979), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(3029), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Computer Science",
+                            Public = true,
+                            StatusId = 0,
                             UserID = 8
                         },
                         new
@@ -229,24 +232,24 @@ namespace EduPost.Migrations
                             ArticleId = 10,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle10",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
+                            ArticleTitle = "EArticle01",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7115), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7182), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
                             Public = true,
-                            StatusId = 3,
-                            UserID = 8
+                            StatusId = 0,
+                            UserID = 9
                         },
                         new
                         {
                             ArticleId = 11,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle11",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
+                            ArticleTitle = "EArticle02",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7437), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7483), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
+                            Public = false,
                             StatusId = 0,
                             UserID = 9
                         },
@@ -255,12 +258,12 @@ namespace EduPost.Migrations
                             ArticleId = 12,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle12",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
+                            ArticleTitle = "EArticle03",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1925), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1982), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Economics",
                             Public = true,
-                            StatusId = 1,
+                            StatusId = 0,
                             UserID = 9
                         },
                         new
@@ -268,494 +271,39 @@ namespace EduPost.Migrations
                             ArticleId = 13,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle13",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 9
+                            ArticleTitle = "ESArticle01",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5518), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5631), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 10
                         },
                         new
                         {
                             ArticleId = 14,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle14",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 9
+                            ArticleTitle = "ESArticle02",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8359), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8402), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Environmental Science",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 10
                         },
                         new
                         {
                             ArticleId = 15,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle15",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 9
-                        },
-                        new
-                        {
-                            ArticleId = 16,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle16",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 10
-                        },
-                        new
-                        {
-                            ArticleId = 17,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle17",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 10
-                        },
-                        new
-                        {
-                            ArticleId = 18,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle18",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 10
-                        },
-                        new
-                        {
-                            ArticleId = 19,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle19",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 10
-                        },
-                        new
-                        {
-                            ArticleId = 20,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle20",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 10
-                        },
-                        new
-                        {
-                            ArticleId = 21,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle21",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
+                            ArticleTitle = "PsyArticle01",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(365), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(431), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Psychology",
                             Public = true,
                             StatusId = 0,
                             UserID = 11
-                        },
-                        new
-                        {
-                            ArticleId = 22,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle22",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 11
-                        },
-                        new
-                        {
-                            ArticleId = 23,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle23",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 11
-                        },
-                        new
-                        {
-                            ArticleId = 24,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle24",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 11
-                        },
-                        new
-                        {
-                            ArticleId = 25,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "ITArticle25",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Information Tecnology",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 11
-                        },
-                        new
-                        {
-                            ArticleId = 26,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle01",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 12
-                        },
-                        new
-                        {
-                            ArticleId = 27,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle02",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 12
-                        },
-                        new
-                        {
-                            ArticleId = 28,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle03",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 12
-                        },
-                        new
-                        {
-                            ArticleId = 29,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle04",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 12
-                        },
-                        new
-                        {
-                            ArticleId = 30,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle05",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 12
-                        },
-                        new
-                        {
-                            ArticleId = 31,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle06",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 13
-                        },
-                        new
-                        {
-                            ArticleId = 32,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle07",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 13
-                        },
-                        new
-                        {
-                            ArticleId = 33,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle08",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 13
-                        },
-                        new
-                        {
-                            ArticleId = 34,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle09",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 13
-                        },
-                        new
-                        {
-                            ArticleId = 35,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle10",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 13
-                        },
-                        new
-                        {
-                            ArticleId = 36,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle11",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 14
-                        },
-                        new
-                        {
-                            ArticleId = 37,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle12",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 14
-                        },
-                        new
-                        {
-                            ArticleId = 38,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle13",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 14
-                        },
-                        new
-                        {
-                            ArticleId = 39,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle14",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 14
-                        },
-                        new
-                        {
-                            ArticleId = 40,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle15",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 14
-                        },
-                        new
-                        {
-                            ArticleId = 41,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle16",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 15
-                        },
-                        new
-                        {
-                            ArticleId = 42,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle17",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 15
-                        },
-                        new
-                        {
-                            ArticleId = 43,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle18",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 15
-                        },
-                        new
-                        {
-                            ArticleId = 44,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle19",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 15
-                        },
-                        new
-                        {
-                            ArticleId = 45,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle20",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 15
-                        },
-                        new
-                        {
-                            ArticleId = 46,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle21",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 16
-                        },
-                        new
-                        {
-                            ArticleId = 47,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle22",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 1,
-                            UserID = 16
-                        },
-                        new
-                        {
-                            ArticleId = 48,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle23",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 2,
-                            UserID = 16
-                        },
-                        new
-                        {
-                            ArticleId = 49,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle24",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 3,
-                            UserID = 16
-                        },
-                        new
-                        {
-                            ArticleId = 50,
-                            AgreeToTerms = true,
-                            AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle25",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 3,
-                            UserID = 16
                         });
                 });
 
@@ -1126,7 +674,6 @@ namespace EduPost.Migrations
                             Email = "TestEmail@email.com",
                             EmailConfirmed = true,
                             Faculty = "Admin",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                             NormalizedUserName = "TESTEMAIL@EMAIL.COM",
@@ -1145,7 +692,6 @@ namespace EduPost.Migrations
                             Email = "ITHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITHEAD@EMAIL.COM",
                             NormalizedUserName = "ITHEAD@EMAIL.COM",
@@ -1164,7 +710,6 @@ namespace EduPost.Migrations
                             Email = "CSHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Computer Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSHEAD@EMAIL.COM",
                             NormalizedUserName = "CSHEAD@EMAIL.COM",
@@ -1183,7 +728,6 @@ namespace EduPost.Migrations
                             Email = "EHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EHEAD@EMAIL.COM",
                             NormalizedUserName = "EHEAD@EMAIL.COM",
@@ -1202,7 +746,6 @@ namespace EduPost.Migrations
                             Email = "ESHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESHEAD@EMAIL.COM",
                             NormalizedUserName = "ESHEAD@EMAIL.COM",
@@ -1221,7 +764,6 @@ namespace EduPost.Migrations
                             Email = "PsyHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYHEAD@EMAIL.COM",
                             NormalizedUserName = "PSYHEAD@EMAIL.COM",
@@ -1240,7 +782,6 @@ namespace EduPost.Migrations
                             Email = "ITUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITUSER01@EMAIL.COM",
                             NormalizedUserName = "ITUSER01@EMAIL.COM",
@@ -1259,7 +800,6 @@ namespace EduPost.Migrations
                             Email = "ITUser02@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITUSER02@EMAIL.COM",
                             NormalizedUserName = "ITUSER02@EMAIL.COM",
@@ -1278,7 +818,6 @@ namespace EduPost.Migrations
                             Email = "ITUser03@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITUSER03@EMAIL.COM",
                             NormalizedUserName = "ITUSER03@EMAIL.COM",
@@ -1297,7 +836,6 @@ namespace EduPost.Migrations
                             Email = "ITUser04@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITUSER04@EMAIL.COM",
                             NormalizedUserName = "ITUSER04@EMAIL.COM",
@@ -1316,7 +854,6 @@ namespace EduPost.Migrations
                             Email = "ITUser05@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITUSER05@EMAIL.COM",
                             NormalizedUserName = "ITUSER05@EMAIL.COM",
@@ -1335,7 +872,6 @@ namespace EduPost.Migrations
                             Email = "CSUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSUSER01@EMAIL.COM",
                             NormalizedUserName = "CSUSER01@EMAIL.COM",
@@ -1354,7 +890,6 @@ namespace EduPost.Migrations
                             Email = "CSUser02@email.com",
                             EmailConfirmed = true,
                             Faculty = "Computer Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSUSER02@EMAIL.COM",
                             NormalizedUserName = "CSUSER02@EMAIL.COM",
@@ -1373,7 +908,6 @@ namespace EduPost.Migrations
                             Email = "CSUser03@email.com",
                             EmailConfirmed = true,
                             Faculty = "Computer Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSUSER03@EMAIL.COM",
                             NormalizedUserName = "CSUSER03@EMAIL.COM",
@@ -1392,7 +926,6 @@ namespace EduPost.Migrations
                             Email = "CSUser04@email.com",
                             EmailConfirmed = true,
                             Faculty = "Computer Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSUSER04@EMAIL.COM",
                             NormalizedUserName = "CSUSER04@EMAIL.COM",
@@ -1411,7 +944,6 @@ namespace EduPost.Migrations
                             Email = "CSUser05@email.com",
                             EmailConfirmed = true,
                             Faculty = "Computer Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSUSER05@EMAIL.COM",
                             NormalizedUserName = "CSUSER05@EMAIL.COM",
@@ -1430,7 +962,6 @@ namespace EduPost.Migrations
                             Email = "EUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EUSER01@EMAIL.COM",
                             NormalizedUserName = "EUSER01@EMAIL.COM",
@@ -1449,7 +980,6 @@ namespace EduPost.Migrations
                             Email = "EUser02@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EUSER02@EMAIL.COM",
                             NormalizedUserName = "EUSER02@EMAIL.COM",
@@ -1468,7 +998,6 @@ namespace EduPost.Migrations
                             Email = "EUser03@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EUSER03@EMAIL.COM",
                             NormalizedUserName = "EUSER03@EMAIL.COM",
@@ -1487,7 +1016,6 @@ namespace EduPost.Migrations
                             Email = "EUser04@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EUSER04@EMAIL.COM",
                             NormalizedUserName = "EUSER04@EMAIL.COM",
@@ -1506,7 +1034,6 @@ namespace EduPost.Migrations
                             Email = "EUser05@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EUSER05@EMAIL.COM",
                             NormalizedUserName = "EUSER05@EMAIL.COM",
@@ -1525,7 +1052,6 @@ namespace EduPost.Migrations
                             Email = "ESUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESUSER01@EMAIL.COM",
                             NormalizedUserName = "ESUSER01@EMAIL.COM",
@@ -1544,7 +1070,6 @@ namespace EduPost.Migrations
                             Email = "ESUser02@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESUSER02@EMAIL.COM",
                             NormalizedUserName = "ESUSER02@EMAIL.COM",
@@ -1563,7 +1088,6 @@ namespace EduPost.Migrations
                             Email = "ESUser03@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESUSER03@EMAIL.COM",
                             NormalizedUserName = "ESUSER03@EMAIL.COM",
@@ -1582,7 +1106,6 @@ namespace EduPost.Migrations
                             Email = "ESUser04@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESUSER04@EMAIL.COM",
                             NormalizedUserName = "ESUSER04@EMAIL.COM",
@@ -1601,7 +1124,6 @@ namespace EduPost.Migrations
                             Email = "ESUser05@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESUSER05@EMAIL.COM",
                             NormalizedUserName = "ESUSER05@EMAIL.COM",
@@ -1620,7 +1142,6 @@ namespace EduPost.Migrations
                             Email = "PsyUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYUSER01@EMAIL.COM",
                             NormalizedUserName = "PSYUSER01@EMAIL.COM",
@@ -1639,7 +1160,6 @@ namespace EduPost.Migrations
                             Email = "PsyUser02@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYUSER02@EMAIL.COM",
                             NormalizedUserName = "PSYUSER02@EMAIL.COM",
@@ -1658,7 +1178,6 @@ namespace EduPost.Migrations
                             Email = "PsyUser03@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYUSER03@EMAIL.COM",
                             NormalizedUserName = "PSYUSER03@EMAIL.COM",
@@ -1677,7 +1196,6 @@ namespace EduPost.Migrations
                             Email = "PsyUser04@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYUSER04@EMAIL.COM",
                             NormalizedUserName = "PSYUSER04@EMAIL.COM",
@@ -1696,7 +1214,6 @@ namespace EduPost.Migrations
                             Email = "PsyUser05@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYUSER05@EMAIL.COM",
                             NormalizedUserName = "PSYUSER05@EMAIL.COM",
@@ -1715,7 +1232,6 @@ namespace EduPost.Migrations
                             Email = "Manager@email.com",
                             EmailConfirmed = true,
                             Faculty = "Marketing Manager",
-                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "MANAGER@EMAIL.COM",
                             NormalizedUserName = "MANAGER@EMAIL.COM",
@@ -1992,7 +1508,7 @@ namespace EduPost.Migrations
                         new
                         {
                             UserId = 32,
-                            RoleId = 4
+                            RoleId = 2
                         });
                 });
 

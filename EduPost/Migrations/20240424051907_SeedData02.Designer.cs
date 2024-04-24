@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPost.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240418173552_fileDownloadToggle")]
-    partial class fileDownloadToggle
+    [Migration("20240424051907_SeedData02")]
+    partial class SeedData02
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace EduPost.Migrations
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle01",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
                             StatusId = 0,
@@ -130,10 +130,10 @@ namespace EduPost.Migrations
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle02",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
-                            StatusId = 0,
+                            StatusId = 1,
                             UserID = 7
                         },
                         new
@@ -143,10 +143,10 @@ namespace EduPost.Migrations
                             AllowFIleDownload = false,
                             ArticleTitle = "ITArticle03",
                             CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
-                            StatusId = 0,
+                            StatusId = 2,
                             UserID = 7
                         },
                         new
@@ -159,7 +159,7 @@ namespace EduPost.Migrations
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = false,
-                            StatusId = 0,
+                            StatusId = 3,
                             UserID = 7
                         },
                         new
@@ -172,7 +172,7 @@ namespace EduPost.Migrations
                             ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
                             Faculty = "Information Tecnology",
                             Public = true,
-                            StatusId = 0,
+                            StatusId = 3,
                             UserID = 7
                         },
                         new
@@ -180,10 +180,10 @@ namespace EduPost.Migrations
                             ArticleId = 6,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle01",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4099), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 42, 780, DateTimeKind.Unspecified).AddTicks(4158), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
+                            ArticleTitle = "ITArticle06",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
                             Public = true,
                             StatusId = 0,
                             UserID = 8
@@ -193,12 +193,12 @@ namespace EduPost.Migrations
                             ArticleId = 7,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle02",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4727), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 13, 50, 639, DateTimeKind.Unspecified).AddTicks(4775), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = false,
-                            StatusId = 0,
+                            ArticleTitle = "ITArticle07",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 1,
                             UserID = 8
                         },
                         new
@@ -206,12 +206,12 @@ namespace EduPost.Migrations
                             ArticleId = 8,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle03",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(277), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 1, 586, DateTimeKind.Unspecified).AddTicks(327), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
+                            ArticleTitle = "ITArticle08",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 2,
                             UserID = 8
                         },
                         new
@@ -219,12 +219,12 @@ namespace EduPost.Migrations
                             ArticleId = 9,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "CSArticle04",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(2979), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 14, 11, 955, DateTimeKind.Unspecified).AddTicks(3029), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Computer Science",
-                            Public = true,
-                            StatusId = 0,
+                            ArticleTitle = "ITArticle09",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 3,
                             UserID = 8
                         },
                         new
@@ -232,24 +232,24 @@ namespace EduPost.Migrations
                             ArticleId = 10,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "EArticle01",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7115), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 0, 935, DateTimeKind.Unspecified).AddTicks(7182), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Economics",
+                            ArticleTitle = "ITArticle10",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
                             Public = true,
-                            StatusId = 0,
-                            UserID = 9
+                            StatusId = 3,
+                            UserID = 8
                         },
                         new
                         {
                             ArticleId = 11,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "EArticle02",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7437), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 7, 767, DateTimeKind.Unspecified).AddTicks(7483), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Economics",
-                            Public = false,
+                            ArticleTitle = "ITArticle11",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
                             StatusId = 0,
                             UserID = 9
                         },
@@ -258,12 +258,12 @@ namespace EduPost.Migrations
                             ArticleId = 12,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "EArticle03",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1925), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 16, 422, DateTimeKind.Unspecified).AddTicks(1982), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Economics",
+                            ArticleTitle = "ITArticle12",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
                             Public = true,
-                            StatusId = 0,
+                            StatusId = 1,
                             UserID = 9
                         },
                         new
@@ -271,38 +271,168 @@ namespace EduPost.Migrations
                             ArticleId = 13,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ESArticle01",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5518), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 41, 591, DateTimeKind.Unspecified).AddTicks(5631), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Environmental Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 10
+                            ArticleTitle = "ITArticle13",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 9
                         },
                         new
                         {
                             ArticleId = 14,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "ESArticle02",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8359), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 15, 50, 428, DateTimeKind.Unspecified).AddTicks(8402), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Environmental Science",
-                            Public = true,
-                            StatusId = 0,
-                            UserID = 10
+                            ArticleTitle = "ITArticle14",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 9
                         },
                         new
                         {
                             ArticleId = 15,
                             AgreeToTerms = true,
                             AllowFIleDownload = false,
-                            ArticleTitle = "PsyArticle01",
-                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(365), new TimeSpan(0, 7, 0, 0, 0)),
-                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 16, 26, 676, DateTimeKind.Unspecified).AddTicks(431), new TimeSpan(0, 7, 0, 0, 0)),
-                            Faculty = "Psychology",
+                            ArticleTitle = "ITArticle15",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 9
+                        },
+                        new
+                        {
+                            ArticleId = 16,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle16",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
                             Public = true,
                             StatusId = 0,
+                            UserID = 10
+                        },
+                        new
+                        {
+                            ArticleId = 17,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle17",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 10
+                        },
+                        new
+                        {
+                            ArticleId = 18,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle18",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 10
+                        },
+                        new
+                        {
+                            ArticleId = 19,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle19",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 10
+                        },
+                        new
+                        {
+                            ArticleId = 20,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle20",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 3,
+                            UserID = 10
+                        },
+                        new
+                        {
+                            ArticleId = 21,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle21",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(8253), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 36, 895, DateTimeKind.Unspecified).AddTicks(9251), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 0,
+                            UserID = 11
+                        },
+                        new
+                        {
+                            ArticleId = 22,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle22",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4713), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 52, 633, DateTimeKind.Unspecified).AddTicks(4770), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 1,
+                            UserID = 11
+                        },
+                        new
+                        {
+                            ArticleId = 23,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle23",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3506), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 30, 20, 11, 59, 722, DateTimeKind.Unspecified).AddTicks(3572), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 2,
+                            UserID = 11
+                        },
+                        new
+                        {
+                            ArticleId = 24,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle24",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(1948), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 11, 487, DateTimeKind.Unspecified).AddTicks(2005), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = false,
+                            StatusId = 3,
+                            UserID = 11
+                        },
+                        new
+                        {
+                            ArticleId = 25,
+                            AgreeToTerms = true,
+                            AllowFIleDownload = false,
+                            ArticleTitle = "ITArticle25",
+                            CreatedDate = new DateTimeOffset(new DateTime(2024, 4, 2, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3664), new TimeSpan(0, 7, 0, 0, 0)),
+                            ExpireDate = new DateTimeOffset(new DateTime(2024, 4, 16, 20, 12, 24, 227, DateTimeKind.Unspecified).AddTicks(3751), new TimeSpan(0, 7, 0, 0, 0)),
+                            Faculty = "Information Tecnology",
+                            Public = true,
+                            StatusId = 3,
                             UserID = 11
                         });
                 });
@@ -674,6 +804,7 @@ namespace EduPost.Migrations
                             Email = "TestEmail@email.com",
                             EmailConfirmed = true,
                             Faculty = "Admin",
+                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "TESTEMAIL@EMAIL.COM",
                             NormalizedUserName = "TESTEMAIL@EMAIL.COM",
@@ -692,6 +823,7 @@ namespace EduPost.Migrations
                             Email = "ITHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ITHEAD@EMAIL.COM",
                             NormalizedUserName = "ITHEAD@EMAIL.COM",
@@ -710,6 +842,7 @@ namespace EduPost.Migrations
                             Email = "CSHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Computer Science",
+                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "CSHEAD@EMAIL.COM",
                             NormalizedUserName = "CSHEAD@EMAIL.COM",
@@ -728,6 +861,7 @@ namespace EduPost.Migrations
                             Email = "EHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Economics",
+                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "EHEAD@EMAIL.COM",
                             NormalizedUserName = "EHEAD@EMAIL.COM",
@@ -746,6 +880,7 @@ namespace EduPost.Migrations
                             Email = "ESHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Environmental Science",
+                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "ESHEAD@EMAIL.COM",
                             NormalizedUserName = "ESHEAD@EMAIL.COM",
@@ -764,6 +899,7 @@ namespace EduPost.Migrations
                             Email = "PsyHead@email.com",
                             EmailConfirmed = true,
                             Faculty = "Psychology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "PSYHEAD@EMAIL.COM",
                             NormalizedUserName = "PSYHEAD@EMAIL.COM",
@@ -779,106 +915,492 @@ namespace EduPost.Migrations
                             Id = 7,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "eb09b0fb-ec00-493a-922a-dac179910c75",
-                            Email = "ITUser@email.com",
+                            Email = "ITUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
-                            NormalizedEmail = "ITUSER@EMAIL.COM",
-                            NormalizedUserName = "ITUSER@EMAIL.COM",
+                            NormalizedEmail = "ITUSER01@EMAIL.COM",
+                            NormalizedUserName = "ITUSER01@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEH+sZz3bFv5Wywum0wvsGfPWHcHzrU1eP3NFCsZgCv+i4iLsX/hbwo5UAoa5DXEY1Q==",
                             PhoneNumberConfirmed = false,
                             Role = "Student",
                             SecurityStamp = "KL4GXYEBVQCM4CMOUHUWGVA76X5GWPLK",
                             TwoFactorEnabled = false,
-                            UserName = "ITUser@email.com"
+                            UserName = "ITUser01@email.com"
                         },
                         new
                         {
                             Id = 8,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "53038d4e-7b6d-4185-8e7f-2415763a63d5",
-                            Email = "CSUser@email.com",
+                            Email = "ITUser02@email.com",
                             EmailConfirmed = true,
-                            Faculty = "Computer Science",
+                            Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
-                            NormalizedEmail = "CSUSER@EMAIL.COM",
-                            NormalizedUserName = "CSUSER@EMAIL.COM",
+                            NormalizedEmail = "ITUSER02@EMAIL.COM",
+                            NormalizedUserName = "ITUSER02@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEC2lBMmzn9Yz4SZc01Pp0gtWDaUXyEYFQkFmprsa93UzlO5IoXSktJ6WnO2wfzBAtw==",
                             PhoneNumberConfirmed = false,
                             Role = "Student",
                             SecurityStamp = "YO6SY4A2FLBOS7ZHD4GRYTXZTKCD4JOM",
                             TwoFactorEnabled = false,
-                            UserName = "CSUser@email.com"
+                            UserName = "ITUser02@email.com"
                         },
                         new
                         {
                             Id = 9,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "5288bb02-53b6-47cf-9da5-a21eb80b3b13",
-                            Email = "EUser@email.com",
+                            Email = "ITUser03@email.com",
                             EmailConfirmed = true,
-                            Faculty = "Economics",
+                            Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
-                            NormalizedEmail = "EUSER@EMAIL.COM",
-                            NormalizedUserName = "EUSER@EMAIL.COM",
+                            NormalizedEmail = "ITUSER03@EMAIL.COM",
+                            NormalizedUserName = "ITUSER03@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJo3QDCo6vtJ6l1GW3RaXbYL0+jKR+Tp8/x+Ny1VoAJhh/Mb2c+JOEA3MF0K68wkUg==",
                             PhoneNumberConfirmed = false,
                             Role = "Student",
                             SecurityStamp = "7ASQ2UGT33TIBBIGWOHIZRSTT3ZZWSHA",
                             TwoFactorEnabled = false,
-                            UserName = "EUser@email.com"
+                            UserName = "ITUser03@email.com"
                         },
                         new
                         {
                             Id = 10,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "893122b9-115a-41c3-b526-fc7cda035a6b",
-                            Email = "ESUser@email.com",
+                            Email = "ITUser04@email.com",
                             EmailConfirmed = true,
-                            Faculty = "Environmental Science",
+                            Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
-                            NormalizedEmail = "ESUSER@EMAIL.COM",
-                            NormalizedUserName = "ESUSER@EMAIL.COM",
+                            NormalizedEmail = "ITUSER04@EMAIL.COM",
+                            NormalizedUserName = "ITUSER04@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAECmJwOOIUtxINztEbzdBGoIv8vic33hW/XaXWx524PnHCzAq0+r9h8qXWflV9dAreA==",
                             PhoneNumberConfirmed = false,
                             Role = "Student",
                             SecurityStamp = "ZDEUN3C3CICWEQN6KH4AI3UFWJCWGA5A",
                             TwoFactorEnabled = false,
-                            UserName = "ESUser@email.com"
+                            UserName = "ITUser04@email.com"
                         },
                         new
                         {
                             Id = 11,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "99b4129c-6f43-4332-80e8-1abfd403d54f",
-                            Email = "PsyUser@email.com",
+                            Email = "ITUser05@email.com",
                             EmailConfirmed = true,
-                            Faculty = "Psychology",
+                            Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
-                            NormalizedEmail = "PSYUSER@EMAIL.COM",
-                            NormalizedUserName = "PSYUSER@EMAIL.COM",
+                            NormalizedEmail = "ITUSER05@EMAIL.COM",
+                            NormalizedUserName = "ITUSER05@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAELRnJOAVIaxsmhQAwr4S4MghTgxv8ZKuJVGGcIhRaHb55dkpwnwYC86GlM9qGthE4A==",
                             PhoneNumberConfirmed = false,
                             Role = "Student",
                             SecurityStamp = "XCVBJEVYK3X2AO3N26IMH2LTVOXNPWEN",
                             TwoFactorEnabled = false,
-                            UserName = "PsyUser@email.com"
+                            UserName = "ITUser05@email.com"
                         },
                         new
                         {
                             Id = 12,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "f2a383ab-3759-4516-9107-fd7b075d1f23",
-                            Email = "Manager@email.com",
+                            Email = "CSUser01@email.com",
                             EmailConfirmed = true,
                             Faculty = "Information Tecnology",
+                            FirstLogin = false,
                             LockoutEnabled = true,
-                            NormalizedEmail = "MANAGER@EMAIL.COM",
-                            NormalizedUserName = "MANAGER@EMAIL.COM",
+                            NormalizedEmail = "CSUSER01@EMAIL.COM",
+                            NormalizedUserName = "CSUSER01@EMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEM+mPvVomCRp2EY60mU1dycFTYnWTmGIzkvnWy1R47/zs5zd9zIrRO2uDgX/wJoJmw==",
                             PhoneNumberConfirmed = false,
                             Role = "Student",
                             SecurityStamp = "OK5EHYUMTYTQDEY5FHJVZMIYUYUYXMP2",
+                            TwoFactorEnabled = false,
+                            UserName = "CSUser01@email.com"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e9466ba9-c736-43ff-bd2a-11be3ec5e498",
+                            Email = "CSUser02@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Computer Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "CSUSER02@EMAIL.COM",
+                            NormalizedUserName = "CSUSER02@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDwNgWYnSqcQ0paUgAuJ8f7ahqutHUQB6byIxBGwlGm9Ql2ogy4a7qGNtjx3JnPFPQ==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "7TTWSFY5RC2BESNPZDGTKYR6444ISRWL",
+                            TwoFactorEnabled = false,
+                            UserName = "CSUser02@email.com"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1e1d6506-c98d-4edc-9e57-3d3ae92e3415",
+                            Email = "CSUser03@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Computer Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "CSUSER03@EMAIL.COM",
+                            NormalizedUserName = "CSUSER03@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECZvcYqCrf/Q9OXgSCx8UPFmQNAOZsSpbLFCsLsL33S8BTCrEifeIbXXdAp+i8aCnA==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "GXRCFKOFJ6GWQXSFETM463HPVZX53IHT",
+                            TwoFactorEnabled = false,
+                            UserName = "CSUser03@email.com"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a25560a4-6cea-42c3-bcd7-da3d0d47837d",
+                            Email = "CSUser04@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Computer Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "CSUSER04@EMAIL.COM",
+                            NormalizedUserName = "CSUSER04@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMvcN7RnwgZ7/zHh0W1jihYAr1gLaaq33ZbaqKNoQ9iozCO0m8Wlg0wDg7ocz7FgEA==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "YTKQSDOA7745BFSUDY7W6SPPYD7N747N",
+                            TwoFactorEnabled = false,
+                            UserName = "CSUser04@email.com"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cb6974a4-23cb-4c89-9712-1556a45d3454",
+                            Email = "CSUser05@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Computer Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "CSUSER05@EMAIL.COM",
+                            NormalizedUserName = "CSUSER05@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOL0FO85Wq17d2NU0QMVGZSA6mR0BNvXldrynNWm6KmKrmq1yG8VX1e6DtH3QYU2Aw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "ACX65RGUUT7PJAFMCIO5YSYSFFWBU7E5",
+                            TwoFactorEnabled = false,
+                            UserName = "CSUser05@email.com"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "10d3c0fe-77e0-4df0-8ded-4e1aad4b3afc",
+                            Email = "EUser01@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Economics",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EUSER01@EMAIL.COM",
+                            NormalizedUserName = "EUSER01@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAivd04QPHp/7fQavTwIrfB5T2K2M8Hb0ZAP41Ia/awExIadtcDqshfx2jfXOotDlA==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "IAQJSOD2TQY7LXMCRRSCKS3QZUXILQA6",
+                            TwoFactorEnabled = false,
+                            UserName = "EUser01@email.com"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "10a9af30-0ef7-4fc1-ace8-b018698731cc",
+                            Email = "EUser02@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Economics",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EUSER02@EMAIL.COM",
+                            NormalizedUserName = "EUSER02@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGMhK/rn4P74QRiPQB3l//yXK/RwD9InCoof0Wefcd5k2jYIwOrPrf0WBrKZFm/gIg==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "V56H77ZW4YVY4SGP5LVMNJ6737WB2YSA",
+                            TwoFactorEnabled = false,
+                            UserName = "EUser02@email.com"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70a1c443-7f66-4929-adfc-1fb81197f3f4",
+                            Email = "EUser03@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Economics",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EUSER03@EMAIL.COM",
+                            NormalizedUserName = "EUSER03@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPDAeJh6A+JEBehf0NEBZvB3LvRcagEdaAda/Bs04xvF4W/EQ4aPJr+y+VNHNqeBGg==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "IMZ3A5VMBT76HAZST2WPP5KLTDLWV33T",
+                            TwoFactorEnabled = false,
+                            UserName = "EUser03@email.com"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "99228dd0-22fe-4ec8-864f-4cdb13e791ca",
+                            Email = "EUser04@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Economics",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EUSER04@EMAIL.COM",
+                            NormalizedUserName = "EUSER04@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMdt84Pr6Ug+yASNcwtYvTKB+bJZ7WkUgGTC34diODYb/FY7uNBz+RLhOFbgzFOVEQ==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "5UELYUJTAG4UOSFS2OJNUYMDY7ZYIIW5",
+                            TwoFactorEnabled = false,
+                            UserName = "EUser04@email.com"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9f141745-0d28-4dce-9714-233bee71ce4d",
+                            Email = "EUser05@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Economics",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EUSER05@EMAIL.COM",
+                            NormalizedUserName = "EUSER05@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBK54wJBMS3RV7TGcr8+p/jtI3YYtPgghsMtSkTnf2UHUNRNKADm2G1GUaNJ04Wlgw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "JQRR3LKVFNZDBTL2LJWDFDNKEDCG6LX4",
+                            TwoFactorEnabled = false,
+                            UserName = "EUser05@email.com"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a947aa4c-a5ef-4d2f-a319-764ae3f5eff7",
+                            Email = "ESUser01@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Environmental Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ESUSER01@EMAIL.COM",
+                            NormalizedUserName = "ESUSER01@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJhgdL152HNry7J6e36yAv/98jwEGXAeab9RSjHXZsdIelGepDI4CmjwfVpQgbIVAg==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "AXAATFLRWYPAZOG6LPR6K4MBCIHYAZJB",
+                            TwoFactorEnabled = false,
+                            UserName = "ESUser01@email.com"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "30ca9a5d-1e02-49a8-ab89-1551471fc64c",
+                            Email = "ESUser02@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Environmental Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ESUSER02@EMAIL.COM",
+                            NormalizedUserName = "ESUSER02@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELzFSAEFTMz0Dgl+VzntRtsNsCJhioszMJDwUAiYlYXyBaDF0xjudaa72U4zx0Q86g==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "XEZ6OMBNZXPZGBOMYHWN4JLETBMQ3GNK",
+                            TwoFactorEnabled = false,
+                            UserName = "ESUser02@email.com"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f3889225-34ec-4bf6-816e-fba33dfd5106",
+                            Email = "ESUser03@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Environmental Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ESUSER03@EMAIL.COM",
+                            NormalizedUserName = "ESUSER03@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECbwF+ooB8JLSU5tLaFfAWb28KEWNLnzwCwCvgOjbprdcXNyPeKa7uL/1sqiU6xUQw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "YVJZW5VEG5SZRYHNQBZEE4WC7MZIMGHW",
+                            TwoFactorEnabled = false,
+                            UserName = "ESUser03@email.com"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "16e3a4d0-88ae-4916-9656-b280e34763f4",
+                            Email = "ESUser04@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Environmental Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ESUSER04@EMAIL.COM",
+                            NormalizedUserName = "ESUSER04@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENONevDUHddwSZLoZjytH0nbn6ixfztlFSrrFBmZ1uesL6r30tvrtAW4CAncBBkafw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "OP64D2UPIP6LUCMAEI24Z6FJBNVPKUV7",
+                            TwoFactorEnabled = false,
+                            UserName = "ESUser04@email.com"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "defe4e78-a3cc-40c7-b070-dd6f92c60997",
+                            Email = "ESUser05@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Environmental Science",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ESUSER05@EMAIL.COM",
+                            NormalizedUserName = "ESUSER05@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPYETRsECMaYW9pa2kqQRktTlH9TnhontVB6wiLsOqv5eqTosWrpVFlhAk10HSQl3Q==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "24PBFQAHGHOFTJX7UGRL35L2EHM7UESE",
+                            TwoFactorEnabled = false,
+                            UserName = "ESUser05@email.com"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "90c7e325-5be0-415e-adcf-0bc18a4dfaad",
+                            Email = "PsyUser01@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Psychology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PSYUSER01@EMAIL.COM",
+                            NormalizedUserName = "PSYUSER01@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEODsyP6P0oszjGKZzYMdNf1331lCyJVz/n+lu2tHF3kf+SBiaF7RprSRYlLtTqYOVw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "IRVL5JE5K4S425UP5ES4LUOQNCKXMMC3",
+                            TwoFactorEnabled = false,
+                            UserName = "PsyUser01@email.com"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e3dfe8ff-bcc0-41f5-b5aa-f263ebea1d2a",
+                            Email = "PsyUser02@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Psychology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PSYUSER02@EMAIL.COM",
+                            NormalizedUserName = "PSYUSER02@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENTHkTf31WrTlgolSHKQoyJMtc5Qb1XIqf3Btf2D4tX5gDVpl+N7XYoNcfBb1igFAw==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "NNMI25CTCT7KMJQXQ74TDEGSDNCT3J5M",
+                            TwoFactorEnabled = false,
+                            UserName = "PsyUser02@email.com"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "290fb457-b40b-4362-bf73-67eafefc5876",
+                            Email = "PsyUser03@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Psychology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PSYUSER03@EMAIL.COM",
+                            NormalizedUserName = "PSYUSER03@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDxxhhO8txD83XWSKBaKTs7X1HzWWk1Ecl0aKwOG3mN59mfV6p16ZRKt0yadIvNACA==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "DFJYGHAMFOWOR72BLPUSELLKYYJD3T6J",
+                            TwoFactorEnabled = false,
+                            UserName = "PsyUser03@email.com"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "930395d4-6e59-4cfc-aed4-44192eac0305",
+                            Email = "PsyUser04@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Psychology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PSYUSER04@EMAIL.COM",
+                            NormalizedUserName = "PSYUSER04@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB6Ha0jkkNag9OHx/Dq1HwAwJauvahdbp7ki7Lr+2FKsvvUE0IXY98XfQgzRvdwpuQ==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "JSSUWL7M74TZ2FOMCIE66IV4N6SPYOB4",
+                            TwoFactorEnabled = false,
+                            UserName = "PsyUser04@email.com"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "68ebe619-deb6-4629-a8cd-c03ef0b4139e",
+                            Email = "PsyUser05@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Psychology",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "PSYUSER05@EMAIL.COM",
+                            NormalizedUserName = "PSYUSER05@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI0JMfnBTubwrLegASyI6D4tGI6pcHi9az6KhfNfVok21EGAASW6XirbG8M4w+Lm1Q==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Student",
+                            SecurityStamp = "RW224HJ53CXKBTXANOSX64GG5H2XOYPN",
+                            TwoFactorEnabled = false,
+                            UserName = "PsyUser05@email.com"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2040ba93-fae1-49d7-a2f3-2fdd94874d7d",
+                            Email = "Manager@email.com",
+                            EmailConfirmed = true,
+                            Faculty = "Marketing Manager",
+                            FirstLogin = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "MANAGER@EMAIL.COM",
+                            NormalizedUserName = "MANAGER@EMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDiXmLWJOrrGVy3GrXOPrQLAGeS2PlxNt5j11sB0OUrbvL5YE333FMykZjkvW2s/wg==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Manager",
+                            SecurityStamp = "V4VYKCZNXY76FWYHKSDCEGLO2MP2FS5P",
                             TwoFactorEnabled = false,
                             UserName = "Manager@email.com"
                         });
@@ -1052,8 +1574,103 @@ namespace EduPost.Migrations
                         },
                         new
                         {
-                            UserId = 12,
-                            RoleId = 4
+                            UserId = 13,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 14,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 15,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 16,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 17,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 18,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 19,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 20,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 21,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 22,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 23,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 24,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 25,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 26,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 27,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 28,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 29,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 30,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 31,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 32,
+                            RoleId = 2
                         });
                 });
 
