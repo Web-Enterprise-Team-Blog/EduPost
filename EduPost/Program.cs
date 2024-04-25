@@ -39,6 +39,11 @@ namespace EduPost
 			builder.Services.AddScoped<NotificationViewComponent>();
             builder.Services.AddScoped<AvatarViewComponent>();
             builder.Services.AddScoped<ImageConverter> ();
+            builder.Services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
 
             var app = builder.Build();
 

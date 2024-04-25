@@ -11,7 +11,6 @@ namespace EduPost.Models
         public override string? UserName { get; set; }
 
         [Column("user_email")]
-        [Required]
         public override string? Email { get; set; }
 
         [Column("faculty")]

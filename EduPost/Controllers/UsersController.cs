@@ -17,12 +17,15 @@ namespace EduPost.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public UsersController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager, ILogger<UsersController> logger)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _logger = logger;
+
         }
 
         // GET: Users
@@ -123,77 +126,90 @@ namespace EduPost.Controllers
             return View(user);
         }
 
-		// POST: Users/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-		public IActionResult Edit(int id, [Bind("UserName,Email,Faculty,Role,Id"/*,EmailConfirmed*/)] User userInput)
-		{
-			if (id != userInput.Id)
-			{
-				return NotFound();
-			}
+        public async Task<IActionResult> Edit(int id, [Bind("UserName,Faculty,Role,Id")] User userInput)
+        {
+            _logger.LogInformation("Starting Edit operation for user ID: {UserId}", id);
 
-			var userInDb = _context.Users.Find(id);
-			if (userInDb == null)
-			{
-				return NotFound();
-			}
+            if (id != userInput.Id)
+            {
+                _logger.LogWarning("Edit operation failed: User ID mismatch. Expected {ExpectedId}, got {GotId}", id, userInput.Id);
+                return NotFound();
+            }
 
-			if (ModelState.IsValid)
-			{
-				try
-				{
-                    _context.Entry(userInDb).CurrentValues.SetValues(userInput);
-                    userInDb.NormalizedEmail = userInput.Email.ToUpperInvariant();
-                    userInDb.NormalizedUserName = userInput.Email.ToUpperInvariant();
-                    _context.Entry(userInDb).Property(x => x.PasswordHash).IsModified = false;
-					_context.Entry(userInDb).Property(x => x.SecurityStamp).IsModified = false;
-					_context.Entry(userInDb).Property(x => x.ConcurrencyStamp).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.PhoneNumber).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.PhoneNumberConfirmed).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.TwoFactorEnabled).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.LockoutEnd).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.LockoutEnabled).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.AccessFailedCount).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.FirstLogin).IsModified = false;
-                    _context.Entry(userInDb).Property(x => x.Role).IsModified = true;
-					_context.Entry(userInDb).Property(x => x.Faculty).IsModified = true;
-					_context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Edit operation aborted due to invalid model state for user ID: {UserId}. Errors: {ModelErrors}", id, ModelState);
+                return View(userInput);
+            }
 
-					var currentRoles = _userManager.GetRolesAsync(userInDb).Result;
-					var newRoleName = userInput.Role;
+            try
+            {
+                var userInDb = await _context.Users.FindAsync(id);
+                if (userInDb == null)
+                {
+                    _logger.LogWarning("User with ID: {UserId} not found in database.", id);
+                    return NotFound();
+                }
 
-					if (!currentRoles.Contains(newRoleName))
-					{
-						if (currentRoles.Any())
-						{
-							_userManager.RemoveFromRolesAsync(userInDb, currentRoles).Wait();
-						}
-						if (!String.IsNullOrEmpty(newRoleName))
-						{
-							_userManager.AddToRoleAsync(userInDb, newRoleName).Wait(); 
-						}
-					}
+                _logger.LogInformation("User found in database. Updating user details for user ID: {UserId}", id);
+                _context.Entry(userInDb).CurrentValues.SetValues(userInput);
 
-					return RedirectToAction(nameof(Index));
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!UserExists(userInput.Id))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-			}
-			return View(userInput);
-		}
+                var propertiesToNotModify = new string[]
+                {
+                    "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber",
+                    "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled",
+                    "AccessFailedCount", "FirstLogin", "EmailConfirmed", "Email", "NormalizedEmail",
+                    "NormalizedUserName", "Avatar"
+                };
+
+                foreach (var propName in propertiesToNotModify)
+                {
+                    _context.Entry(userInDb).Property(propName).IsModified = false;
+                }
+
+                var currentRoles = await _userManager.GetRolesAsync(userInDb);
+                var newRoleName = userInput.Role;
+                if (!currentRoles.Contains(newRoleName))
+                {
+                    await _userManager.RemoveFromRolesAsync(userInDb, currentRoles);
+                    await _userManager.AddToRoleAsync(userInDb, newRoleName);
+                    _logger.LogInformation("Role updated to {NewRole} for user ID: {UserId}", newRoleName, id);
+                }
+
+                int changes = await _context.SaveChangesAsync();
+                if (changes == 0)
+                {
+                    _logger.LogWarning("No changes detected by the database context for user ID: {UserId}", id);
+                    throw new Exception("No changes were made to the database.");
+                }
+
+                _logger.LogInformation("Edit operation successful. Changes saved for user ID: {UserId}", id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError(ex, "Concurrency error occurred updating user ID: {UserId}", id);
+                if (!UserExists(userInput.Id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+            catch (Exception ex) when (ex is not DbUpdateConcurrencyException)
+            {
+                _logger.LogError(ex, "An error occurred while updating the user ID: {UserId}", id);
+                ModelState.AddModelError(string.Empty, "An error occurred while updating the user.");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+
 
         // GET: Users/Delete/5
         [Authorize(Roles = "Admin")]
