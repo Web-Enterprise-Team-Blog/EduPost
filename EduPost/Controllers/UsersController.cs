@@ -177,10 +177,14 @@ namespace EduPost.Controllers
                 var newRoleName = userInput.Role;
                 if (!currentRoles.Contains(newRoleName))
                 {
+                    var normalizedUserName = userInDb.NormalizedUserName;
                     await _userManager.RemoveFromRolesAsync(userInDb, currentRoles);
                     await _userManager.AddToRoleAsync(userInDb, newRoleName);
                     _logger.LogInformation("Role updated to {NewRole} for user ID: {UserId}", newRoleName, id);
+
+                    userInDb.NormalizedUserName = normalizedUserName;
                 }
+
 
                 int changes = await _context.SaveChangesAsync();
                 if (changes == 0)
@@ -208,8 +212,6 @@ namespace EduPost.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-
-
 
         // GET: Users/Delete/5
         [Authorize(Roles = "Admin")]
